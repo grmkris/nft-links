@@ -1,6 +1,5 @@
-// @ts-nocheck
 import React from "react";
-import Navbar from "../Navbar";
+import NavigationBar from "../NavigationBar";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,7 +8,7 @@ interface LayoutProps {
 function Layout({children}: LayoutProps) {
   return (
     <>
-      <Navbar />
+      <NavigationBar />
       <div id="container_dashboard" className="bg-white">
         {children}
       </div>

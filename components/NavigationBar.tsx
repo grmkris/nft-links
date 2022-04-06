@@ -3,7 +3,7 @@ import Link from "next/link";
 import NavbarMobile from "./NavbarMobile";
 import Menu from "./Menu";
 
-function Navbar() {
+function NavigationBar() {
   return (
     <header>
       <div className="fixed hidden h-screen w-64 border-r-2 border-gray-500 bg-gradient-to-b from-slate-700 via-slate-700  to-slate-800 md:block">
@@ -24,4 +24,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavigationBar;
