@@ -46,7 +46,7 @@ function Navbar() {
         </div>
 
         {dummyMenu.map((item) => (
-          <Link href={item.link}>
+          <Link href={item.link} key={item.link}>
             <div
               className={
                 router.pathname == item.link &&
