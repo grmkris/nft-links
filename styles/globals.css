@@ -8,7 +8,7 @@
   margin-left: 16rem;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1280px) {
   #container_dashboard {
     width: 100%;
     height: calc(100vh - 64px);
