@@ -4,27 +4,29 @@ interface NFTListProps {
   dummyNFT: string[];
 }
 
-function NFTList({dummyNFT}) {
+function NFTList({ dummyNFT }) {
   return (
-    <div className="grid  w-full grid-cols-1 justify-items-center  md:grid-cols-2 2xl:grid-cols-3">
+    <div className="grid w-full grid-cols-1 justify-items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
       {dummyNFT.map((nft) => (
         <div
           key={nft.title}
-          className="my-2 flex w-full flex-col items-center justify-center space-y-4 rounded-xl bg-slate-200 p-4 transition-all duration-300 hover:scale-110 md:w-5/6 lg:my-8 lg:p-8 xl:w-96"
+          className="my-2 flex w-full cursor-pointer  flex-col items-center justify-center space-y-2 rounded-xl border-2 border-slate-300 border-opacity-50 bg-slate-100 bg-gradient-to-b shadow-lg shadow-slate-300 transition-all duration-300 sm:w-3/4 md:w-5/6 md:justify-start md:hover:scale-110 lg:my-8  xl:w-[250px]"
         >
-          <div>
-            <h1 className="text-2xl font-bold text-black">{nft.title}</h1>
-          </div>
-
-          <div className="w-3/4 items-center rounded-lg bg-gradient-to-br from-blue-500 via-gray-500 to-rose-400 p-2 sm:w-1/2 md:w-full">
+          <div className="w-full items-center rounded-lg bg-gradient-to-br from-blue-500 via-gray-500 to-rose-400 p-1 md:w-full">
             <img
               src={nft.image}
-              className="h-72 w-full rounded-lg object-cover  md:h-48 xl:h-60 "
+              className="h-72 w-full rounded-lg object-cover  xl:h-64"
               alt={nft.title}
             />
           </div>
 
-          <div className="text-slate-800">{nft.description}</div>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-700">{nft.title}</h1>
+          </div>
+
+          <div className="px-3 pb-4 text-sm text-slate-500">
+            {nft.description}
+          </div>
         </div>
       ))}
     </div>
