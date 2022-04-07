@@ -1,9 +1,10 @@
+import Link from "next/link";
 import React from "react";
 import Menu from "./Menu";
 
 function NavbarMobile() {
   return (
-    <div className="navbar bg-slate-800">
+    <div className="navbar bg-slate-800 text-gray-200">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -31,7 +32,9 @@ function NavbarMobile() {
         </div>
       </div>
       <div className="navbar-center">
-        <a className="btn btn-ghost text-xl normal-case">NFT Link</a>
+        <Link href={"/"}>
+          <div className="btn btn-ghost text-xl normal-case">NFT Link</div>
+        </Link>
       </div>
       <div className="navbar-end">
         <button className="btn btn-ghost btn-circle">
