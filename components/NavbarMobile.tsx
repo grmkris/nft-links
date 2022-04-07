@@ -3,7 +3,7 @@ import Menu from "./Menu";
 
 function NavbarMobile() {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-slate-800">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -24,7 +24,7 @@ function NavbarMobile() {
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow"
+            className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-slate-800 p-2 shadow"
           >
             <Menu />
           </ul>
