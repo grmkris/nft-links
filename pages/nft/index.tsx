@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import Link from "next/link";
+import React, {useEffect, useState} from "react";
 import Layout from "../../components/Layout";
 import NFTList from "../../components/NFTList";
 import NFTListSkeleton from "../../components/NFTListSkeleton";
-import { supabase } from "../../utils/supabaseClient";
+import {nftModel} from "../../model/nftModel";
 
 function NFT() {
-  const [nfts, setNfts] = useState([]);
-
-  const randomWalletAddress =
-    "7906687914988522a9dd32b6b1bd9461115b340c74195facf36bbd083a83c981";
+  const [nfts, setNfts] = useState<nftModel[]>([]);
 
   const dummyNFT = [
     {
@@ -67,10 +64,6 @@ function NFT() {
     }, 1000);
   }, []);
 
-  const logoutHandler = async () => {
-    let { error } = await supabase.auth.signOut();
-  };
-
   const nftTitle = (
     <p>
       Your{" "}
@@ -82,6 +75,13 @@ function NFT() {
   return (
     <Layout headerTitle={nftTitle}>
       <div className="bg-white p-5">
+        <div className="mb-8 flex justify-center md:ml-8 md:justify-start lg:-mb-3 ">
+          <Link href="/nft/create">
+            <button className="w-full rounded-lg bg-rose-500 px-8 py-4 font-semibold text-white transition-all hover:-translate-y-1 hover:bg-rose-700 hover:text-slate-100 sm:w-2/3 md:w-1/6 xl:w-[250px] ">
+              Add NFT
+            </button>
+          </Link>
+        </div>
         {nfts.length ? (
           <NFTList dummyNFT={nfts} />
         ) : (

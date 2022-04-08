@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import "../styles/globals.css";
-import { supabase } from "../utils/supabaseClient";
+import {supabase} from "../utils/supabaseClient";
 import AuthComponent from "../components/AuthComponent";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import store from "../store";
-import { authActions } from "../store/auth-slice";
+import {authActions} from "../store/auth-slice";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({Component, pageProps}) {
   const session = useSelector((state) => state.auth.session);
   const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-function MyAppWithProvider({ Component, pageProps }) {
+function MyAppWithProvider({Component, pageProps}) {
   return (
     <Provider store={store}>
       <MyApp Component={Component} pageProps={pageProps} />
