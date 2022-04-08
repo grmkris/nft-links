@@ -4,7 +4,7 @@ import {
   ClipboardCheckIcon,
 } from "@heroicons/react/outline";
 import Link from "next/link";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
 
 function Menu() {
@@ -12,7 +12,7 @@ function Menu() {
   const dummyMenu = [
     {
       name: "Dashboard",
-      link: "/dashboard",
+      link: "/",
       icon: <ChartPieIcon className="mt-1 h-5 w-5" />,
     },
     {

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Layout from "../../components/Layout";
 import NFTList from "../../components/NFTList";
 import NFTListSkeleton from "../../components/NFTListSkeleton";
+import { supabase } from "../../utils/supabaseClient";
 
 function NFT() {
   const [nfts, setNfts] = useState([]);
@@ -51,6 +53,12 @@ function NFT() {
       image:
         "https://scontent.flju4-1.fna.fbcdn.net/v/t1.15752-9/276199310_314963527393704_1894867575042343784_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=ae9488&_nc_ohc=Uy_ifNoF-TgAX8koag6&_nc_ht=scontent.flju4-1.fna&oh=03_AVIhQYPthx2WXv9UUgTrZLi2hfD4_QxcO1M8JFoHHi_j8Q&oe=62743052",
     },
+    {
+      title: "Hulja v antici",
+      description: "Hulja rad obišče Antico in si privošči tartufe",
+      image:
+        "https://scontent.flju4-1.fna.fbcdn.net/v/t1.15752-9/277912235_691062952216035_1666736231789691998_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=ae9488&_nc_ohc=0q9GOPkKS5UAX89knYl&_nc_ht=scontent.flju4-1.fna&oh=03_AVKTxKhxRSOHur1DlWArSJM6wsE63q4y19B4fzluh735Bw&oe=62754A64",
+    },
   ];
 
   useEffect(() => {
@@ -59,37 +67,20 @@ function NFT() {
     }, 1000);
   }, []);
 
+  const logoutHandler = async () => {
+    let { error } = await supabase.auth.signOut();
+  };
+
+  const nftTitle = (
+    <p>
+      Your{" "}
+      <span className="text-rose-400 underline underline-offset-2">NFT</span>{" "}
+      Collection
+    </p>
+  );
+
   return (
-    <Layout>
-      <div className="flex flex-col  justify-between space-y-3 bg-gray-100 px-8 py-6 md:flex-row md:space-y-0">
-        <div>
-          <h1 className="text-center text-lg font-semibold text-black md:text-xl lg:text-3xl">
-            Your{" "}
-            <span className="text-rose-400 underline underline-offset-2">
-              NFT
-            </span>{" "}
-            Collection
-          </h1>
-        </div>
-
-        <div className="flex flex-col items-center space-y-3 md:flex-row md:space-x-4 md:space-y-0">
-          <div>
-            <p className="text-center text-base text-indigo-700">
-              You are logged in with wallet{" "}
-              {randomWalletAddress.substring(0, 5)}
-              ...{randomWalletAddress.substring(randomWalletAddress.length - 5)}
-            </p>
-          </div>
-
-          <div>
-            <button className="rounded-full bg-indigo-500 px-6 py-2 text-white transition-all duration-300 hover:scale-105 hover:bg-indigo-400 hover:text-black">
-              {randomWalletAddress ? "Sign out" : "Sign in"}
-            </button>
-          </div>
-        </div>
-      </div>
-      <hr className="border-1 " />
-
+    <Layout headerTitle={nftTitle}>
       <div className="bg-white p-5">
         {nfts.length ? (
           <NFTList dummyNFT={nfts} />
