@@ -1,1 +1,3 @@
 .idea
+.env.local.local
+node_modules
