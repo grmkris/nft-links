@@ -1,19 +1,43 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import {useAccount, useConnect} from "wagmi";
+import {useAccount, useConnect, useSignMessage} from "wagmi";
+import {useSelector} from "react-redux";
+import axios from "axios";
 
 
 function Index() {
 
-
   const [{ data: accountData }, disconnect] = useAccount({
     fetchEns: true,
   })
+  const [{ data, error, loading }, signMessage] = useSignMessage()
   const [{ data: connectData, error: connectError }, connect] = useConnect()
+  const session = useSelector((state: any) => state.auth.session);
 
-  const linkWithAccount = (address: string) => {
-    console.log(address)
-    // TODO
+  const linkWithAccount = async (address: string) => {
+    const result = await axios.get('api/wallet/link', {
+      headers: {
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+      params: {
+        address
+      }
+    })
+    console.log(result)
+    // popup metamask and ask to sign a message
+    // if signed, call api to link account
+    // if not signed, do nothing
+    signMessage({ message: result.data.nonce }).then(async ({data}) => {
+      const result2 = await axios.post('api/wallet/validate', {
+        address: address,
+        signedNonce: data
+      }, {
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+        }
+      })
+      console.log(result2.data)
+    })
   }
 
   const renderWalletAccountConnection = () => {
