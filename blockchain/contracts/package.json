@@ -1,5 +1,25 @@
 {
   "name": "hardhat-project",
+  "scripts": {
+    "generete-types": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat compile",
+    "compile:": "npx hardhat compile",
+
+    "deploy:local": "hardhat deploy --network localhost",
+    "deploy:local:tag": "sh -c 'hardhat deploy --network localhost --tags ${0}'",
+    "deploy:local:tag:reset": "sh -c 'hardhat deploy --network localhost --tags ${0} --reset'",
+    "deploy:rinkeby": "hardhat deploy --network rinkeby",
+    "deploy:rinkeby:reset": "hardhat deploy --network rinkeby --reset",
+    "deploy:rinkeby:tag": "sh -c 'hardhat deploy --network rinkeby --tags ${0}'",
+    "deploy:rinkeby:tag:reset": "sh -c 'hardhat deploy --network rinkeby --tags ${0} --reset'",
+    "deploy:mainnet": "hardhat deploy --network mainnet",
+    "deploy:mainnet:reset": "hardhat deploy --network mainnet --reset",
+    "deploy:mainnet:tag": "sh -c 'hardhat deploy --network mainnet --tags ${0}'",
+    "deploy:mainnet:tag:reset": "sh -c 'hardhat deploy --network mainnet --tags ${0} --reset'",
+    "deploy:mumbai": "hardhat deploy --network mumbai",
+    "deploy:mumbai:reset": "hardhat deploy --network mumbai --reset",
+    "deploy:mumbai:tag": "sh -c 'hardhat deploy --network mumbai --tags ${0}'",
+    "deploy:mumbai:tag:reset": "sh -c 'hardhat deploy --network mumbai --tags ${0} --reset'"
+  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
@@ -23,6 +43,7 @@
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.6.2",
     "hardhat": "^2.9.3",
+    "hardhat-deploy": "^0.10.6",
     "hardhat-gas-reporter": "^1.0.8",
     "prettier": "^2.6.2",
     "prettier-plugin-solidity": "^1.0.0-beta.13",
@@ -31,5 +52,8 @@
     "ts-node": "^10.7.0",
     "typechain": "^5.2.0",
     "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.5.0"
   }
 }

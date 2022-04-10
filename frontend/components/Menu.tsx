@@ -25,6 +25,11 @@ function Menu() {
       link: "/mint-nft",
       icon: <BeakerIcon className="mt-1 h-5 w-5" />,
     },
+    {
+      name: "Settings",
+      link: "/settings",
+      icon: <BeakerIcon className="mt-1 h-5 w-5" />,
+    },
   ];
 
   return (

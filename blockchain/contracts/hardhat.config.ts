@@ -1,42 +1,81 @@
-import * as dotenv from "dotenv";
-
-import { HardhatUserConfig, task } from "hardhat/config";
-import "@nomiclabs/hardhat-etherscan";
-import "@nomiclabs/hardhat-waffle";
+import { config as dotEnvConfig } from "dotenv";
+import { HardhatUserConfig } from "hardhat/types";
 import "@typechain/hardhat";
+import "@nomiclabs/hardhat-waffle";
+import "@nomiclabs/hardhat-ethers";
+import "hardhat-deploy";
 import "hardhat-gas-reporter";
-import "solidity-coverage";
+import { accounts, nodeUrl } from "./utils/network";
+dotEnvConfig();
 
-dotenv.config();
+// Go to https://www.alchemyapi.io, sign up, create
+// a new App in its dashboard, and replace "KEY" with its key
+const INFURA_API_KEY = process.env.INFURA_API_KEY;
+const MNEMONIC = process.env.MNEMONIC;
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
-
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
+// Replace this private key with your Ropsten account private key
+// To export your private key from Metamask, open Metamask and
+// go to Account Details > Export Private Key
+// Be aware of NEVER putting real Ether into testing accounts
+const ROPSTEN_PRIVATE_KEY = "YOUR ROPSTEN PRIVATE KEY";
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.4",
-  networks: {
-    ropsten: {
-      url: process.env.ROPSTEN_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+  solidity: {
+    version: "0.8.10",
+    settings: {
+      optimizer: {
+        runs: 200,
+        enabled: true,
+      },
     },
   },
-  gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
-    currency: "USD",
+  namedAccounts: {
+    deployer: 0,
   },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+  networks: {
+    localhost: {
+      url: nodeUrl("localhost"),
+      accounts: accounts(),
+    },
+    rinkeby: {
+      url: nodeUrl("rinkeby"),
+      accounts: accounts("rinkeby"),
+    },
+    mainnet: {
+      url: nodeUrl("mainnet"),
+      accounts: accounts("mainnet"),
+    },
+    mumbai: {
+      url: nodeUrl("mumbai"),
+      accounts: accounts("mumbai"),
+      chainId: 80001,
+    },
+  },
+  paths: {
+    artifacts: "./artifacts",
+    cache: "./cache",
+    sources: "./contracts",
+    tests: "./tests",
+    deploy: "./deploy",
+    root: "./",
+  },
+  gasReporter: {
+    currency: "USD",
+    gasPrice: 100,
+    enabled: !!process.env.REPORT_GAS,
+    coinmarketcap: process.env.CMC_API_KEY,
+    maxMethodDiff: 10,
+  },
+  typechain: {
+    outDir: "types",
+    target: "ethers-v5",
+    alwaysGenerateOverloads: false,
+  },
+  mocha: {
+    timeout: 0,
   },
 };
 
