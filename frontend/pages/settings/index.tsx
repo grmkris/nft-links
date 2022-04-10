@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../../components/Layout";
 import {useAccount, useConnect, useSignMessage} from "wagmi";
 import axios from "axios";
-import {linkedWalletList} from "../../components/settings/LinkedWalletList";
+import {LinkedWalletList} from "../../components/settings/LinkedWalletList";
 import { useUser } from "@supabase/supabase-auth-helpers/react";
 import { toast } from "react-toastify";
 
@@ -113,7 +113,7 @@ function Index() {
             <div className="card-body">
               <h2 className="card-title">Linked wallets</h2>
               <div>
-                {linkedWalletList()}
+                {LinkedWalletList()}
               </div>
             </div>
           </div>

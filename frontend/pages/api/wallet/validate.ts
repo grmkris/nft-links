@@ -11,7 +11,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
   console.log('userid', user.user.id)
   console.log('address', address)
   const wallet = await supabaseServerClient.from('user_wallet').select('*').match({
-    user: user.user.id,
+    user_id: user.user.id,
     wallet: address
   })
 
@@ -42,7 +42,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     signed_nonce: signedNonce
   }).match({
     user: user.user.id,
-    wallet: address
+    user_id: address
   })
 
   return response.status(200).json({"success": true})

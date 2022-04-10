@@ -19,11 +19,11 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
   // wallet has not been successfully linked to any account, initiate link
   const nonce = crypto.randomUUID();
   // check if user already tried to link this wallet
-  userWallet = await supabaseServerClient.from('user_wallet').select('*').match({wallet: address, user: user.user.id});
+  userWallet = await supabaseServerClient.from('user_wallet').select('*').match({wallet: address, user_id: user.user.id});
   if (userWallet.data.length === 0) {
     // user has not tried to link this wallet yet, create new entry
     await supabaseServerClient.from('user_wallet').insert({
-      user: user.user.id,
+      user_id: user.user.id,
       wallet: address,
       nonce: nonce
     });
@@ -32,7 +32,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     await supabaseServerClient.from('user_wallet').update({
       nonce: nonce
     }).match({
-      user: user.user.id,
+      user_id: user.user.id,
       wallet: address
     });
   }
