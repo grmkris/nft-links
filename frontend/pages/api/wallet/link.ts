@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import {supabaseServerClient} from "../../../utils/server/supabaseServer";
 import crypto from "crypto"
+import { supabaseServerClient } from "../../../utils/server/supabaseServer";
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   const {query: { address } } = request;

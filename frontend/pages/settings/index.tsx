@@ -1,9 +1,10 @@
 import React from "react";
 import Layout from "../../components/Layout";
 import {useAccount, useConnect, useSignMessage} from "wagmi";
-import {useSelector} from "react-redux";
 import axios from "axios";
 import {linkedWalletList} from "../../components/settings/LinkedWalletList";
+import { useUser } from "@supabase/supabase-auth-helpers/react";
+import { toast } from "react-toastify";
 
 
 function Index() {
@@ -11,14 +12,14 @@ function Index() {
   const [{ data: accountData }, disconnect] = useAccount({
     fetchEns: true,
   })
-  const [{ data, error, loading }, signMessage] = useSignMessage()
+  const { user, accessToken } = useUser()
+  const [{ }, signMessage] = useSignMessage()
   const [{ data: connectData, error: connectError }, connect] = useConnect()
-  const session = useSelector((state: any) => state.auth.session);
 
   const linkWithAccount = async (address: string) => {
     const result = await axios.get('api/wallet/link', {
       headers: {
-        'Authorization': `Bearer ${session.access_token}`,
+        'Authorization': `Bearer ${accessToken}`,
       },
       params: {
         address
@@ -29,15 +30,20 @@ function Index() {
     // if signed, call api to link account
     // if not signed, do nothing
     signMessage({ message: result.data.nonce }).then(async ({data}) => {
-      const result2 = await axios.post('api/wallet/validate', {
+      const result = await axios.post('api/wallet/validate', {
         address: address,
         signedNonce: data
       }, {
         headers: {
-          'Authorization': `Bearer ${session.access_token}`,
+          'Authorization': `Bearer ${accessToken}`,
         }
       })
-      console.log(result2.data)
+      console.log('result', result)
+      if (result.status === 200) {
+        toast.success('Account linked!')
+      } else {
+        toast.error('Could not link account!')
+      }
     })
   }
 

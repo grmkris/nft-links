@@ -6,7 +6,7 @@ interface NFTListSkeletonProps {
 
 function NFTListSkeleton({ skeletonCount }: NFTListSkeletonProps) {
   function renderSkeletons(amount: number) {
-    let skeletons = [];
+    const skeletons = [];
     for (let i = 0; i < amount; i++) {
       skeletons.push(
         <div

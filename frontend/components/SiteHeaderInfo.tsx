@@ -1,16 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { supabase } from "../utils/supabaseClient";
+import { useUser } from "@supabase/supabase-auth-helpers/react";
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
 
 interface SiteHeaderInfoProps {
   headerTitle?: React.ReactNode;
 }
 
 function SiteHeaderInfo({ headerTitle }: SiteHeaderInfoProps) {
-  const session = useSelector((state: any) => state.auth.session);
+  const { user } = useUser();
 
   const logoutHandler = async () => {
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
   };
   return (
     <>
@@ -26,7 +26,7 @@ function SiteHeaderInfo({ headerTitle }: SiteHeaderInfoProps) {
             <p className="text-center text-base text-indigo-700">
               Logged in as{" "}
               <span className="font-semibold text-indigo-800">
-                {session.user?.email}
+                {user?.email}
               </span>
             </p>
           </div>

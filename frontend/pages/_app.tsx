@@ -1,14 +1,15 @@
-import {useEffect} from "react";
 import "../styles/globals.css";
-import {supabase} from "../utils/supabaseClient";
 import AuthComponent from "../components/AuthComponent";
-import {Provider, useDispatch, useSelector} from "react-redux";
 import {chain, defaultChains, InjectedConnector, WagmiProvider} from 'wagmi'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
-import store from "../store";
-import {authActions} from "../store/auth-slice";
-import {RootState} from "../model/storeModel";
+import { UserProvider, useUser } from "@supabase/supabase-auth-helpers/react";
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { QueryClient, QueryClientProvider } from "react-query";
 
 // API key for Ethereum node
 // Two popular services are Infura (infura.io) and Alchemy (alchemy.com)
@@ -42,32 +43,35 @@ const connectors = ({ chainId }) => {
   ]
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0
+    }
+  }
+})
+
 function MyApp({Component, pageProps}) {
-  const session = useSelector((state: RootState) => state.auth.session);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(authActions.logIn(supabase.auth.session()));
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      dispatch(authActions.logIn(session));
-    });
-  }, []);
+  const { user, isLoading } = useUser()
 
   return (
     <div className="h-screen bg-white">
-      {!session ? <AuthComponent /> : <Component {...pageProps} />}
+      {!user ? <AuthComponent /> : isLoading ? <Skeleton count={5} /> : <Component {...pageProps} />}
     </div>
   );
 }
 
 function MyAppWithProvider({Component, pageProps}) {
   return (
-    <Provider store={store}>
+    <UserProvider supabaseClient={supabaseClient}>
+      <QueryClientProvider client={queryClient}>
       <WagmiProvider autoConnect connectors={connectors}>
+        <ToastContainer />
         <MyApp Component={Component} pageProps={pageProps} />
       </WagmiProvider>
-    </Provider>
+      </QueryClientProvider>
+    </UserProvider>
   );
 }
 

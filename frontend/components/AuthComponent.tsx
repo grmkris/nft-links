@@ -1,13 +1,23 @@
-import { supabase } from "../utils/supabaseClient";
+import { useUser, Auth } from '@supabase/supabase-auth-helpers/react';
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
+import { useState } from "react";
 
 export default function AuthComponent() {
+  const { user, error } = useUser();
+  const [ data, setData] = useState();
+  const [ location, setLocation] = useState("");
+
   const handleLogin = async () => {
-    await supabase.auth.signIn({
+    await supabaseClient.auth.signIn({
       provider: "google",
     },{
       redirectTo: window.location.href
     });
   };
+
+  const useEffect = () => {
+    setLocation(window.location.href);
+  }
 
   return (
     <div className="grid h-1/3 grid-cols-1 md:h-screen md:grid-cols-3 md:space-x-2 ">
@@ -45,16 +55,15 @@ export default function AuthComponent() {
             quasi incidunt numquam repellat, earum, nisi officia qui cumque
             pariatur eligendi rem sapiente architecto iusto reiciendis. Unde?
           </div>
-          <div className="mt-8 flex w-full flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 sm:px-16 sm:py-4 md:px-8 lg:order-1  ">
-            <button className="w-full rounded-full bg-indigo-800 px-2 py-3 text-center text-white transition-all delay-150 ease-in-out hover:scale-105 hover:bg-indigo-400 hover:text-slate-700">
-              Sign in with magic link
-            </button>
-            <button
-              className="w-full rounded-full bg-indigo-800 px-2 py-3 text-center text-white transition-all delay-150 ease-in-out hover:scale-105 hover:bg-indigo-400 hover:text-slate-700"
-              onClick={handleLogin}
-            >
-              Sign in with Google
-            </button>
+          <div className="mt-8 flex min-w-fit  flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 sm:px-16 sm:py-4 md:px-8 lg:order-1  ">
+            <Auth
+              supabaseClient={supabaseClient}
+              providers={['google', 'github', 'discord', 'twitter']}
+              socialLayout="horizontal"
+              socialButtonSize="xlarge"
+              redirectTo={location}
+            />
+
           </div>
         </div>
       </div>
