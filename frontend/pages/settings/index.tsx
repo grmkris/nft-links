@@ -3,6 +3,7 @@ import Layout from "../../components/Layout";
 import {useAccount, useConnect, useSignMessage} from "wagmi";
 import {useSelector} from "react-redux";
 import axios from "axios";
+import {linkedWalletList} from "../../components/settings/LinkedWalletList";
 
 
 function Index() {
@@ -97,6 +98,16 @@ function Index() {
               {renderWalletInformation()}
               <div className="card-actions">
                 {renderWalletAccountConnection()}
+              </div>
+            </div>
+          </div>
+        }
+        {
+          <div className="card bg-base-100 shadow-xl max-w-prose m-2">
+            <div className="card-body">
+              <h2 className="card-title">Linked wallets</h2>
+              <div>
+                {linkedWalletList()}
               </div>
             </div>
           </div>
