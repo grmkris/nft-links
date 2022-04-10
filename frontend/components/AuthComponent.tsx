@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { supabase } from "../utils/supabaseClient";
+import {redirect} from "next/dist/server/api-utils";
 
 export default function AuthComponent() {
   const handleLogin = async () => {
     await supabase.auth.signIn({
       provider: "google",
-    });
+    },{
+      redirectTo: window.location.href
+    }) ;
   };
 
   return (
