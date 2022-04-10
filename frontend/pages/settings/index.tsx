@@ -12,6 +12,7 @@ function Index() {
   const [{ data: connectData, error: connectError }, connect] = useConnect()
 
   const linkWithAccount = (address: string) => {
+    console.log(address)
     // TODO
   }
 

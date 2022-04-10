@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { supabase } from "../utils/supabaseClient";
-import {redirect} from "next/dist/server/api-utils";
 
 export default function AuthComponent() {
   const handleLogin = async () => {
@@ -8,7 +6,7 @@ export default function AuthComponent() {
       provider: "google",
     },{
       redirectTo: window.location.href
-    }) ;
+    });
   };
 
   return (

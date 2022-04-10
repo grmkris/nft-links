@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import "../styles/globals.css";
 import {supabase} from "../utils/supabaseClient";
 import AuthComponent from "../components/AuthComponent";
@@ -8,6 +8,7 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
 import store from "../store";
 import {authActions} from "../store/auth-slice";
+import {RootState} from "../model/storeModel";
 
 // API key for Ethereum node
 // Two popular services are Infura (infura.io) and Alchemy (alchemy.com)
@@ -42,7 +43,7 @@ const connectors = ({ chainId }) => {
 }
 
 function MyApp({Component, pageProps}) {
-  const session = useSelector((state) => state.auth.session);
+  const session = useSelector((state: RootState) => state.auth.session);
   const dispatch = useDispatch();
 
   useEffect(() => {
