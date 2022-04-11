@@ -7,7 +7,7 @@ import { UserProvider, useUser } from "@supabase/supabase-auth-helpers/react";
 import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { QueryClient, QueryClientProvider } from "react-query";
 

@@ -1,9 +1,5 @@
 import React from "react";
 
-interface NFTListProps {
-  dummyNFT: string[];
-}
-
 function NFTList({dummyNFT}) {
   return (
     <div className="grid w-full grid-cols-1 justify-items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">

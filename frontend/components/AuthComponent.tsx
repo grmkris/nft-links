@@ -1,23 +1,13 @@
-import { useUser, Auth } from '@supabase/supabase-auth-helpers/react';
-import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
-import { useState } from "react";
+import { Auth } from '@supabase/supabase-auth-helpers/react'
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
+import { useEffect, useState } from 'react'
 
 export default function AuthComponent() {
-  const { user, error } = useUser();
-  const [ data, setData] = useState();
-  const [ location, setLocation] = useState("");
+  const [location, setLocation] = useState('')
 
-  const handleLogin = async () => {
-    await supabaseClient.auth.signIn({
-      provider: "google",
-    },{
-      redirectTo: window.location.href
-    });
-  };
-
-  const useEffect = () => {
-    setLocation(window.location.href);
-  }
+  useEffect(() => {
+    setLocation(window.location.href)
+  }, [])
 
   return (
     <div className="grid h-1/3 grid-cols-1 md:h-screen md:grid-cols-3 md:space-x-2 ">
@@ -34,7 +24,7 @@ export default function AuthComponent() {
         <div className="rounded-lg bg-gradient-to-br from-violet-900 via-violet-500 to-orange-500 p-1 transition-all duration-300 hover:scale-105">
           <img
             src={
-              "https://d1don5jg7yw08.cloudfront.net/filters:quality(70)/nft-images/20211003/Lazy_Lion_1633263209277.jpg"
+              'https://d1don5jg7yw08.cloudfront.net/filters:quality(70)/nft-images/20211003/Lazy_Lion_1633263209277.jpg'
             }
             className=" relative h-56 w-56 rounded-lg md:h-72 md:w-64 lg:h-96 lg:w-96"
           />
@@ -44,16 +34,15 @@ export default function AuthComponent() {
       <div className="col-span-2">
         <div className="flex flex-col items-center justify-center bg-white p-5">
           <div className="w-full rounded-xl bg-gray-100 p-5 text-sm shadow-lg shadow-gray-200 md:text-base lg:order-2">
-            Lorem, ipsum dolor sit amet consectetur{" "}
+            Lorem, ipsum dolor sit amet consectetur{' '}
             <span className="text-semibold text-rose-500 underline decoration-2	underline-offset-2	">
               adipisicing elit.
-            </span>{" "}
-            Libero ducimus praesentium quod quae, obcaecati officiis et
-            laudantium illo eius ad magnam, vitae ipsa repudiandae recusandae
-            magni. Adipisci itaque fuga totam. Lorem ipsum dolor sit, amet
-            consectetur adipisicing elit. Assumenda unde tenetur esse optio
-            quasi incidunt numquam repellat, earum, nisi officia qui cumque
-            pariatur eligendi rem sapiente architecto iusto reiciendis. Unde?
+            </span>{' '}
+            Libero ducimus praesentium quod quae, obcaecati officiis et laudantium illo eius ad
+            magnam, vitae ipsa repudiandae recusandae magni. Adipisci itaque fuga totam. Lorem ipsum
+            dolor sit, amet consectetur adipisicing elit. Assumenda unde tenetur esse optio quasi
+            incidunt numquam repellat, earum, nisi officia qui cumque pariatur eligendi rem sapiente
+            architecto iusto reiciendis. Unde?
           </div>
           <div className="mt-8 flex min-w-fit  flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 sm:px-16 sm:py-4 md:px-8 lg:order-1  ">
             <Auth
@@ -63,10 +52,9 @@ export default function AuthComponent() {
               socialButtonSize="xlarge"
               redirectTo={location}
             />
-
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
