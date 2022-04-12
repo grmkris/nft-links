@@ -1,10 +1,10 @@
-import React from "react";
-import NavigationBar from "./NavigationBar";
-import SiteHeaderInfo from "./SiteHeaderInfo";
+import React from 'react'
+import NavigationBar from '../navbar/NavigationBar'
+import SiteHeaderInfo from './SiteHeaderInfo'
 
 interface LayoutProps {
-  children: React.ReactNode;
-  headerTitle?: React.ReactNode;
+  children: React.ReactNode
+  headerTitle?: React.ReactNode
 }
 
 function Layout({ children, headerTitle }: LayoutProps) {
@@ -17,7 +17,7 @@ function Layout({ children, headerTitle }: LayoutProps) {
         {children}
       </div>
     </>
-  );
+  )
 }
 
-export default Layout;
+export default Layout

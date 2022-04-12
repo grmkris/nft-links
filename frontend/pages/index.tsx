@@ -1,8 +1,8 @@
-import React from "react";
-import Layout from "../components/Layout";
+import React from 'react'
+import Layout from '../components/layout/Layout'
 
 function Dashboard() {
-  return <Layout>dashboard</Layout>;
+  return <Layout>dashboard</Layout>
 }
 
-export default Dashboard;
+export default Dashboard

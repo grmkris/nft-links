@@ -1,15 +1,15 @@
-import "../styles/globals.css";
-import AuthComponent from "../components/AuthComponent";
-import {chain, defaultChains, InjectedConnector, WagmiProvider} from 'wagmi'
+import '../styles/globals.css'
+import AuthComponent from '../components/AuthComponent'
+import { chain, defaultChains, InjectedConnector, WagmiProvider } from 'wagmi'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
-import { UserProvider, useUser } from "@supabase/supabase-auth-helpers/react";
-import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
+import { UserProvider, useUser } from '@supabase/supabase-auth-helpers/react'
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { QueryClient, QueryClientProvider } from "react-query";
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 // API key for Ethereum node
 // Two popular services are Infura (infura.io) and Alchemy (alchemy.com)
@@ -20,26 +20,24 @@ const chains = defaultChains
 
 // Set up connectors
 const connectors = ({ chainId }) => {
-  const rpcUrl =
-    chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
-    chain.mainnet.rpcUrls[0]
+  const rpcUrl = chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ?? chain.mainnet.rpcUrls[0]
   return [
     new InjectedConnector({
       chains,
-      options: { shimDisconnect: true },
+      options: { shimDisconnect: true }
     }),
     new WalletConnectConnector({
       options: {
         infuraId,
-        qrcode: true,
-      },
+        qrcode: true
+      }
     }),
     new WalletLinkConnector({
       options: {
         appName: 'My wagmi app',
-        jsonRpcUrl: `${rpcUrl}/${infuraId}`,
-      },
-    }),
+        jsonRpcUrl: `${rpcUrl}/${infuraId}`
+      }
+    })
   ]
 }
 
@@ -51,28 +49,33 @@ const queryClient = new QueryClient({
   }
 })
 
-function MyApp({Component, pageProps}) {
-
+function MyApp({ Component, pageProps }) {
   const { user, isLoading } = useUser()
 
   return (
     <div className="h-screen bg-white">
-      {!user ? <AuthComponent /> : isLoading ? <Skeleton count={5} /> : <Component {...pageProps} />}
+      {!user ? (
+        <AuthComponent />
+      ) : isLoading ? (
+        <Skeleton count={5} />
+      ) : (
+        <Component {...pageProps} />
+      )}
     </div>
-  );
+  )
 }
 
-function MyAppWithProvider({Component, pageProps}) {
+function MyAppWithProvider({ Component, pageProps }) {
   return (
     <UserProvider supabaseClient={supabaseClient}>
       <QueryClientProvider client={queryClient}>
-      <WagmiProvider autoConnect connectors={connectors}>
-        <ToastContainer />
-        <MyApp Component={Component} pageProps={pageProps} />
-      </WagmiProvider>
+        <WagmiProvider autoConnect connectors={connectors}>
+          <ToastContainer />
+          <MyApp Component={Component} pageProps={pageProps} />
+        </WagmiProvider>
       </QueryClientProvider>
     </UserProvider>
-  );
+  )
 }
 
-export default MyAppWithProvider;
+export default MyAppWithProvider
