@@ -90,42 +90,7 @@ function Index() {
 
   const renderContent = () => {
     return (
-      <div>
-        {!accountData && (
-          <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title">Wallet connection</h2>
-              <p>Link wallet to your account</p>
-              <div>
-                <div className={'btn-group'}>
-                  {connectData.connectors.map((connector) => (
-                    <button
-                      className={'btn'}
-                      disabled={!connector.ready}
-                      key={connector.id}
-                      onClick={() => connect(connector)}
-                    >
-                      {connector.name}
-                      {!connector.ready && ' (unsupported)'}
-                    </button>
-                  ))}
-
-                  {connectError && <div>{connectError?.message ?? 'Failed to connect'}</div>}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {accountData &&
-          <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title">Wallet information</h2>
-              {renderWalletInformation()}
-              <div className="card-actions">{renderWalletAccountConnection()}</div>
-            </div>
-          </div>}
-        <LinkedWalletList />
-      </div>
+      <GroupsSettings />
     )
   }
 

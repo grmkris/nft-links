@@ -6,6 +6,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { CogIcon, UserGroupIcon } from "@heroicons/react/solid";
 
 function Menu() {
   const router = useRouter();
@@ -26,9 +27,14 @@ function Menu() {
       icon: <BeakerIcon className="mt-1 h-5 w-5" />,
     },
     {
+      name: "Groups",
+      link: "/groups",
+      icon: <UserGroupIcon className="mt-1 h-5 w-5" />,
+    },
+    {
       name: "Settings",
       link: "/settings",
-      icon: <BeakerIcon className="mt-1 h-5 w-5" />,
+      icon: <CogIcon className="mt-1 h-5 w-5" />,
     },
   ];
 
