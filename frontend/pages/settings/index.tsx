@@ -7,7 +7,6 @@ import { useUser } from '@supabase/supabase-auth-helpers/react'
 import { toast } from 'react-toastify'
 import { CheckIcon } from '@heroicons/react/solid'
 import { useWallets } from '../../hooks/useWallets'
-import { GroupsSettings } from "../../components/settings/GroupsSettings";
 
 function Index() {
   const [{ data: accountData }, disconnect] = useAccount({

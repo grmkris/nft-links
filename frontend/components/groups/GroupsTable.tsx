@@ -12,11 +12,7 @@ export const GroupsTable = () => {
   const queryCache = useQueryClient()
 
   return (
-    <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
-      <div className="card-header bg-base-200">
-        <h3 className="text-center text-base-100 text-base-300">Groups</h3>
-      </div>
-      <div className="card-body">
+      <div>
         {isLoading && (
           <div className="text-center">
             <Skeleton />
@@ -64,6 +60,5 @@ export const GroupsTable = () => {
           </table>
         )}
       </div>
-    </div>
   )
 }

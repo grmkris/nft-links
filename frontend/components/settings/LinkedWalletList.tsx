@@ -19,7 +19,7 @@ export const LinkedWalletList = () => {
           data.data.map((wallet, index) => (
             <div key={index}>
               <CopyToClipboard text={wallet.wallet}>
-                <div className={"btn btn-ghost"} onClick={() => toast.success("Copied to clipboard", {autoClose:500})}> <ClipboardCopyIcon className="w-6" /> {wallet.wallet}</div>
+                <div className={"btn btn-ghost"} onClick={() => toast.info("Copied to clipboard", {autoClose:500})}> <ClipboardCopyIcon className="w-6" /> {wallet.wallet}</div>
               </CopyToClipboard>
             </div>
           ))}
