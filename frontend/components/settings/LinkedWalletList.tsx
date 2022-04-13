@@ -2,6 +2,9 @@ import { useWallets } from '../../hooks/useWallets'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import React from 'react'
+import { ClipboardCopyIcon } from '@heroicons/react/solid'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { toast } from "react-toastify";
 
 export const LinkedWalletList = () => {
   const { isLoading, error, data, isFetching } = useWallets()
@@ -11,12 +14,15 @@ export const LinkedWalletList = () => {
       <div className="card-body">
         <h2 className="card-title">Linked wallets</h2>
         {isLoading || (isFetching && <Skeleton enableAnimation={true} count={5} />)}
-        {data && data.error || (error && <div>Error</div>)}
-        {data && data.data.map((wallet) => (
-          <div key={wallet.id}>
-            <p>{wallet.wallet}</p>
-          </div>
-        ))}
+        {(data && data.error) || (error && <div>Error</div>)}
+        {data &&
+          data.data.map((wallet, index) => (
+            <div key={index}>
+              <CopyToClipboard text={wallet.wallet}>
+                <div className={"btn btn-ghost"} onClick={() => toast.success("Copied to clipboard", {autoClose:500})}> <ClipboardCopyIcon className="w-6" /> {wallet.wallet}</div>
+              </CopyToClipboard>
+            </div>
+          ))}
       </div>
     </div>
   )
