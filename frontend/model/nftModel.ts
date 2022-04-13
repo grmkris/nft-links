@@ -1,7 +1,7 @@
 export type nftModel = {
-  title: string;
-  description?: string;
-  image: string;
-  metadata?: string;
-  chain?: string;
-};
+  nftTitle: string
+  nftDescription?: string
+  nftImage: { url?: string }
+  nftMetadata?: string
+  nftBlockchain?: string
+}

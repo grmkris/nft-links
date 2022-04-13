@@ -12,5 +12,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       res.status(200).json(response)
     }
+    case 'POST': {
+      console.log(req.body)
+      //const {} = req.body
+
+      res.status(200).json({ hey: 'hey' })
+    }
   }
 }

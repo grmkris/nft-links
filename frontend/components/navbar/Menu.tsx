@@ -1,36 +1,32 @@
-import {
-  BeakerIcon,
-  ChartPieIcon,
-  ClipboardCheckIcon,
-} from "@heroicons/react/outline";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React from "react";
+import { BeakerIcon, ChartPieIcon, ClipboardCheckIcon, CogIcon } from '@heroicons/react/outline'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React from 'react'
 
 function Menu() {
-  const router = useRouter();
+  const router = useRouter()
   const dummyMenu = [
     {
-      name: "Dashboard",
-      link: "/",
-      icon: <ChartPieIcon className="mt-1 h-5 w-5" />,
+      name: 'Dashboard',
+      link: '/',
+      icon: <ChartPieIcon className="mt-1 h-5 w-5" />
     },
     {
       name: "NFT's",
-      link: "/nft",
-      icon: <ClipboardCheckIcon className="mt-1 h-5 w-5" />,
+      link: '/nft',
+      icon: <ClipboardCheckIcon className="mt-1 h-5 w-5" />
     },
     {
       name: "Mint NFT's",
-      link: "/mint-nft",
-      icon: <BeakerIcon className="mt-1 h-5 w-5" />,
+      link: '/mint-nft',
+      icon: <BeakerIcon className="mt-1 h-5 w-5" />
     },
     {
-      name: "Settings",
-      link: "/settings",
-      icon: <BeakerIcon className="mt-1 h-5 w-5" />,
-    },
-  ];
+      name: 'Settings',
+      link: '/settings',
+      icon: <CogIcon className="mt-1 h-5 w-5" />
+    }
+  ]
 
   return (
     <div className="space-y-4 p-3 text-gray-300">
@@ -47,8 +43,8 @@ function Menu() {
           <div
             className={
               router.pathname == item.link
-                ? "border-r-4 border-indigo-500 text-indigo-500 underline decoration-2 underline-offset-4"
-                : ""
+                ? 'border-r-4 border-indigo-500 text-indigo-500 underline decoration-2 underline-offset-4'
+                : ''
             }
           >
             <div
@@ -61,7 +57,7 @@ function Menu() {
         </Link>
       ))}
     </div>
-  );
+  )
 }
 
-export default Menu;
+export default Menu

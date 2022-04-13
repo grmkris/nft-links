@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react'
 import Layout from '../../../components/layout/Layout'
 import axios from 'axios'
 import ImagePreview from '../../../components/nft/ImagePreview'
+import { nftModel } from '../../../model/nftModel'
+import { FileUploader } from 'react-drag-drop-files'
 
 function CreateNFT() {
   const [ipfsFiles, setIpfsFiles] = useState([])
-  const [nftFormFields, setNftFormFields] = useState({
+  const [nftFormFields, setNftFormFields] = useState<nftModel>({
     nftTitle: '',
     nftDescription: '',
     nftBlockchain: '',
-    nftMetadata: ''
+    nftMetadata: '',
+    nftImage: {}
   })
 
   const handleChange = (e) =>
@@ -25,7 +28,14 @@ function CreateNFT() {
     getData()
   }, [])
 
-  console.log('ipfsFiles', ipfsFiles)
+  const submitHandler = async () => {
+    const response = await axios.post('/api/nft', nftFormFields)
+    console.log(response)
+  }
+
+  const handleChange2 = (file) => {
+    console.log(file)
+  }
 
   console.log('nftFormFields', nftFormFields)
 
@@ -40,42 +50,34 @@ function CreateNFT() {
               <label className="mb-2 inline-block text-gray-500">Select previous images</label>
 
               <div className="grid max-h-72 grid-cols-4 overflow-y-auto">
-                <div className="m-3 h-32 w-32 border-2">Picture 1</div>
-                <div className="m-3 h-32 w-32 border-2">Picture 1</div>
-                <div className="m-3 h-32 w-32 border-2">Picture 1</div>
-                <div className="m-3 h-32 w-32 border-2">Picture 1</div>
-                <div className="m-3 h-32 w-32 border-2">Picture 1</div>
-                <div className="m-3 h-32 w-32 border-2">Picture 1</div>
-                <div className="m-3 h-32 w-32 border-2">Picture 1</div>
-                <div className="m-3 h-32 w-32 border-2">Picture 1</div>
-                <div className="m-3 h-32 w-32 border-2">Picture 1</div>
+                {ipfsFiles.map((file) => (
+                  <div key={file.metadata.name} className="m-3 h-32 w-32 border-2">
+                    {file.metadata.name}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </label>
       </label>
 
-      <div className="m-auto flex w-full flex-col justify-center bg-white p-5 md:flex-row lg:w-3/4">
-        <div className="flex w-full flex-col space-y-4 px-12">
-          <ImagePreview />
+      <div className="flex w-full flex-col justify-center bg-white md:flex-row md:py-12 md:px-6 2xl:px-48">
+        <div className="flex w-full flex-col space-y-4 md:w-1/2">
+          <ImagePreview setNftFormFields={setNftFormFields} />
 
-          <div className="divider">OR</div>
+          <FileUploader handleChange={handleChange2} name="file">
+            hey hey
+          </FileUploader>
+
+          <div className="divider m-auto w-1/2">OR</div>
 
           <div className="grid place-items-center ">
             <label
-              className="w-1/3 cursor-pointer rounded-full bg-indigo-500 px-2 py-3 text-center text-white hover:bg-indigo-800"
+              className="w-3/4 cursor-pointer rounded-full bg-indigo-500 px-2 py-3 text-center text-white hover:bg-indigo-800 sm:w-1/3 md:w-1/2"
               htmlFor="my-modal-4"
             >
               Pick from album
             </label>
-          </div>
-
-          <div className="grid max-h-72 grid-cols-4 overflow-y-auto">
-            {ipfsFiles.map((file) => (
-              <div key={file.metadata.name} className="m-3 h-32 w-32 border-2">
-                {file.metadata.name}
-              </div>
-            ))}
           </div>
         </div>
         <div className="flex w-full flex-col items-center space-y-3 md:w-1/2">
@@ -118,10 +120,9 @@ function CreateNFT() {
               <option value={0} disabled>
                 Select Blockchain
               </option>
-              <option>Game of Thrones</option>
-              <option>Lost</option>
-              <option>Breaking Bad</option>
-              <option>Walking Dead</option>
+              <option>Etherium</option>
+              <option>Polygon</option>
+              <option>Blabla</option>
             </select>
           </div>
 
@@ -137,8 +138,13 @@ function CreateNFT() {
             ></textarea>
           </div>
 
-          <div>
-            <button className="btn btn-primary">Button</button>
+          <div className="w-1/2">
+            <button
+              className="mt-8  w-full rounded bg-emerald-400 px-2 py-3 text-white hover:bg-emerald-600"
+              onClick={submitHandler}
+            >
+              Save NFT to IPFS
+            </button>
           </div>
         </div>
       </div>

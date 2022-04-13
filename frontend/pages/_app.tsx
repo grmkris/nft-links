@@ -5,7 +5,6 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
 import { UserProvider, useUser } from '@supabase/supabase-auth-helpers/react'
 import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
-import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -50,17 +49,11 @@ const queryClient = new QueryClient({
 })
 
 function MyApp({ Component, pageProps }) {
-  const { user, isLoading } = useUser()
+  const { user } = useUser()
 
   return (
     <div className="h-screen bg-white">
-      {!user ? (
-        <AuthComponent />
-      ) : isLoading ? (
-        <Skeleton count={5} />
-      ) : (
-        <Component {...pageProps} />
-      )}
+      {!user ? <AuthComponent /> : <Component {...pageProps} />}
     </div>
   )
 }
