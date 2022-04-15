@@ -29,11 +29,12 @@ function CreateNFT() {
   }, [])
 
   const submitHandler = async () => {
-    const response = await axios.post('/api/nft', nftFormFields)
+    const response = await axios.post('/api/nft/create', nftFormFields)
     console.log(response)
   }
 
   const handleChange2 = (file) => {
+    setNftFormFields((prevState) => ({ ...prevState, nftImage: file }))
     console.log(file)
   }
 
