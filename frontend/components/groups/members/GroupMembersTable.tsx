@@ -1,23 +1,22 @@
-import "react-loading-skeleton/dist/skeleton.css";
+import 'react-loading-skeleton/dist/skeleton.css'
 import React, { useState } from "react";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import { useGroups } from "../../hooks/useGroups";
+import 'react-loading-skeleton/dist/skeleton.css'
 import { useTable, usePagination, useRowSelect, Hooks, HeaderProps, CellProps } from "react-table";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ChevronLeftIcon,
-  ChevronRightIcon, CogIcon
+  ChevronRightIcon,
 } from "@heroicons/react/solid";
-import { GroupMembersTable } from "./members/GroupMembersTable";
-import { GroupsModal } from "./GroupsModal";
+import { GroupMembersModal } from "./GroupMembersModal";
+import { useGroups } from "../../../hooks/useGroups";
+import Skeleton from "react-loading-skeleton";
 
 const selectionHook = (hooks: Hooks<object>) => {
   hooks.allColumns.push((columns) => [
     // Let's make a column for selection
     {
-      id: "_selector",
+      id: '_selector',
       disableResizing: true,
       disableGroupBy: true,
       minWidth: 45,
@@ -33,20 +32,18 @@ const selectionHook = (hooks: Hooks<object>) => {
       ),
       // The cell can use the individual row's getToggleRowSelectedProps method
       // to the render a checkbox
-      Cell: ({ row }: CellProps<object>) => <input type="checkbox"
-                                                   className="toggle toggle-xs" {...row.getToggleRowSelectedProps()} />
+      Cell: ({ row }: CellProps<object>) => <input type="checkbox" className="toggle toggle-xs" {...row.getToggleRowSelectedProps()} />,
     },
-    ...columns
-  ]);
+    ...columns,
+  ])
   hooks.useInstanceBeforeDimensions.push(({ headerGroups }) => {
     // fix the parent group of the selection button to not be resizable
-    const selectionGroupHeader = headerGroups[0].headers[0];
-    selectionGroupHeader.canResize = false;
-  });
-};
+    const selectionGroupHeader = headerGroups[0].headers[0]
+    selectionGroupHeader.canResize = false
+  })
+}
 
-
-function Table({ columns, data }) {
+function Table({ columns, data, onClick }) {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -74,7 +71,7 @@ function Table({ columns, data }) {
     usePagination,
     useRowSelect,
     selectionHook
-  );
+  )
 
   // Render the UI for your table
   return (
@@ -83,23 +80,20 @@ function Table({ columns, data }) {
         <div>
           <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
             <ChevronDoubleLeftIcon
-              className={`h-6 w-6 ${canPreviousPage ? "text-secondary" : "text-base"}`}
+              className={`h-6 w-6 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
             />
-          </button>
-          {" "}
+          </button>{' '}
           <button onClick={() => previousPage()} disabled={!canPreviousPage}>
             <ChevronLeftIcon
-              className={`h-6 w-6 ${canPreviousPage ? "text-secondary" : "text-base"}`}
+              className={`h-6 w-6 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
             />
-          </button>
-          {" "}
+          </button>{' '}
           <button onClick={() => nextPage()} disabled={!canNextPage}>
-            <ChevronRightIcon className={`h-6 w-6 ${canNextPage ? "text-secondary" : "text-base"}`} />
-          </button>
-          {" "}
+            <ChevronRightIcon className={`h-6 w-6 ${canNextPage ? 'text-secondary' : 'text-base'}`} />
+          </button>{' '}
           <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
             <ChevronDoubleRightIcon
-              className={`h-6 w-6 ${canNextPage ? "text-secondary" : "text-base"}`}
+              className={`h-6 w-6 ${canNextPage ? 'text-secondary' : 'text-base'}`}
             />
           </button>
         </div>
@@ -115,8 +109,8 @@ function Table({ columns, data }) {
               type="number"
               defaultValue={pageIndex + 1}
               onChange={(e) => {
-                const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                gotoPage(page);
+                const page = e.target.value ? Number(e.target.value) - 1 : 0
+                gotoPage(page)
               }}
               className="input-bordered input-xs"
             />
@@ -124,10 +118,10 @@ function Table({ columns, data }) {
         </div>
         <div>
           <select
-            className={"select-xs"}
+            className={'select-xs'}
             value={pageSize}
             onChange={(e) => {
-              setPageSize(Number(e.target.value));
+              setPageSize(Number(e.target.value))
             }}
           >
             {[10, 20, 30, 40, 50].map((pageSize) => (
@@ -140,13 +134,13 @@ function Table({ columns, data }) {
       </div>
 
       <div className="overflow-x-auto">
-        <table {...getTableProps()} className={"table table-compact w-full"}>
+        <table {...getTableProps()} className={'table table-compact w-full'}>
           <thead>
           {headerGroups.map((headerGroup, index) => (
             <tr key={index} {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, index) => (
                 <th key={index} {...column.getHeaderProps()}>
-                  {column.render("Header")}
+                  {column.render('Header')}
                 </th>
               ))}
             </tr>
@@ -154,88 +148,54 @@ function Table({ columns, data }) {
           </thead>
           <tbody {...getTableBodyProps()}>
           {page.map((row, i) => {
-            prepareRow(row);
+            prepareRow(row)
             return (
-              <tr key={i} {...row.getRowProps()} className={`hover cursor-pointer ${row.isSelected ? "active" : ""}`}>
+              <tr key={i} {...row.getRowProps()} className={`hover cursor-pointer ${row.isSelected ? 'active' : ''}`}>
                 {row.cells.map((cell, id) => {
                   return (
-                    <td key={id} {...cell.getCellProps()} className={"max-w-xs truncate"}>
-                      {cell.render("Cell")}
+                    <td key={id} {...cell.getCellProps()} className={'max-w-xs truncate'}>
+                      {cell.render('Cell')}
                     </td>
-                  );
+                  )
                 })}
               </tr>
-            );
+            )
           })}
           </tbody>
         </table>
       </div>
     </>
-  );
+  )
 }
 
-export const GroupsTable = () => {
-  const { data, isError, isLoading } = useGroups();
-  const [selectedGroup, setSelectedGroup] = useState(null);
+export const GroupMembersTable = (props : { group_id: string } ) => {
+
+  const [selectedGroupMember, setSelectedGroupMember] = useState();
+  const { data, isLoading } = useGroups();
+
 
   const columns = React.useMemo(
     () => [
       {
-        Header: "Name",
-        accessor: "name" // accessor is the "key" in the data
+        Header: 'Name',
+        accessor: 'name' // accessor is the "key" in the data
       },
       {
-        Header: "Description",
-        accessor: "description"
-      },
-      {
-        Header: "Members",
-        accessor: (row) => <label onClick={() => onRowClick(row)}
-                                  className="btn btn-sm">{row.user_groups.length + " "}<CogIcon className={"w-5 h-5"} /></label>
+        Header: 'Email',
+        accessor: 'email'
       }
     ],
     []
-  );
+  )
 
-  const onRowClick = (row) => {
-    console.log(row);
-    setSelectedGroup(row);
-  };
+  if (isLoading) return <Skeleton />
 
-  if (data?.data) {
+  if (data) {
     return (
-      <div className={"grid lg:grid-cols-2 grid-cols-1"}>
-        <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
-          <div className="card-body">
-            <GroupsModal group={selectedGroup} />
-            <Table columns={columns} data={data.data} />
-          </div>
-        </div>
-        {selectedGroup &&
-          <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title text-current">Members of <label
-                className={"text-primary hover:text-primary-focus"}>{selectedGroup.name}</label></h2>
-              <GroupMembersTable group_id={selectedGroup.id} />
-            </div>
-          </div>
-        }
-      </div>
-    );
+      <>
+        <GroupMembersModal member={selectedGroupMember} group_id={props.group_id} />
+        <Table columns={columns} data={data.data.filter(id => (id.id == props.group_id))[0].user_groups} onClick={setSelectedGroupMember} />
+      </>
+    )
   }
-
-  if (isLoading) {
-    return (
-      <div className="flex h-full flex-col items-center justify-center">
-        <Skeleton count={10} />
-      </div>
-    );
-  }
-  if (isError) {
-    return (
-      <div className="flex h-full flex-col items-center justify-center">
-        <p>Something went wrong</p>
-      </div>
-    );
-  }
-};
+}

@@ -11,10 +11,9 @@ function Index() {
           <div className="card-body">
             <h2 className="card-title text-current">Manage your groups</h2>
             <p className="card-text">You can create and manage your groups here.</p>
-            <GroupsModal />
-            <GroupsTable />
           </div>
         </div>
+        <GroupsTable />
       </>
     )
   };
