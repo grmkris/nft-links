@@ -20,12 +20,14 @@
     "react-dom": "18.0.0",
     "react-loading-skeleton": "^3.0.3",
     "react-query": "^3.34.19",
+    "react-table": "^7.7.0",
     "react-toastify": "^8.2.0",
     "wagmi": "^0.2.26"
   },
   "devDependencies": {
     "@types/node": "^17.0.23",
     "@types/react": "^17.0.43",
+    "@types/react-table": "^7.7.10",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "autoprefixer": "^10.4.4",
     "eslint": "8.12.0",

@@ -9,7 +9,7 @@ function Index() {
       <>
         <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
           <div className="card-body">
-            <h2 className="card-title">Manage your groups</h2>
+            <h2 className="card-title text-current">Manage your groups</h2>
             <p className="card-text">You can create and manage your groups here.</p>
             <GroupsModal />
             <GroupsTable />

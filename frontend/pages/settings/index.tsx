@@ -7,6 +7,7 @@ import { useUser } from '@supabase/supabase-auth-helpers/react'
 import { toast } from 'react-toastify'
 import { CheckIcon } from '@heroicons/react/solid'
 import { useWallets } from '../../hooks/useWallets'
+import { useQueryClient } from "react-query";
 
 function Index() {
   const [{ data: accountData }, disconnect] = useAccount({
@@ -16,6 +17,7 @@ function Index() {
   const [{}, signMessage] = useSignMessage()
   const [{ data: connectData, error: connectError }, connect] = useConnect()
   const { data: linkedWallets } = useWallets()
+  const queryCache = useQueryClient()
 
   const linkWithAccount = async (address: string) => {
     const result = await axios.get('api/wallet/link', {
@@ -46,6 +48,7 @@ function Index() {
       console.log('result', result)
       if (result.status === 200) {
         toast.success('Account linked!')
+        await queryCache.invalidateQueries('linked-wallet-list')
       } else {
         toast.error('Could not link account!')
       }
@@ -53,13 +56,15 @@ function Index() {
   }
 
   const renderWalletAccountConnection = () => {
-    if (accountData) {
+    console.log(accountData.address)
+    console.log(linkedWallets)
+    if (accountData && linkedWallets) {
       return (
         <div className="flex items-center gap-2">
           <button className="btn" onClick={disconnect}>
             Disconnect
           </button>
-          {linkedWallets.data.includes((wallet) => wallet.address !== accountData.address) ? (
+          {!linkedWallets.data.some(element => element.wallet === accountData.address) ? (
             <button className="btn" onClick={() => linkWithAccount(accountData.address)}>
               Link with account
             </button>

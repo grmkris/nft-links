@@ -14,7 +14,7 @@ export const LinkedWalletList = () => {
       <div className="card-body">
         <h2 className="card-title">Linked wallets</h2>
         {isLoading || (isFetching && <Skeleton enableAnimation={true} count={5} />)}
-        {(data && data.error) || (error && <div>Error</div>)}
+        {(error || (data && data.error)  && <div>Error</div>)}
         {data &&
           data.data.map((wallet, index) => (
             <div key={index}>

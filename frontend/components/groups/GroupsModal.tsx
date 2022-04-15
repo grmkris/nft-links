@@ -4,17 +4,18 @@ import { toast } from 'react-toastify'
 import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
 import { useQueryClient } from 'react-query'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
+import { PencilIcon, PlusIcon } from "@heroicons/react/solid";
 
-export const GroupsModal = () => {
+export const GroupsModal = (props: {group?: {name: string, description: string, image: string}}) => {
 
   const [inputs, setInputs] = useState<{
     name
     description
     image
   }>({
-    name: '',
-    description: '',
-    image: ''
+    name: props.group?.name ? props.group.name : '',
+    description: props.group?.description ? props.group.description : '',
+    image: props.group?.image ? props.group.image : '',
   })
   const { user } = useUser()
   const queryCache = useQueryClient()
@@ -45,37 +46,35 @@ export const GroupsModal = () => {
   }
 
   return (
-    <div>
-      <label htmlFor="my-modal-6" className="btn modal-button">Create new group</label>
-
-      <input type="checkbox" id="my-modal-6" className="modal-toggle"/>
+    <>
+      <label htmlFor="my-modal-6" className="btn hover:bg-primary-focus bg-primary">{props.group? <PencilIcon className={"w-5 h-5"}/> :<PlusIcon className={"w-5 h-5"}/>}</label><input
+        type="checkbox" id="my-modal-6" className="modal-toggle" />
         <div className="modal modal-bottom sm:modal-middle">
           <div className="modal-box">
-            <form className={'form-control'} onSubmit={handleSubmit}>
-              <label>Group name</label>
+            <h2 className={"text-2xl"}>Create a group</h2>
+            <form className={"form-control"} onSubmit={handleSubmit}>
+              <label className={"label"}>Group name</label>
               <input
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered text-base"
                 placeholder="Group name"
                 type="text"
                 name="name"
-                value={inputs.name || ''}
-                onChange={handleChange}
-              />
-              <label>Description</label>
+                value={inputs.name || ""}
+                onChange={handleChange} />
+              <label className={"label"}>Description</label>
               <textarea
-                className="textarea textarea-bordered w-full max-w-xs"
+                className="textarea textarea-bordered text-base-content"
                 name="description"
                 placeholder="Description"
-                value={inputs.description || ''}
-                onChange={handleChange}
-              />
+                value={inputs.description || ""}
+                onChange={handleChange} />
               <div className="modal-action">
-                <button data-dismiss="my-modal-6" className="btn" type={'submit'}>Create</button>
-                <label htmlFor="my-modal-6" className="btn" >Close</label>
+                <label htmlFor="my-modal-6" className="btn btn hover:bg-secondary-focus bg-secondary">Close</label>
+                <button data-dismiss="my-modal-6" className="btn hover:bg-primary-focus bg-primary" type={"submit"}>Submit</button>
               </div>
             </form>
           </div>
         </div>
-    </div>
+      </>
   )
 }
