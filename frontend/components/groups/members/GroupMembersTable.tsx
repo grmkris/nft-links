@@ -43,7 +43,7 @@ const selectionHook = (hooks: Hooks<object>) => {
   })
 }
 
-function Table({ columns, data, onClick }) {
+function Table({ columns, data, setSelectedGroupMember }) {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -150,7 +150,7 @@ function Table({ columns, data, onClick }) {
           {page.map((row, i) => {
             prepareRow(row)
             return (
-              <tr key={i} {...row.getRowProps()} className={`hover cursor-pointer ${row.isSelected ? 'active' : ''}`}>
+              <tr key={i} {...row.getRowProps()} className={`hover cursor-pointer ${row.isSelected ? 'active' : ''}`} onClick={() => setSelectedGroupMember(row)}>
                 {row.cells.map((cell, id) => {
                   return (
                     <td key={id} {...cell.getCellProps()} className={'max-w-xs truncate'}>
@@ -194,7 +194,7 @@ export const GroupMembersTable = (props : { group_id: string } ) => {
     return (
       <>
         <GroupMembersModal member={selectedGroupMember} group_id={props.group_id} />
-        <Table columns={columns} data={data.data.filter(id => (id.id == props.group_id))[0].user_groups} onClick={setSelectedGroupMember} />
+        <Table columns={columns} data={data.data.filter(id => (id.id == props.group_id))[0].user_groups} setSelectedGroupMember={setSelectedGroupMember} />
       </>
     )
   }

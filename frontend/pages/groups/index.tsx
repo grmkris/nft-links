@@ -1,7 +1,6 @@
 import React from "react";
 import Layout from "../../components/Layout";
 import { GroupsTable } from "../../components/groups/GroupsTable";
-import { GroupsModal } from "../../components/groups/GroupsModal";
 
 function Index() {
   const renderContent = () => {
