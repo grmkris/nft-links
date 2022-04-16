@@ -6,6 +6,9 @@ import "@nomiclabs/hardhat-ethers";
 import "hardhat-deploy";
 import "hardhat-gas-reporter";
 import { accounts, nodeUrl } from "./utils/network";
+import "./tasks/tasks"
+import "./tasks/mint";
+
 dotEnvConfig();
 
 // Go to https://www.alchemyapi.io, sign up, create

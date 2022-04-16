@@ -1,10 +1,13 @@
 import React from 'react'
-import Layout from '../../components/layout/Layout'
+import Layout from '../../components/Layout'
 import { useAccount, useConnect, useSignMessage } from 'wagmi'
 import axios from 'axios'
 import { LinkedWalletList } from '../../components/settings/LinkedWalletList'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 import { toast } from 'react-toastify'
+import { CheckIcon } from '@heroicons/react/solid'
+import { useWallets } from '../../hooks/useWallets'
+import { useQueryClient } from "react-query";
 
 function Index() {
   const [{ data: accountData }, disconnect] = useAccount({
@@ -13,6 +16,8 @@ function Index() {
   const { accessToken } = useUser()
   const [{}, signMessage] = useSignMessage()
   const [{ data: connectData, error: connectError }, connect] = useConnect()
+  const { data: linkedWallets } = useWallets()
+  const queryCache = useQueryClient()
 
   const linkWithAccount = async (address: string) => {
     const result = await axios.get('api/wallet/link', {
@@ -43,6 +48,7 @@ function Index() {
       console.log('result', result)
       if (result.status === 200) {
         toast.success('Account linked!')
+        await queryCache.invalidateQueries('linked-wallet-list')
       } else {
         toast.error('Could not link account!')
       }
@@ -50,15 +56,24 @@ function Index() {
   }
 
   const renderWalletAccountConnection = () => {
-    if (accountData) {
+    console.log(accountData.address)
+    console.log(linkedWallets)
+    if (accountData && linkedWallets) {
       return (
-        <div>
+        <div className="flex items-center gap-2">
           <button className="btn" onClick={disconnect}>
             Disconnect
           </button>
-          <button className="btn" onClick={() => linkWithAccount(accountData.address)}>
-            Link with account
-          </button>
+          {!linkedWallets.data.some(element => element.wallet === accountData.address) ? (
+            <button className="btn" onClick={() => linkWithAccount(accountData.address)}>
+              Link with account
+            </button>
+          ) : (
+            <div className="flex items-center">
+              <CheckIcon className="mr-2 h-4 w-4" />
+              <span>Wallet linked</span>
+            </div>
+          )}
         </div>
       )
     }
@@ -105,23 +120,15 @@ function Index() {
             </div>
           </div>
         )}
-        {accountData && (
+        {accountData &&
           <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
             <div className="card-body">
               <h2 className="card-title">Wallet information</h2>
               {renderWalletInformation()}
               <div className="card-actions">{renderWalletAccountConnection()}</div>
             </div>
-          </div>
-        )}
-        {
-          <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title">Linked wallets</h2>
-              <div>{LinkedWalletList()}</div>
-            </div>
-          </div>
-        }
+          </div>}
+        <LinkedWalletList />
       </div>
     )
   }

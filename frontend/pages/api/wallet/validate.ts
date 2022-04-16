@@ -38,13 +38,13 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
   }
 
   // if the signature is verified, update the wallet's signedNonce
-  await supabaseServerClient.from('user_wallet').update({
+  console.log('Wallet found, updating signedNonce');
+  const supabaseResponse = await supabaseServerClient.from('user_wallet').update({
     signed_nonce: signedNonce
   }).match({
-    user: user.user.id,
-    user_id: address
+    user_id: user.user.id,
   })
 
-  return response.status(200).json({"success": true})
+  return response.status(200).json(supabaseResponse)
 
 }
