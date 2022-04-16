@@ -10,7 +10,7 @@ function Index() {
   const [{ data: accountData }, disconnect] = useAccount({
     fetchEns: true
   })
-  const { user, accessToken } = useUser()
+  const { accessToken } = useUser()
   const [{}, signMessage] = useSignMessage()
   const [{ data: connectData, error: connectError }, connect] = useConnect()
 

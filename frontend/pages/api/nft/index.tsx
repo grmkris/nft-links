@@ -10,7 +10,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
       const response = await pinata.pinList(filter)
 
-      res.status(200).json(response)
+      if (response) {
+        res.status(200).json(response)
+      }
     }
     case 'POST': {
       console.log(req.body)

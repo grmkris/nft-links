@@ -4,17 +4,19 @@ import SiteHeaderInfo from './SiteHeaderInfo'
 
 interface LayoutProps {
   children: React.ReactNode
-  headerTitle?: React.ReactNode
 }
 
-function Layout({ children, headerTitle }: LayoutProps) {
+function Layout({ children }: LayoutProps) {
   return (
     <>
-      <NavigationBar />
+      <div>
+        <SiteHeaderInfo />
 
-      <div id="container_dashboard" className="bg-white">
-        <SiteHeaderInfo headerTitle={headerTitle} />
-        {children}
+        <NavigationBar />
+
+        <div id="container_dashboard" className="bg-gray-100">
+          {children}
+        </div>
       </div>
     </>
   )

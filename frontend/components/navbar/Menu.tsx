@@ -17,8 +17,8 @@ function Menu() {
       icon: <ClipboardCheckIcon className="mt-1 h-5 w-5" />
     },
     {
-      name: "Mint NFT's",
-      link: '/mint-nft',
+      name: "Create NFT's",
+      link: '/nft/info',
       icon: <BeakerIcon className="mt-1 h-5 w-5" />
     },
     {
@@ -39,16 +39,16 @@ function Menu() {
       </div>
 
       {dummyMenu.map((item) => (
-        <Link href={item.link} key={item.link}>
+        <Link href={item.link} key={item.link} passHref>
           <div
             className={
               router.pathname == item.link
-                ? 'border-r-4 border-indigo-500 text-indigo-500 underline decoration-2 underline-offset-4'
-                : ''
+                ? 'border-r-4 border-indigo-500 font-bold text-indigo-500 underline decoration-2 underline-offset-4'
+                : ' text-gray-400'
             }
           >
             <div
-              className={`flex cursor-pointer space-x-2  border-indigo-500 p-3 text-base decoration-2 underline-offset-4  transition-all duration-150 ease-in-out hover:border-r-4 hover:text-indigo-500 hover:underline`}
+              className={`flex cursor-pointer space-x-2 border-indigo-500 p-3 text-base  decoration-2 underline-offset-4  transition-all duration-150 ease-in-out hover:border-r-4 hover:text-indigo-500 hover:underline`}
             >
               {item.icon}
               <p>{item.name}</p>
