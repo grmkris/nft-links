@@ -26,10 +26,13 @@ const ImageUpload = ({ setNftFormFields }: ImagePrevProps) => {
     filePickerRef.current!.click()
   }
 
-  const pickedHandler = (event: any) => {
+  const pickedHandler = (event: React.FormEvent<HTMLInputElement>) => {
     let pickedFile
-    if (event.target.files && event.target.files.length === 1) {
-      pickedFile = event.target.files[0]
+    if (
+      (event.target as HTMLInputElement).files &&
+      (event.target as HTMLInputElement).files.length === 1
+    ) {
+      pickedFile = (event.target as HTMLInputElement).files[0]
       setFile(pickedFile)
     } else {
       setPreviewUrl(null)

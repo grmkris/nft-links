@@ -1,14 +1,14 @@
-import { useUser, Auth } from '@supabase/supabase-auth-helpers/react'
+import { Auth } from '@supabase/supabase-auth-helpers/react'
 import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 export default function AuthComponent() {
   const [location, setLocation] = useState('')
 
-  const useEffect = () => {
+  useEffect(() => {
     setLocation(window.location.href)
-  }
+  })
 
   return (
     <div className="grid h-1/3 grid-cols-1 md:h-screen md:grid-cols-3 md:space-x-2 ">

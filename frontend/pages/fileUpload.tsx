@@ -18,10 +18,10 @@ export default function FileUpload() {
     }
   }
 
-  const uploadToServer = async (event) => {
+  const uploadToServer = async () => {
     const body = new FormData()
     body.append('file', image)
-    const response = await axios.post('/api/nft/create', body)
+    await axios.post('/api/nft/create', body)
   }
 
   return (
