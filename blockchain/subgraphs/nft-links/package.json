@@ -1,0 +1,26 @@
+{
+  "name": "nft-links",
+  "license": "UNLICENSED",
+  "scripts": {
+    "deploy": "graph deploy --product hosted-service grmkris/nft-link",
+    "create-local": "graph create --node http://localhost:8020/ nft-links",
+    "remove-local": "graph remove --node http://localhost:8020/ nft-links",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 nft-links",
+
+    "generate-schema": "cat schema/* > schema.graphql",
+    "prepare:mumbai": "yarn mustache config/mumbai.json subgraph.template.yaml subgraph.yaml",
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build",
+    "deploy:mumbai": "graph deploy --node https://api.thegraph.com/deploy/ grmkris/nft-link subgraph.yaml",
+    "generate-and-deploy:mumbai": "yarn codegen && yarn generate-schema && yarn prepare:mumbai && yarn codegen && yarn build && yarn deploy:mumbai"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.26.0",
+    "@graphprotocol/graph-ts": "0.24.1",
+    "as-base58": "^0.1.1",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "matchstick-as": "^0.3.0"
+  }
+}
