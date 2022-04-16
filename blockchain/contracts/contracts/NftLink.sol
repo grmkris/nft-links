@@ -11,7 +11,9 @@ contract NftLink is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    constructor() public ERC721("NftLink", "LINK") {}
+    constructor() public ERC721("NftLink", "NFTLINK") {}
+
+    event Minted(address indexed sender, address indexed to, uint256 tokenId, string tokenUri);
 
     function mintNFT(address recipient, string memory tokenURI)
     public onlyOwner
@@ -23,6 +25,7 @@ contract NftLink is ERC721URIStorage, Ownable {
         _mint(recipient, newItemId);
         _setTokenURI(newItemId, tokenURI);
 
+        emit Minted(msg.sender, recipient, newItemId, tokenURI);
         return newItemId;
     }
 }
