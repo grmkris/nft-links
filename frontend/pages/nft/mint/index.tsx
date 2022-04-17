@@ -91,6 +91,19 @@ function CreateNFT() {
 
             <div className="form-control w-full max-w-xs">
               <label className="label">
+                <span className="label-text font-semibold text-slate-700">Amount</span>
+              </label>
+              <input
+                name="nftAmount"
+                type="number"
+                placeholder="Enter NFT Amount"
+                className="input input-bordered input-primary w-full max-w-xs bg-white"
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
                 <span className="label-text font-semibold text-slate-700">NFT Blockchain</span>
               </label>
               <select
@@ -103,7 +116,7 @@ function CreateNFT() {
                 <option value={0} disabled>
                   Select Blockchain
                 </option>
-                <option>Etherium</option>
+                <option>Ethereum</option>
                 <option>Polygon</option>
                 <option>Blabla</option>
               </select>
@@ -123,10 +136,10 @@ function CreateNFT() {
 
             <div className="w-full max-w-xs">
               <button
-                className="mt-8  w-full rounded bg-emerald-400 px-2 py-3 text-white hover:bg-emerald-600"
+                className="mt-8 w-full btn btn-primary"
                 type="submit"
               >
-                Save NFT to IPFS
+                  Create NFT
               </button>
             </div>
           </div>
