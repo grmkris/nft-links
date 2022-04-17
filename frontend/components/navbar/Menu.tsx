@@ -2,6 +2,7 @@ import { BeakerIcon, ChartPieIcon, ClipboardCheckIcon, CogIcon } from '@heroicon
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
+import {UserGroupIcon} from "@heroicons/react/solid";
 
 function Menu() {
   const router = useRouter()
@@ -20,6 +21,11 @@ function Menu() {
       name: "Create NFT's",
       link: '/nft/info',
       icon: <BeakerIcon className="mt-1 h-5 w-5" />
+    },
+    {
+      name: "Groups",
+      link: "/groups",
+      icon: <UserGroupIcon className="mt-1 h-5 w-5" />,
     },
     {
       name: 'Settings',

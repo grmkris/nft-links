@@ -24,6 +24,7 @@ export default function AuthComponent() {
 
         <div className="rounded-lg bg-gradient-to-br from-violet-900 via-violet-500 to-orange-500 p-1 transition-all duration-300 hover:scale-105">
           <Image
+            layout={'fill'}
             src={
               'https://d1don5jg7yw08.cloudfront.net/filters:quality(70)/nft-images/20211003/Lazy_Lion_1633263209277.jpg'
             }

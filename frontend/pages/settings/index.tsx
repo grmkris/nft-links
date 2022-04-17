@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '../../components/Layout'
+import Layout from '../../components/layout/Layout'
 import { useAccount, useConnect, useSignMessage } from 'wagmi'
 import axios from 'axios'
 import { LinkedWalletList } from '../../components/settings/LinkedWalletList'
