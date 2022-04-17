@@ -1,17 +1,18 @@
 import "react-loading-skeleton/dist/skeleton.css";
-import React, { useState } from "react";
+import React from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useGroups } from "../../hooks/useGroups";
 import { useTable, usePagination, useRowSelect, Hooks, HeaderProps, CellProps } from "react-table";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ChevronLeftIcon,
-  ChevronRightIcon, CogIcon
+  ChevronRightIcon, ClipboardCopyIcon
 } from "@heroicons/react/solid";
-import { GroupMembersTable } from "./members/GroupMembersTable";
-import { GroupsModal } from "./GroupsModal";
+import {useFiles} from "../../hooks/useFiles";
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import {FilesModal} from "./FilesModal";
+import {toast} from "react-toastify";
 
 const selectionHook = (hooks: Hooks<object>) => {
   hooks.allColumns.push((columns) => [
@@ -174,52 +175,47 @@ function Table({ columns, data }) {
   );
 }
 
-export const  GroupsTable = () => {
-  const { data, isError, isLoading } = useGroups();
-  const [selectedGroup, setSelectedGroup] = useState(null);
+export const FilesTable = () => {
+  const { data, isError, isLoading } = useFiles();
 
   const columns = React.useMemo(
     () => [
       {
+        Header: "Ipfs",
+        accessor: (row) => <CopyToClipboard text={row.id}>
+          <div className={"btn btn-xs max-w-sm text-xs"} onClick={() => toast.info("Copied to clipboard", {autoClose:500})}> <ClipboardCopyIcon className="w-4" /> {row.id}</div>
+        </CopyToClipboard>
+      },
+      ,
+      {
         Header: "Name",
-        accessor: "name" // accessor is the "key" in the data
+        accessor: "name"
       },
       {
-        Header: "Description",
-        accessor: "description"
+        Header: "Type",
+        accessor: "type"
       },
       {
-        Header: "Members",
-        accessor: (row) => <label onClick={() => onRowClick(row)}
-                                  className="btn btn-sm">{row.user_groups.length + " "}<CogIcon className={"w-5 h-5"} /></label>
+        Header: "Size",
+        accessor: "size"
+      },
+      {
+        Header: "Created",
+        accessor: "created_at"
       }
     ],
     []
   );
 
-  const onRowClick = (row) => {
-    console.log(row);
-    setSelectedGroup(row);
-  };
-
   if (data?.data) {
     return (
-      <div className={"grid lg:grid-cols-2 grid-cols-1"}>
-        <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
+      <div className={"w-full"}>
+        <div className="card m-2 bg-base-100 shadow-xl">
           <div className="card-body">
-            <GroupsModal group={selectedGroup} />
+            <FilesModal />
             <Table columns={columns} data={data.data} />
           </div>
         </div>
-        {selectedGroup &&
-          <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title text-current">Members of <label
-                className={"text-primary hover:text-primary-focus"}>{selectedGroup.name}</label></h2>
-              <GroupMembersTable group_id={selectedGroup.id} />
-            </div>
-          </div>
-        }
       </div>
     );
   }

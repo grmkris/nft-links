@@ -6,16 +6,14 @@ import {toast} from "react-toastify";
 import {ClipboardCopyIcon} from "@heroicons/react/solid";
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {useUser} from "@supabase/supabase-auth-helpers/react";
+import {useQueryClient} from "react-query";
 
-type ImagePrevProps = {
-  setNftFormFields: (prevState) => void
-}
-
-const ImageUpload = ({setNftFormFields}: ImagePrevProps) => {
+const ImageUpload = (props: {onFileSelected?: (pickedFile: string) => void }) => {
   const { accessToken } = useUser()
   const [file, setFile] = useState()
   const [fileIpfsHash, setFileIpfsHash] = useState()
   const [previewUrl, setPreviewUrl] = useState<string | ArrayBuffer | null>()
+  const queryClient = useQueryClient()
 
   const filePickerRef = useRef<HTMLInputElement>(null)
 
@@ -38,9 +36,18 @@ const ImageUpload = ({setNftFormFields}: ImagePrevProps) => {
         Authorization: `Bearer ${accessToken}`
       }
     })
-    toast.info('File uploaded to IPFS, hash: ' + result.data.IpfsHash)
-    console.log(result.data)
-    setFileIpfsHash(result.data.IpfsHash)
+
+    console.log(result)
+    if (result.data.error) {
+      toast.error(result.data.error.message)
+      return
+    }
+    toast.info('File uploaded to IPFS, hash: ' + result.data.data[0].id)
+    setFileIpfsHash(result.data.data[0].id)
+    if (props.onFileSelected) {
+      props.onFileSelected(result.data.data[0].id)
+    }
+    await queryClient.invalidateQueries('files')
   }
 
   const pickImageHandler = () => {
@@ -58,11 +65,10 @@ const ImageUpload = ({setNftFormFields}: ImagePrevProps) => {
     } else {
       setPreviewUrl(null)
     }
-    setNftFormFields((prevState) => ({...prevState, nftImage: pickedFile}))
   }
   return (
     <>
-      <div className="relative m-auto w-full">
+      <div className="relative m-auto w-full hover:cursor-pointer">
         <input
           ref={filePickerRef}
           className="hidden"

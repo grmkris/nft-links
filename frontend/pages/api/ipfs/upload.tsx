@@ -14,18 +14,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     default:
     case 'POST': {
       const form = new formidable.IncomingForm()
-      form.parse(req, async function (err, fields, files) {
-        const pinataFile = await pinata.pinFromFS(files.file.filepath)
-        const user = await supabaseServerClient.auth.api.getUser(req.headers.authorization.slice(7))
+      try {
+        form.parse(req, async function (err, fields, files) {
+          const pinataFile = await pinata.pinFromFS(files.file.filepath)
+          const user = await supabaseServerClient.auth.api.getUser(req.headers.authorization.slice(7))
 
-        await supabaseServerClient.from('media').insert({
-          id: pinataFile.IpfsHash,
-          user: user.user.id,
-          size: pinataFile.PinSize
-        });
-
-        return res.status(201).send(pinataFile)
-      })
+          const result = await supabaseServerClient.from('files').insert({
+            id: pinataFile.IpfsHash,
+            user: user.user.id,
+            size: pinataFile.PinSize,
+            type: files.file.mimetype,
+            name: files.file.originalFilename,
+          });
+          return res.status(201).send(result)
+        })
+      } catch (e) {
+        console.log(e)
+        return res.status(500).send(e)
+      }
     }
   }
 }
