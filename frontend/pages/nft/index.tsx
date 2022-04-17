@@ -93,7 +93,7 @@ function NFT() {
             </div>
 
             <div className="flex flex-col text-center">
-              <div className="text-smtext-black md:text-2xl">Total NFT's</div>
+              <div className="text-smtext-black md:text-2xl">Total NFT&apos;s</div>
               <CountUp delay={1} end={5215} className="text-cyan-500" />
             </div>
           </div>

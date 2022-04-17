@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { PhotographIcon } from '@heroicons/react/outline'
 
 type ImagePrevProps = {
-  setNftFormFields: (prevState: any) => void
+  setNftFormFields: (prevState) => void
 }
 
 const ImageUpload = ({ setNftFormFields }: ImagePrevProps) => {
