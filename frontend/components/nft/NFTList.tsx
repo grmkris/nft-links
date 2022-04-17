@@ -1,6 +1,6 @@
 import React from 'react'
 import { nftModel } from '../../model/nftModel'
-import Image from "next/image";
+import Image from 'next/image'
 
 interface NFTListProps {
   dummyNFT: nftModel[]
@@ -15,8 +15,7 @@ function NFTList({ dummyNFT }: NFTListProps) {
           className="my-2 flex w-full cursor-pointer  flex-col items-center justify-center space-y-2 rounded-xl border-2 border-slate-300 border-opacity-50 bg-slate-100 bg-gradient-to-b shadow-lg shadow-slate-300 transition-all duration-300 sm:w-3/4 md:w-5/6 md:justify-start md:hover:scale-110 lg:my-8  xl:w-[250px]"
         >
           <div className="w-full items-center rounded-lg bg-gradient-to-br from-blue-500 via-gray-500 to-rose-400 p-1 md:w-full">
-            <Image
-              layout={'fill'}
+            <img
               src={nft.nftImage.url}
               className="h-72 w-full rounded-lg object-cover  xl:h-64"
               alt={nft.nftTitle}

@@ -22,15 +22,16 @@ export default function AuthComponent() {
           </h3>
         </div>
 
-        <div className="rounded-lg bg-gradient-to-br from-violet-900 via-violet-500 to-orange-500 p-1 transition-all duration-300 hover:scale-105">
-          <Image
-            layout={'fill'}
-            src={
-              'https://d1don5jg7yw08.cloudfront.net/filters:quality(70)/nft-images/20211003/Lazy_Lion_1633263209277.jpg'
-            }
-            alt="Lazy Lion"
-            className=" relative h-56 w-56 rounded-lg md:h-72 md:w-64 lg:h-96 lg:w-96"
-          />
+        <div className=" rounded-lg bg-gradient-to-br from-violet-900 via-violet-500 to-orange-500 p-1  transition-all duration-300 hover:scale-105">
+          <div className=" relative h-56 w-56 rounded-lg md:h-72 md:w-64 lg:h-96 lg:w-96">
+            <Image
+              layout={'fill'}
+              src={
+                'https://d1don5jg7yw08.cloudfront.net/filters:quality(70)/nft-images/20211003/Lazy_Lion_1633263209277.jpg'
+              }
+              alt="Lazy Lion"
+            />
+          </div>
         </div>
       </div>
 
