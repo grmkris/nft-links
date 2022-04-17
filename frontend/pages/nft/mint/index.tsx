@@ -1,23 +1,80 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import {nftModel} from '../../../model/nftModel'
 import ImagePrev from '../../../components/nft/ImagePrev'
 import CreateNFTLayout from '../../../components/layout/CreateNFTLayout'
 import {useFiles} from "../../../hooks/useFiles";
 import Image from "next/image";
+import {toast} from "react-toastify";
+import {useUser} from "@supabase/supabase-auth-helpers/react";
+import {useQueryClient} from "react-query";
+import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs";
+
+export type NftModel = {
+  title?: string
+  description?: string
+  image?: string
+  additionalMetadata?: string
+}
+
+/**
+ * Creating NFT works in multiple steps.
+ * 1. User fills information about nft metadata (title, description, image, additional json metadata)
+ * 1.1 If image is not yet on ipfs, user can upload it
+ * 2. User uploads nft metadata to ipfs
+ * 3. User selects on which blockchain to mint nfts
+ */
+
 
 function CreateNFT() {
   const {data: ipfsFiles, isLoading: isLoadingFiles, error: isErrorLoadingFiles} = useFiles()
-  const [nftFormFields, setNftFormFields] = useState<nftModel>({
-    nftTitle: '',
-    nftDescription: '',
-    nftBlockchain: '',
-    nftMetadata: '',
-    nftImage: {}
+  const {accessToken} = useUser()
+  const [nftMetadata, setNftMetadata] = useState<NftModel>({
+    title: '',
+    description: '',
+    image: "",
+    additionalMetadata: '',
   })
+  const { user } = useUser()
+  const [createNftForm, setCreateNftForm] = useState<{
+    metadata: string,
+    active: boolean,
+    selectedBlockchain: string,
+    amount: number
+  }>({
+    metadata: '',
+    active: false,
+    selectedBlockchain: '',
+    amount: 0
+  })
+  const queryClient = useQueryClient()
 
-  const handleChange = (e) =>
-    setNftFormFields((prevState) => ({...prevState, [e.target.name]: e.target.value}))
+  const uploadToServer = async () => {
+    const body = new FormData()
+    body.append('json', JSON.stringify(nftMetadata))
+    const result = await axios.post('/api/ipfs/upload', body, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+
+    console.log(result)
+    if (result.data.error) {
+      toast.error(result.data.error.message)
+      return
+    }
+    toast.info('Metadata uploaded to IPFS, hash: ' + result.data.data[0].id)
+    setCreateNftForm({
+      ...createNftForm,
+      metadata: result.data.data[0].id
+    })
+    await queryClient.invalidateQueries('files')
+  }
+
+  const handleChangeNftMetadata = (e) =>
+    setNftMetadata((prevState) => ({...prevState, [e.target.name]: e.target.value}))
+
+  const handleChangeCreateNftForm = (e) =>
+    setCreateNftForm((prevState) => ({...prevState, [e.target.name]: e.target.value}))
 
   const getData = async () => {
     const response = await axios.get('/api/nft')
@@ -30,120 +87,153 @@ function CreateNFT() {
 
   const submitHandler = async (e) => {
     e.preventDefault()
+    console.log(createNftForm)
+    const result = await supabaseClient.from("nfts").insert({
+      metadata: createNftForm.metadata,
+      limit: createNftForm.amount,
+      active: createNftForm.active,
+      chain: createNftForm.selectedBlockchain,
+      user: user.id
+    })
+    console.log(result)
+    toast.info('NFT minted', result)
 
-    const body = new FormData()
-    body.append('file', nftFormFields.nftImage as Blob)
-
-    const response = await axios.post('/api/nft/create', body)
-    console.log(response)
   }
-
-  console.log('nftFormFields', nftFormFields)
 
   return (
     <CreateNFTLayout>
       <form onSubmit={submitHandler}>
         <input type="checkbox" id="image-selector-modal" className="modal-toggle"/>
-        <label htmlFor="image-selector-modal" className="modal cursor-pointer">
+        <label htmlFor="image-selector-modal" className="modal modal-bottom sm:modal-middle cursor-pointer">
           <label className="modal-box relative bg-white" htmlFor="">
-            <h3 className="text-lg font-bold">Congratulations random Interner user!</h3>
-            <div className="w-5/6  rounded-lg bg-gray-50 p-5 shadow-2xl ">
-              <div className="h-full ">
-                <label className="mb-2 inline-block text-gray-500">Select previous images</label>
-                <div className="flex flex-wrap">
-                  {isLoadingFiles ? (
-                    <div className="w-full h-full flex justify-center items-center">
-                      <div className="spinner"></div>
-                    </div>
-                  ) : isErrorLoadingFiles ? (
-                    <div className="w-full h-full flex justify-center items-center">
-                      <div className="text-red-500">{isErrorLoadingFiles}</div>
-                    </div>
-                  ) : (
-                    <div className="grid max-h-72 grid-cols-4 overflow-y-auto">
-                      {ipfsFiles.data.map((file) => (
-                        <div key={file.id} className="m-3 h-32 w-32 border-2">
-                          <Image src={`https://cloudflare-ipfs.com/ipfs/${file.id}`} width={32} height={32} alt={file.name}/>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+            <h3 className="text-lg font-bold">Select one of your uploaded images</h3>
+            <div className="h-full ">
+              <div className="flex flex-wrap">
+                {isLoadingFiles ? (
+                  <div className="w-full h-full flex justify-center items-center">
+                    <div className="spinner"></div>
+                  </div>
+                ) : isErrorLoadingFiles ? (
+                  <div className="w-full h-full flex justify-center items-center">
+                    <div className="text-red-500">{isErrorLoadingFiles}</div>
+                  </div>
+                ) : (
+                  <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
+                    {ipfsFiles.data.map((file) => (
+                      <div className="carousel-item hover:opacity-80 hover:cursor-pointer" key={file.id}>
+                        <Image onClick={() => {
+                          setNftMetadata({...nftMetadata, image: file.id})
+                          console.log(nftMetadata)
+                          document.getElementById('image-selector-modal').click()
+                        }} src={`https://cloudflare-ipfs.com/ipfs/${file.id}`}
+                               width={200}
+                               height={200}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </label>
         </label>
 
-        <div className="flex w-full flex-col justify-center  md:flex-row md:py-12 md:px-6 ">
+        <div className="flex w-full flex-col justify-center md:flex-row md:py-12 md:px-6 ">
           <div className="order-last flex w-full flex-col items-center space-y-3 md:order-first md:w-1/2">
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text font-semibold text-slate-700">NFT Title</span>
+                <span className="label-text font-semibold text-slate-700">Title</span>
               </label>
               <input
-                name="nftTitle"
+                name="title"
                 type="text"
-                placeholder="Enter NFT Title"
+                placeholder="Enter Title"
                 className="input input-bordered input-primary w-full max-w-xs bg-white"
-                onChange={handleChange}
+                onChange={handleChangeNftMetadata}
               />
             </div>
 
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text font-semibold text-slate-700">NFT Description</span>
+                <span className="label-text font-semibold text-slate-700">Description</span>
               </label>
               <textarea
-                name="nftDescription"
+                name="description"
                 className="textarea textarea-primary bg-white"
                 placeholder="Describe your NFT"
-                onChange={handleChange}
+                onChange={handleChangeNftMetadata}
               ></textarea>
             </div>
 
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text font-semibold text-slate-700">Amount</span>
+                <span className="label-text font-semibold text-slate-700">Additional Metadata</span>
               </label>
-              <input
-                name="nftAmount"
-                type="number"
-                placeholder="Enter NFT Amount"
-                className="input input-bordered input-primary w-full max-w-xs bg-white"
-                onChange={handleChange}
-              />
+              <textarea
+                className="textarea textarea-primary bg-white"
+                placeholder="Additional JSON metadata"
+                name="additionalMetadata"
+                onChange={handleChangeNftMetadata}
+              ></textarea>
+            </div>
+
+            <div className="w-full max-w-xs">
+              <label
+                className="w-full btn btn-primary my-2"
+                onClick={async () => {
+                  await uploadToServer()
+                }}
+              >
+                Create metadata
+              </label>
+            </div>
+            <label className="btn btn-ghost" >{createNftForm.metadata}</label>
+            <div className="divider"></div>
+
+            <div className="form-control w-full max-w-xs grid grid-cols-2">
+              <div>
+                <label className="label">
+                  <span className="label-text font-semibold text-slate-700">Active</span>
+                </label>
+                <input
+                  name="active"
+                  type="checkbox"
+                  className="toggle-primary toggle"
+                  onChange={handleChangeCreateNftForm}
+                />
+              </div>
+
+              <div>
+                <label className="label">
+                  <span className="label-text font-semibold text-slate-700">Amount</span>
+                </label>
+                <input
+                  name="amount"
+                  type="number"
+                  placeholder="Amount"
+                  className="input input-bordered input-primary w-full max-w-xs bg-white"
+                  onChange={handleChangeCreateNftForm}
+                />
+              </div>
             </div>
 
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text font-semibold text-slate-700">NFT Blockchain</span>
+                <span className="label-text font-semibold text-slate-700">Blockchain</span>
               </label>
               <select
-                name="nftBlockchain"
+                name="selectedBlockchain"
                 className="select select-primary w-full max-w-xs bg-white"
                 placeholder={'props.placeholder'}
-                value={nftFormFields.nftBlockchain}
-                onChange={handleChange}
+                value={createNftForm.selectedBlockchain}
+                onChange={handleChangeCreateNftForm}
               >
                 <option value={0} disabled>
                   Select Blockchain
                 </option>
                 <option>Ethereum</option>
                 <option>Polygon</option>
-                <option>Blabla</option>
               </select>
-            </div>
-
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text font-semibold text-slate-700">NFT Metadata</span>
-              </label>
-              <textarea
-                className="textarea textarea-primary bg-white"
-                placeholder="Metadata"
-                name="nftMetadata"
-                onChange={handleChange}
-              ></textarea>
             </div>
 
             <div className="w-full max-w-xs">
