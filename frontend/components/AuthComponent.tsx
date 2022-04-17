@@ -1,6 +1,7 @@
 import { Auth } from '@supabase/supabase-auth-helpers/react'
 import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 export default function AuthComponent() {
   const [location, setLocation] = useState('')
@@ -22,10 +23,12 @@ export default function AuthComponent() {
         </div>
 
         <div className="rounded-lg bg-gradient-to-br from-violet-900 via-violet-500 to-orange-500 p-1 transition-all duration-300 hover:scale-105">
-          <img
+          <Image
+            layout={'fill'}
             src={
               'https://d1don5jg7yw08.cloudfront.net/filters:quality(70)/nft-images/20211003/Lazy_Lion_1633263209277.jpg'
             }
+            alt="Lazy Lion"
             className=" relative h-56 w-56 rounded-lg md:h-72 md:w-64 lg:h-96 lg:w-96"
           />
         </div>
