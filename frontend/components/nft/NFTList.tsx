@@ -1,6 +1,5 @@
 import React from 'react'
 import { nftModel } from '../../model/nftModel'
-import Image from 'next/image'
 
 interface NFTListProps {
   dummyNFT: nftModel[]
