@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { pinata } from '../../../utils/server/pinataServer'
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler (req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     default:
     case 'GET': {

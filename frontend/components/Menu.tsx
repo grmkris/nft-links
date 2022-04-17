@@ -49,7 +49,7 @@ function Menu() {
       </div>
 
       {dummyMenu.map((item) => (
-        <Link href={item.link} key={item.link}>
+        <Link passHref={true} href={item.link} key={item.link}>
           <div
             className={
               router.pathname == item.link

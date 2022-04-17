@@ -2,8 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import {supabaseServerClient} from "../../../utils/server/supabaseServer";
 import { utils } from 'ethers'
 
-export default async (request: NextApiRequest, response: NextApiResponse) => {
-  const {body: { address, signedNonce } } = request;
+export default async function handler(request: NextApiRequest, response: NextApiResponse) {
+  const {body: {address, signedNonce}} = request;
   console.log(signedNonce);
   const user = await supabaseServerClient.auth.api.getUser(request.headers.authorization.slice(7))
 

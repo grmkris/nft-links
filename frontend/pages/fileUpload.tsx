@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import Image from "next/image";
 /**
  * # MY ACCOUNT GOOGLE PLAY:
  * @see {@link https://play.google.com/store/apps/developer?id=dzino Google Play}
@@ -27,7 +28,7 @@ export default function FileUpload() {
   return (
     <div>
       <div>
-        <img src={createObjectURL} />
+        <Image width={200} height={200} src={createObjectURL} alt={""} />
         <h4>Select Image</h4>
         <input type="file" name="myImage" onChange={uploadToClient} />
         <button className="btn btn-primary" type="submit" onClick={uploadToServer}>

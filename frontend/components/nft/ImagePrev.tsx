@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { PhotographIcon } from '@heroicons/react/outline'
+import Image from "next/image";
 
 type ImagePrevProps = {
   setNftFormFields: (prevState) => void
@@ -23,7 +24,7 @@ const ImageUpload = ({ setNftFormFields }: ImagePrevProps) => {
   }, [file])
 
   const pickImageHandler = () => {
-    filePickerRef.current!.click()
+    filePickerRef.current?.click()
   }
 
   const pickedHandler = (event: React.FormEvent<HTMLInputElement>) => {
@@ -53,7 +54,8 @@ const ImageUpload = ({ setNftFormFields }: ImagePrevProps) => {
         onClick={pickImageHandler}
       >
         {previewUrl ? (
-          <img
+          <Image
+            layout={'fill'}
             src={previewUrl ? previewUrl.toString() : undefined}
             alt="Preview"
             className="h-[415px] rounded-lg"

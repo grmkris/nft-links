@@ -8,7 +8,7 @@ export default function AuthComponent() {
 
   useEffect(() => {
     setLocation(window.location.href)
-  })
+  }, [])
 
   return (
     <div className="grid h-1/3 grid-cols-1 md:h-screen md:grid-cols-3 md:space-x-2 ">
