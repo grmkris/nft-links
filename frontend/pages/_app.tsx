@@ -52,7 +52,7 @@ function MyApp({ Component, pageProps }) {
   const { user } = useUser()
 
   return (
-    <div className="dark" data-theme="aqua">
+    <div className="dark" data-theme="cyberpunk">
         {!user ? <AuthComponent /> : <Component {...pageProps} />}
     </div>
   )
