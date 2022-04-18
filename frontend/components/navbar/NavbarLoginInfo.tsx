@@ -2,6 +2,7 @@ import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 import Link from 'next/link'
 import React from 'react'
+import ToggleTheme from './ToggleTheme'
 
 function NavbarLoginInfo() {
   const { user } = useUser()
@@ -19,8 +20,13 @@ function NavbarLoginInfo() {
       </div>
 
       <div className="flex flex-col  items-center space-x-3 space-y-3 p-5 xl:flex-row  xl:space-y-0 xl:p-0">
+        <div className="flex cursor-pointer items-center justify-items-center rounded border-2 border-gray-500 border-opacity-40 p-2 hover:bg-gray-100 dark:hover:bg-gray-800">
+          <ToggleTheme />
+        </div>
+
         <p className="text-center text-base text-gray-400">
-          Logged in as <span className="font-semibold text-black">{user?.email}</span>
+          Logged in as{' '}
+          <span className="font-semibold text-black dark:text-white">{user?.email}</span>
         </p>
         <div className="rounded-full bg-gradient-to-br from-primary-focus via-primary to-secondary p-0.5">
           <button

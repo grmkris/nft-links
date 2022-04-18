@@ -215,7 +215,7 @@ export const FilesTable = () => {
   if (data?.data) {
     return (
       <div className={'w-full px-2 py-4 md:px-10'}>
-        <div className="rounded-xl bg-white shadow-xl">
+        <div className="rounded-xl bg-white shadow-xl dark:bg-gray-700">
           <div className="flex flex-col space-y-8 p-4 sm:space-y-2">
             <FilesModal />
             <Table columns={columns} data={data.data} />

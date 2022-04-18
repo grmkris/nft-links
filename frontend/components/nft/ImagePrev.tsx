@@ -77,7 +77,7 @@ const ImageUpload = (props: { onFileSelected?: (pickedFile: string) => void }) =
           onChange={pickedHandler}
         />
         <div
-          className={`m-auto flex h-[440px] max-w-md items-center rounded-lg bg-gray-50 p-5 shadow-2xl`}
+          className={`m-auto flex h-[440px] max-w-md items-center rounded-lg bg-gray-50 p-5 shadow-2xl dark:bg-slate-700`}
           onClick={pickImageHandler}
         >
           {previewUrl ? (

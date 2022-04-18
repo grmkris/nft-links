@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ImagePrev from '../../../components/nft/ImagePrev'
 import CreateNFTLayout from '../../../components/layout/CreateNFTLayout'
-import {useFiles} from "../../../hooks/useFiles";
-import Image from "next/image";
-import {toast} from "react-toastify";
-import {useUser} from "@supabase/supabase-auth-helpers/react";
-import {useQueryClient} from "react-query";
-import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs";
-import {NftModel} from "../../../model/nftModel";
+import { useFiles } from '../../../hooks/useFiles'
+import Image from 'next/image'
+import { toast } from 'react-toastify'
+import { useUser } from '@supabase/supabase-auth-helpers/react'
+import { useQueryClient } from 'react-query'
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
+import { NftModel } from '../../../model/nftModel'
 
 /**
  * Creating NFT works in multiple steps.
@@ -24,14 +24,14 @@ function CreateNFT() {
   const [nftMetadata, setNftMetadata] = useState<NftModel>({
     title: '',
     description: '',
-    image: "",
+    image: ''
   })
   const { user } = useUser()
   const [createNftForm, setCreateNftForm] = useState<{
-    metadata: string,
-    active: boolean,
-    selectedBlockchain: string,
-    amount: number,
+    metadata: string
+    active: boolean
+    selectedBlockchain: string
+    amount: number
   }>({
     metadata: '',
     active: false,
@@ -148,7 +148,7 @@ function CreateNFT() {
                 name="title"
                 type="text"
                 placeholder="Enter Title"
-                className="input input-bordered input-primary w-full max-w-xs bg-white"
+                className="input input-bordered input-primary w-full max-w-xs bg-white dark:bg-slate-700"
                 onChange={handleChangeNftMetadata}
               />
             </div>
@@ -159,7 +159,7 @@ function CreateNFT() {
               </label>
               <textarea
                 name="description"
-                className="textarea textarea-primary bg-white"
+                className="textarea textarea-primary bg-white dark:bg-slate-700"
                 placeholder="Describe your NFT"
                 onChange={handleChangeNftMetadata}
               ></textarea>
@@ -170,7 +170,7 @@ function CreateNFT() {
                 <span className="label-text font-semibold text-slate-700">Additional Metadata</span>
               </label>
               <textarea
-                className="textarea textarea-primary bg-white"
+                className="textarea textarea-primary bg-white dark:bg-slate-700"
                 placeholder="Additional JSON metadata"
                 name="additionalMetadata"
                 onChange={handleChangeNftMetadata}
@@ -205,13 +205,13 @@ function CreateNFT() {
 
               <div>
                 <label className="label">
-                  <span className="label-text font-semibold text-slate-700">Amount</span>
+                  <span className="label-text font-semibold text-slate-700 ">Amount</span>
                 </label>
                 <input
                   name="amount"
                   type="number"
                   placeholder="Amount"
-                  className="input input-bordered input-primary w-full max-w-xs bg-white"
+                  className="input input-bordered input-primary w-full max-w-xs bg-white dark:bg-slate-700"
                   onChange={handleChangeCreateNftForm}
                 />
               </div>
@@ -223,7 +223,7 @@ function CreateNFT() {
               </label>
               <select
                 name="selectedBlockchain"
-                className="select select-primary w-full max-w-xs bg-white"
+                className="select select-primary w-full max-w-xs bg-white dark:bg-slate-700"
                 placeholder={'props.placeholder'}
                 value={createNftForm.selectedBlockchain}
                 onChange={handleChangeCreateNftForm}

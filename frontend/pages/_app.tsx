@@ -52,8 +52,10 @@ function MyApp({ Component, pageProps }) {
   const { user } = useUser()
 
   return (
-    <div className="h-screen bg-white ">
-      {!user ? <AuthComponent /> : <Component {...pageProps} />}
+    <div className="dark">
+      <div className="h-screen bg-white dark:bg-slate-800">
+        {!user ? <AuthComponent /> : <Component {...pageProps} />}
+      </div>
     </div>
   )
 }
