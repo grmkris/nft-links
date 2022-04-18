@@ -3,18 +3,13 @@ import React from 'react'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useTable, usePagination, useRowSelect, Hooks, HeaderProps, CellProps } from 'react-table'
-import {
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ClipboardCopyIcon
-} from '@heroicons/react/solid'
+import {ClipboardCopyIcon} from '@heroicons/react/solid'
 import { useFiles } from '../../hooks/useFiles'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { FilesModal } from './FilesModal'
 import { toast } from 'react-toastify'
 import {formatBytes} from "../../utils/utils";
+import {Pagination} from "../table/Pagination";
 
 const selectionHook = (hooks: Hooks<object>) => {
   hooks.allColumns.push((columns) => [
@@ -87,43 +82,7 @@ function Table({ columns, data }) {
   // Render the UI for your table
   return (
     <>
-      <div className="btn-group">
-        <button className="btn btn-accent" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          <ChevronDoubleLeftIcon
-            className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
-          />
-        </button>{' '}
-        <button className="btn btn-accent" onClick={() => previousPage()} disabled={!canPreviousPage}>
-          <ChevronLeftIcon
-            className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
-          />
-        </button>{' '}
-        <button className="btn btn-accent">{pageIndex + 1} / {pageOptions.length}</button>
-        <button className="btn btn-accent" onClick={() => nextPage()} disabled={!canNextPage}>
-          <ChevronRightIcon
-            className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
-          />
-        </button>{' '}
-        <button className="btn btn-accent" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          <ChevronDoubleRightIcon
-            className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
-          />
-        </button>
-          <select
-            className={'btn btn-accent'}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value))
-            }}
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-      </div>
-
+      <Pagination gotoPage={gotoPage} canPreviousPage={canPreviousPage} previousPage={previousPage} pageIndex={pageIndex} pageOptions={pageOptions} nextPage={nextPage} pageCount={pageCount} pageSize={pageSize} setPageSize={setPageSize} canNextPage={canNextPage} />
       <div className="overflow-x-auto">
         <table {...getTableProps()} className={'table-compact table w-full'}>
           <thead>
@@ -208,7 +167,7 @@ export const FilesTable = () => {
     return (
       <div className="card m-4 rounded-xl bg-base-300 shadow-xl">
         <div className="card-body">
-          <div className="flex flex-col space-y-8 p-4 sm:space-y-2">
+          <div className="flex flex-col space-y-8 sm:space-y-2">
             <FilesModal />
             <Table columns={columns} data={data.data} />
           </div>

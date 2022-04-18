@@ -2,15 +2,10 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import React, {useState} from "react";
 import 'react-loading-skeleton/dist/skeleton.css'
 import {useTable, usePagination, useRowSelect, Hooks, HeaderProps, CellProps} from "react-table";
-import {
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "@heroicons/react/solid";
 import {GroupMembersModal} from "./GroupMembersModal";
 import {useGroups} from "../../../hooks/useGroups";
 import Skeleton from "react-loading-skeleton";
+import {Pagination} from "../../table/Pagination";
 
 const selectionHook = (hooks: Hooks<object>) => {
   hooks.allColumns.push((columns) => [
@@ -78,46 +73,7 @@ function Table({columns, data}) {
   // Render the UI for your table
   return (
     <>
-      <div className="btn-group">
-        <button className="btn" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          <ChevronDoubleLeftIcon
-            className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
-          />
-        </button>
-        {' '}
-        <button className="btn" onClick={() => previousPage()} disabled={!canPreviousPage}>
-          <ChevronLeftIcon
-            className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
-          />
-        </button>
-        {' '}
-        <button className="btn">{pageIndex + 1} / {pageOptions.length}</button>
-        <button className="btn" onClick={() => nextPage()} disabled={!canNextPage}>
-          <ChevronRightIcon
-            className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
-          />
-        </button>
-        {' '}
-        <button className="btn" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          <ChevronDoubleRightIcon
-            className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
-          />
-        </button>
-        <select
-          className={'btn'}
-          value={pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value))
-          }}
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              {pageSize}
-            </option>
-          ))}
-        </select>
-      </div>
-
+      <Pagination gotoPage={gotoPage} canPreviousPage={canPreviousPage} previousPage={previousPage} pageIndex={pageIndex} pageOptions={pageOptions} nextPage={nextPage} pageCount={pageCount} pageSize={pageSize} setPageSize={setPageSize} canNextPage={canNextPage} />
       <div className="overflow-x-auto">
         <table {...getTableProps()} className={'table table-compact w-full'}>
           <thead>
@@ -158,7 +114,7 @@ function Table({columns, data}) {
 
 export const GroupMembersTable = (props: { group_id: string }) => {
 
-  const [selectedGroupMember, setSelectedGroupMember] = useState();
+  const [selectedGroupMember] = useState();
   const {data, isLoading} = useGroups();
 
 

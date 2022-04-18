@@ -6,7 +6,7 @@ function CreateNFTHeader() {
   const router = useRouter()
   return (
     <div className="py-4 text-black md:px-12">
-      <div className="flex w-full flex-col items-center justify-between rounded-lg bg-white p-5 px-8 dark:bg-gray-700 dark:text-gray-300 md:flex-row">
+      <div className="flex w-full flex-col items-center justify-between rounded-lg p-5 px-8 dark:bg-gray-700 dark:text-gray-300 md:flex-row">
         <div className="text-xl font-semibold">Mint NFTs</div>
         <div className="mt-4 flex w-full flex-col justify-around space-y-3 text-center text-lg text-gray-600 md:mt-0 md:w-3/4 md:flex-row md:space-x-4 md:space-y-0">
           <Link href="/nft/info" passHref>

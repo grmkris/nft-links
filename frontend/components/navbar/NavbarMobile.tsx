@@ -7,7 +7,7 @@ import ToggleTheme from './ToggleTheme'
 
 function NavbarMobile() {
   return (
-    <div className="supports-backdrop-blur:bg-white/9 navbar sticky top-0 z-50  border-b-2 border-slate-900/10 backdrop-blur transition-colors duration-500 bg-base-300">
+    <div className="supports-backdrop-blur:bg-white/9 shadow-xl navbar sticky top-0 z-50  border-b-2 border-slate-900/10 backdrop-blur transition-colors duration-500 bg-base-300">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">

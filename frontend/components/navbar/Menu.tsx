@@ -6,7 +6,7 @@ import { DatabaseIcon, UserGroupIcon } from '@heroicons/react/solid'
 
 function Menu() {
   const router = useRouter()
-  const dummyMenu = [
+  const menu = [
     {
       name: 'Dashboard',
       link: '/',
@@ -40,16 +40,16 @@ function Menu() {
   ]
 
   return (
-    <div className="space-y-4 p-3 text-gray-300">
+    <div className="space-y-4 p-3">
       <div className="mt-2 space-y-14 px-4 ">
         <div className="space-y-4">
           <div className="flex justify-between">
-            <h1 className="text-gray-400">Menu</h1>
+            <h1 className="">Menu</h1>
           </div>
         </div>
       </div>
 
-      {dummyMenu.map((item) => (
+      {menu.map((item) => (
         <Link href={item.link} key={item.link} passHref>
           <div
             className={
