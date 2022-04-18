@@ -86,26 +86,26 @@ function Table({ columns, data }) {
   // Render the UI for your table
   return (
     <>
-      <div className="flex flex-col items-center justify-between space-y-3 md:flex-row">
-        <div className="flex space-x-4">
+      <div className="flex flex-col items-center justify-between space-y-5 md:flex-row">
+        <div className="flex w-full justify-between px-5 sm:mt-4 sm:w-1/2 lg:w-36">
           <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
             <ChevronDoubleLeftIcon
-              className={`h-4 w-4 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
+              className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
             />
           </button>{' '}
           <button onClick={() => previousPage()} disabled={!canPreviousPage}>
             <ChevronLeftIcon
-              className={`h-4 w-4 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
+              className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
             />
           </button>{' '}
           <button onClick={() => nextPage()} disabled={!canNextPage}>
             <ChevronRightIcon
-              className={`h-4 w-4 ${canNextPage ? 'text-secondary' : 'text-base'}`}
+              className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
             />
           </button>{' '}
           <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
             <ChevronDoubleRightIcon
-              className={`h-4 w-4 ${canNextPage ? 'text-secondary' : 'text-base'}`}
+              className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
             />
           </button>
         </div>
@@ -215,7 +215,7 @@ export const FilesTable = () => {
   if (data?.data) {
     return (
       <div className={'w-full px-2 py-4 md:px-10'}>
-        <div className="rounded-xl bg-white shadow-xl">
+        <div className="rounded-xl bg-white shadow-xl dark:bg-gray-700">
           <div className="flex flex-col space-y-8 p-4 sm:space-y-2">
             <FilesModal />
             <Table columns={columns} data={data.data} />

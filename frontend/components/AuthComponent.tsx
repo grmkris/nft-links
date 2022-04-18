@@ -36,8 +36,8 @@ export default function AuthComponent() {
       </div>
 
       <div className="col-span-2">
-        <div className="flex flex-col items-center justify-center bg-white p-5">
-          <div className="w-full rounded-xl bg-gray-100 p-5 text-sm shadow-lg shadow-gray-200 md:text-base lg:order-2">
+        <div className="flex flex-col items-center justify-center bg-white p-5 dark:bg-slate-800">
+          <div className="w-full rounded-xl bg-gray-100 p-5 text-sm shadow-lg shadow-gray-200 dark:bg-gray-700 dark:shadow-gray-700 md:text-base lg:order-2">
             Lorem, ipsum dolor sit amet consectetur{' '}
             <span className="text-semibold text-rose-500 underline decoration-2	underline-offset-2	">
               adipisicing elit.
