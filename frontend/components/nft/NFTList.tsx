@@ -7,7 +7,7 @@ interface NFTListProps {
 
 function NFTList({ dummyNFT }: NFTListProps) {
   return (
-    <div className="grid w-full grid-cols-1 justify-items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+    <div className="grid w-full grid-cols-1 justify-items-center px-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
       {dummyNFT.map((nft) => (
         <div
           key={nft.nftTitle}

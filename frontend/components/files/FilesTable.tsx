@@ -1,24 +1,25 @@
-import "react-loading-skeleton/dist/skeleton.css";
-import React from "react";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import { useTable, usePagination, useRowSelect, Hooks, HeaderProps, CellProps } from "react-table";
+import 'react-loading-skeleton/dist/skeleton.css'
+import React from 'react'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { useTable, usePagination, useRowSelect, Hooks, HeaderProps, CellProps } from 'react-table'
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ChevronLeftIcon,
-  ChevronRightIcon, ClipboardCopyIcon
-} from "@heroicons/react/solid";
-import {useFiles} from "../../hooks/useFiles";
+  ChevronRightIcon,
+  ClipboardCopyIcon
+} from '@heroicons/react/solid'
+import { useFiles } from '../../hooks/useFiles'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import {FilesModal} from "./FilesModal";
-import {toast} from "react-toastify";
+import { FilesModal } from './FilesModal'
+import { toast } from 'react-toastify'
 
 const selectionHook = (hooks: Hooks<object>) => {
   hooks.allColumns.push((columns) => [
     // Let's make a column for selection
     {
-      id: "_selector",
+      id: '_selector',
       disableResizing: true,
       disableGroupBy: true,
       minWidth: 45,
@@ -29,23 +30,28 @@ const selectionHook = (hooks: Hooks<object>) => {
       // to render a checkbox
       Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<object>) => (
         <div>
-          <input type="checkbox" id={"toggle-all-groups-selected"} className="toggle toggle-xs" {...getToggleAllRowsSelectedProps()} />
+          <input
+            type="checkbox"
+            id={'toggle-all-groups-selected'}
+            className="toggle toggle-xs"
+            {...getToggleAllRowsSelectedProps()}
+          />
         </div>
       ),
       // The cell can use the individual row's getToggleRowSelectedProps method
       // to the render a checkbox
-      Cell: ({ row }: CellProps<object>) => <input type="checkbox"
-                                                   className="toggle toggle-xs" {...row.getToggleRowSelectedProps()} />
+      Cell: ({ row }: CellProps<object>) => (
+        <input type="checkbox" className="toggle toggle-xs" {...row.getToggleRowSelectedProps()} />
+      )
     },
     ...columns
-  ]);
+  ])
   hooks.useInstanceBeforeDimensions.push(({ headerGroups }) => {
     // fix the parent group of the selection button to not be resizable
-    const selectionGroupHeader = headerGroups[0].headers[0];
-    selectionGroupHeader.canResize = false;
-  });
-};
-
+    const selectionGroupHeader = headerGroups[0].headers[0]
+    selectionGroupHeader.canResize = false
+  })
+}
 
 function Table({ columns, data }) {
   // Use the state and functions returned from useTable to build your UI
@@ -75,60 +81,47 @@ function Table({ columns, data }) {
     usePagination,
     useRowSelect,
     selectionHook
-  );
+  )
 
   // Render the UI for your table
   return (
     <>
-      <div className="flex items-center space-x-1">
-        <div>
+      <div className="flex flex-col items-center justify-between space-y-3 md:flex-row">
+        <div className="flex space-x-4">
           <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
             <ChevronDoubleLeftIcon
-              className={`h-6 w-6 ${canPreviousPage ? "text-secondary" : "text-base"}`}
+              className={`h-4 w-4 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
             />
-          </button>
-          {" "}
+          </button>{' '}
           <button onClick={() => previousPage()} disabled={!canPreviousPage}>
             <ChevronLeftIcon
-              className={`h-6 w-6 ${canPreviousPage ? "text-secondary" : "text-base"}`}
+              className={`h-4 w-4 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
             />
-          </button>
-          {" "}
+          </button>{' '}
           <button onClick={() => nextPage()} disabled={!canNextPage}>
-            <ChevronRightIcon className={`h-6 w-6 ${canNextPage ? "text-secondary" : "text-base"}`} />
-          </button>
-          {" "}
+            <ChevronRightIcon
+              className={`h-4 w-4 ${canNextPage ? 'text-secondary' : 'text-base'}`}
+            />
+          </button>{' '}
           <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
             <ChevronDoubleRightIcon
-              className={`h-6 w-6 ${canNextPage ? "text-secondary" : "text-base"}`}
+              className={`h-4 w-4 ${canNextPage ? 'text-secondary' : 'text-base'}`}
             />
           </button>
         </div>
-        <div className="form-control">
+        <div className="">
           <label className="label">
             <span className="label-text">
               Page {pageIndex + 1} of {pageOptions.length}
             </span>
           </label>
-          <label className="input-group">
-            <span>Page</span>
-            <input
-              type="number"
-              defaultValue={pageIndex + 1}
-              onChange={(e) => {
-                const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                gotoPage(page);
-              }}
-              className="input-bordered input-xs"
-            />
-          </label>
         </div>
         <div>
           <select
-            className={"select-xs"}
+            className={'select-xs'}
             value={pageSize}
             onChange={(e) => {
-              setPageSize(Number(e.target.value));
+              setPageSize(Number(e.target.value))
             }}
           >
             {[10, 20, 30, 40, 50].map((pageSize) => (
@@ -141,83 +134,95 @@ function Table({ columns, data }) {
       </div>
 
       <div className="overflow-x-auto">
-        <table {...getTableProps()} className={"table table-compact w-full"}>
+        <table {...getTableProps()} className={'table-compact table w-full'}>
           <thead>
-          {headerGroups.map((headerGroup, index) => (
-            <tr key={index} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, index) => (
-                <th key={index} {...column.getHeaderProps()}>
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
+            {headerGroups.map((headerGroup, index) => (
+              <tr key={index} {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column, index) => (
+                  <th key={index} {...column.getHeaderProps()}>
+                    {column.render('Header')}
+                  </th>
+                ))}
+              </tr>
+            ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr key={i} {...row.getRowProps()} className={`hover cursor-pointer ${row.isSelected ? "active" : ""}`}>
-                {row.cells.map((cell, id) => {
-                  return (
-                    <td key={id} {...cell.getCellProps()} className={"max-w-xs truncate"}>
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
+            {page.map((row, i) => {
+              prepareRow(row)
+              return (
+                <tr
+                  key={i}
+                  {...row.getRowProps()}
+                  className={`hover cursor-pointer ${row.isSelected ? 'active' : ''}`}
+                >
+                  {row.cells.map((cell, id) => {
+                    return (
+                      <td key={id} {...cell.getCellProps()} className={'max-w-xs truncate'}>
+                        {cell.render('Cell')}
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>
     </>
-  );
+  )
 }
 
 export const FilesTable = () => {
-  const { data, isError, isLoading } = useFiles();
+  const { data, isError, isLoading } = useFiles()
 
   const columns = React.useMemo(
     () => [
       {
-        Header: "Ipfs",
-        accessor: (row) => <CopyToClipboard text={row.id}>
-          <div className={"btn btn-xs max-w-sm text-xs"} onClick={() => toast.info("Copied to clipboard", {autoClose:500})}> <ClipboardCopyIcon className="w-4" /> {row.id}</div>
-        </CopyToClipboard>
+        Header: 'Ipfs',
+        accessor: (row) => (
+          <CopyToClipboard text={row.id}>
+            <div
+              className={'btn btn-xs max-w-sm text-xs'}
+              onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
+            >
+              {' '}
+              <ClipboardCopyIcon className="w-4" /> {row.id}
+            </div>
+          </CopyToClipboard>
+        )
       },
       ,
       {
-        Header: "Name",
-        accessor: "name"
+        Header: 'Name',
+        accessor: 'name'
       },
       {
-        Header: "Type",
-        accessor: "type"
+        Header: 'Type',
+        accessor: 'type'
       },
       {
-        Header: "Size",
-        accessor: "size"
+        Header: 'Size',
+        accessor: 'size'
       },
       {
-        Header: "Created",
-        accessor: "created_at"
+        Header: 'Created',
+        accessor: 'created_at'
       }
     ],
     []
-  );
+  )
 
   if (data?.data) {
     return (
-      <div className={"w-full"}>
-        <div className="card m-2 bg-base-100 shadow-xl">
-          <div className="card-body">
+      <div className={'w-full px-2 py-4 md:px-10'}>
+        <div className="rounded-xl bg-white shadow-xl">
+          <div className="flex flex-col space-y-8 p-4 sm:space-y-2">
             <FilesModal />
             <Table columns={columns} data={data.data} />
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   if (isLoading) {
@@ -225,13 +230,13 @@ export const FilesTable = () => {
       <div className="flex h-full flex-col items-center justify-center">
         <Skeleton count={10} />
       </div>
-    );
+    )
   }
   if (isError) {
     return (
       <div className="flex h-full flex-col items-center justify-center">
         <p>Something went wrong</p>
       </div>
-    );
+    )
   }
-};
+}

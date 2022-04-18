@@ -1,23 +1,29 @@
-import React from "react";
-import Layout from "../../components/layout/Layout";
-import {FilesTable} from "../../components/files/FilesTable";
+import React from 'react'
+import Layout from '../../components/layout/Layout'
+import { FilesTable } from '../../components/files/FilesTable'
 
 function Index() {
-  const renderContent = () => {
-    return (
-      <>
-        <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title text-current">Manage your files </h2>
-            <p className="card-text">You can upload and manage your files on decentralized web.</p>
+  return (
+    <Layout>
+      <div className="bg-gray-100 py-2">
+        <div className="my-4 mx-2 flex flex-col items-center justify-between space-y-2 rounded-xl bg-white py-4 shadow-xl   shadow-secondary/5 md:mx-10 md:flex-row md:px-12">
+          <div className="text-center text-lg text-gray-700  sm:text-left sm:text-2xl md:text-4xl">
+            <p>
+              Your <span className="text-secondary underline underline-offset-2">File</span>{' '}
+              Collection
+            </p>
+          </div>
+
+          <div className="px-5 text-center text-sm text-gray-400 sm:px-12 ">
+            <p>
+              File count <span className="font-semibold text-black">11</span>
+            </p>
           </div>
         </div>
         <FilesTable />
-      </>
-    )
-  };
-
-  return <Layout>{renderContent()}</Layout>;
+      </div>
+    </Layout>
+  )
 }
 
-export default Index;
+export default Index
