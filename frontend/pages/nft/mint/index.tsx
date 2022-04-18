@@ -8,13 +8,7 @@ import {toast} from "react-toastify";
 import {useUser} from "@supabase/supabase-auth-helpers/react";
 import {useQueryClient} from "react-query";
 import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs";
-
-export type NftModel = {
-  title?: string
-  description?: string
-  image?: string
-  additionalMetadata?: string
-}
+import {NftModel} from "../../../model/nftModel";
 
 /**
  * Creating NFT works in multiple steps.
@@ -32,7 +26,6 @@ function CreateNFT() {
     title: '',
     description: '',
     image: "",
-    additionalMetadata: '',
   })
   const { user } = useUser()
   const [createNftForm, setCreateNftForm] = useState<{
@@ -96,8 +89,8 @@ function CreateNFT() {
       user: user.id
     })
     console.log(result)
+    await queryClient.invalidateQueries('nfts')
     toast.info('NFT minted', result)
-
   }
 
   return (
