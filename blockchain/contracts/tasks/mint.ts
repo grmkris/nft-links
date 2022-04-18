@@ -2,7 +2,7 @@ import { task } from "hardhat/config";
 import { NftLink } from "../types";
 
 
-task("mint", "Mints NFT with provided metadata URI to the provided address")
+task("create", "Mints NFT with provided metadata URI to the provided address")
 .addParam("metadata", "metadata of the nft")
 .addParam("address", "address of the receiver")
   .setAction(async  ({ address, metadata }, { ethers, deployments}) => {

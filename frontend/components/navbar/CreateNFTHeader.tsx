@@ -29,10 +29,10 @@ function CreateNFTHeader() {
             </div>
           </Link>
 
-          <Link href="/nft/mint" passHref>
+          <Link href="/nft/create" passHref>
             <div
               className={`rounded-lg md:w-1/3   ${
-                router.pathname == '/nft/mint' ? 'bg-slate-200 text-cyan-400' : ''
+                router.pathname == '/nft/create' ? 'bg-slate-200 text-cyan-400' : ''
               } py-1 hover:bg-slate-300 hover:text-cyan-400`}
             >
               <button className="w-full text-base 2xl:text-xl">Mint NFT</button>

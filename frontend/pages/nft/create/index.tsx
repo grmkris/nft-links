@@ -9,13 +9,15 @@ import {useUser} from "@supabase/supabase-auth-helpers/react";
 import {useQueryClient} from "react-query";
 import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs";
 import {NftModel} from "../../../model/nftModel";
+import {ClipboardCopyIcon} from "@heroicons/react/solid";
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 /**
  * Creating NFT works in multiple steps.
  * 1. User fills information about nft metadata (title, description, image, additional json metadata)
  * 1.1 If image is not yet on ipfs, user can upload it
  * 2. User uploads nft metadata to ipfs
- * 3. User selects on which blockchain to mint nfts
+ * 3. User selects on which blockchain to create nfts
  */
 
 function CreateNFT() {
@@ -75,7 +77,7 @@ function CreateNFT() {
 
   useEffect(() => {
     getData()
-  }, [])
+  }, [createNftForm])
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -187,7 +189,15 @@ function CreateNFT() {
                 Create metadata
               </label>
             </div>
-            <label className="btn btn-ghost">{createNftForm.metadata}</label>
+            {createNftForm.metadata && <CopyToClipboard text={createNftForm.metadata}>
+              <div
+                className={'btn btn-ghost max-w-sm text-xs'}
+                onClick={() => toast.info('Copied to clipboard', {autoClose: 500})}
+              >
+                {' '}
+                <ClipboardCopyIcon className="w-4"/> {createNftForm.metadata}
+              </div>
+            </CopyToClipboard>}
             <div className="divider"></div>
 
             <div className="form-control grid w-full max-w-xs grid-cols-2">
