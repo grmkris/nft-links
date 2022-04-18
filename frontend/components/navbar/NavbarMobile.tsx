@@ -7,7 +7,7 @@ import ToggleTheme from './ToggleTheme'
 
 function NavbarMobile() {
   return (
-    <div className="supports-backdrop-blur:bg-white/9 navbar sticky top-0 z-50  border-b-2 border-slate-900/10 bg-white text-gray-600 backdrop-blur transition-colors duration-500  dark:border-slate-50/[0.06] dark:border-slate-900  dark:bg-slate-900 dark:text-gray-300">
+    <div className="supports-backdrop-blur:bg-white/9 navbar sticky top-0 z-50  border-b-2 border-slate-900/10 backdrop-blur transition-colors duration-500 bg-base-300">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -28,7 +28,7 @@ function NavbarMobile() {
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-white p-2 shadow dark:border-slate-50/[0.06] dark:bg-slate-900"
+            className="dropdown-content menu rounded-box menu-compact w-52 p-2 shadow bg-base-200 border-2 border-primary-focus"
           >
             <Menu />
           </ul>
@@ -51,7 +51,7 @@ function NavbarMobile() {
           </label>
           <ul
             tabIndex={1}
-            className="dropdown-content menu rounded-box menu-compact mt-3  border-2 bg-white px-5 shadow dark:border-slate-50/[0.06] dark:bg-slate-900"
+            className="dropdown-content menu rounded-box menu-compact mt-3 border-2 px-5 shadow border-primary-focus bg-base-200"
           >
             <NavbarLoginInfo />
           </ul>
