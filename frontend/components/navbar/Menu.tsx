@@ -2,7 +2,7 @@ import { BeakerIcon, ChartPieIcon, ClipboardCheckIcon, CogIcon } from '@heroicon
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
-import {DatabaseIcon, UserGroupIcon} from "@heroicons/react/solid";
+import { DatabaseIcon, UserGroupIcon } from '@heroicons/react/solid'
 
 function Menu() {
   const router = useRouter()
@@ -13,7 +13,7 @@ function Menu() {
       icon: <ChartPieIcon className="mt-1 h-5 w-5" />
     },
     {
-      name: "Lab",
+      name: 'Lab',
       link: '/nft/info',
       icon: <BeakerIcon className="mt-1 h-5 w-5" />
     },
@@ -23,14 +23,14 @@ function Menu() {
       icon: <ClipboardCheckIcon className="mt-1 h-5 w-5" />
     },
     {
-      name: "Files",
+      name: 'Files',
       link: '/files',
       icon: <DatabaseIcon className="mt-1 h-5 w-5" />
     },
     {
-      name: "Groups",
-      link: "/groups",
-      icon: <UserGroupIcon className="mt-1 h-5 w-5" />,
+      name: 'Groups',
+      link: '/groups',
+      icon: <UserGroupIcon className="mt-1 h-5 w-5" />
     },
     {
       name: 'Settings',
