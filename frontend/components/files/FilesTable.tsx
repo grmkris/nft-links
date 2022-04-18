@@ -206,7 +206,7 @@ export const FilesTable = () => {
       },
       {
         Header: 'Created',
-        accessor: 'created_at'
+        accessor: (row) => new Date(row.created_at).toLocaleString()
       }
     ],
     []

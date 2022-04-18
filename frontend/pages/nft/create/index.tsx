@@ -208,7 +208,7 @@ function CreateNFT() {
                 <input
                   name="active"
                   type="checkbox"
-                  className="toggle toggle-primary"
+                  className="checkbox checkbox-primary"
                   onChange={handleChangeCreateNftForm}
                 />
               </div>
