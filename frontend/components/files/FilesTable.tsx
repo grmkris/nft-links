@@ -14,6 +14,7 @@ import { useFiles } from '../../hooks/useFiles'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { FilesModal } from './FilesModal'
 import { toast } from 'react-toastify'
+import {formatBytes} from "../../utils/utils";
 
 const selectionHook = (hooks: Hooks<object>) => {
   hooks.allColumns.push((columns) => [
@@ -33,7 +34,7 @@ const selectionHook = (hooks: Hooks<object>) => {
           <input
             type="checkbox"
             id={'toggle-all-groups-selected'}
-            className="toggle toggle-xs"
+            className="checkbox-xs checkbox"
             {...getToggleAllRowsSelectedProps()}
           />
         </div>
@@ -41,7 +42,7 @@ const selectionHook = (hooks: Hooks<object>) => {
       // The cell can use the individual row's getToggleRowSelectedProps method
       // to the render a checkbox
       Cell: ({ row }: CellProps<object>) => (
-        <input type="checkbox" className="toggle toggle-xs" {...row.getToggleRowSelectedProps()} />
+        <input type="checkbox" className="checkbox-xs checkbox" {...row.getToggleRowSelectedProps()} />
       )
     },
     ...columns
@@ -86,39 +87,30 @@ function Table({ columns, data }) {
   // Render the UI for your table
   return (
     <>
-      <div className="flex flex-col items-center justify-between space-y-5 md:flex-row">
-        <div className="flex w-full justify-between px-5 sm:mt-4 sm:w-1/2 lg:w-36">
-          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            <ChevronDoubleLeftIcon
-              className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
-            />
-          </button>{' '}
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            <ChevronLeftIcon
-              className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
-            />
-          </button>{' '}
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            <ChevronRightIcon
-              className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
-            />
-          </button>{' '}
-          <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-            <ChevronDoubleRightIcon
-              className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
-            />
-          </button>
-        </div>
-        <div className="">
-          <label className="label">
-            <span className="label-text">
-              Page {pageIndex + 1} of {pageOptions.length}
-            </span>
-          </label>
-        </div>
-        <div>
+      <div className="btn-group">
+        <button className="btn" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          <ChevronDoubleLeftIcon
+            className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
+          />
+        </button>{' '}
+        <button className="btn" onClick={() => previousPage()} disabled={!canPreviousPage}>
+          <ChevronLeftIcon
+            className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
+          />
+        </button>{' '}
+        <button className="btn">{pageIndex + 1} / {pageOptions.length}</button>
+        <button className="btn" onClick={() => nextPage()} disabled={!canNextPage}>
+          <ChevronRightIcon
+            className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
+          />
+        </button>{' '}
+        <button className="btn" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          <ChevronDoubleRightIcon
+            className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
+          />
+        </button>
           <select
-            className={'select-xs'}
+            className={'btn'}
             value={pageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value))
@@ -126,11 +118,10 @@ function Table({ columns, data }) {
           >
             {[10, 20, 30, 40, 50].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
-                Show {pageSize}
+                {pageSize}
               </option>
             ))}
           </select>
-        </div>
       </div>
 
       <div className="overflow-x-auto">
@@ -154,6 +145,9 @@ function Table({ columns, data }) {
                   key={i}
                   {...row.getRowProps()}
                   className={`hover cursor-pointer ${row.isSelected ? 'active' : ''}`}
+                  onClick={() => {
+                    row.toggleRowSelected()
+                  }}
                 >
                   {row.cells.map((cell, id) => {
                     return (
@@ -182,16 +176,14 @@ export const FilesTable = () => {
         accessor: (row) => (
           <CopyToClipboard text={row.id}>
             <div
-              className={'btn btn-xs max-w-sm text-xs'}
+              className={'btn btn-sm max-w-sm inline'}
               onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
             >
-              {' '}
-              <ClipboardCopyIcon className="w-4" /> {row.id}
+              <ClipboardCopyIcon className="w-4 inline" /><span className={"text-xs"}> {row.id.substring(0,20)}...</span>
             </div>
           </CopyToClipboard>
         )
       },
-      ,
       {
         Header: 'Name',
         accessor: 'name'
@@ -202,7 +194,7 @@ export const FilesTable = () => {
       },
       {
         Header: 'Size',
-        accessor: 'size'
+        accessor: (row) => formatBytes(row.size)
       },
       {
         Header: 'Created',
