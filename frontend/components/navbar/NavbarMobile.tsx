@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import Menu from './Menu'
 import NavbarLoginInfo from './NavbarLoginInfo'
-import { MoonIcon, SunIcon, UserIcon } from '@heroicons/react/outline'
+import { UserIcon } from '@heroicons/react/outline'
 import ToggleTheme from './ToggleTheme'
 
 function NavbarMobile() {

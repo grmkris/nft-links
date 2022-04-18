@@ -45,7 +45,10 @@ function Info() {
     <CreateNFTLayout>
       <div className="mt-8 grid grid-cols-1 justify-center gap-12 py-4 text-center md:grid-cols-2 md:px-12 ">
         {nftInfo.map((nft, index) => (
-          <div className="flex flex-col space-y-3 rounded-lg border-2 border-opacity-25 bg-white p-5 hover:bg-slate-50 dark:border-slate-500 dark:bg-gray-700">
+          <div
+            className="flex flex-col space-y-3 rounded-lg border-2 border-opacity-25 bg-white p-5 hover:bg-slate-50 dark:border-slate-500 dark:bg-gray-700"
+            key={index}
+          >
             <div
               className={`flex justify-center space-x-4 font-bold text-${nft.color}-600 dark:text-${nft.color}-400`}
             >
