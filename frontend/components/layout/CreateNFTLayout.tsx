@@ -6,7 +6,7 @@ function CreateNFTLayout({ children }) {
   return (
     <>
       <Layout>
-        <div className="bg-gray-100">
+        <div className="bg-gray-100 dark:bg-slate-800">
           <div className="px-4 py-4 lg:px-24 lg:py-12">
             <CreateNFTHeader />
             {children}
