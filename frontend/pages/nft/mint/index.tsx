@@ -2,19 +2,13 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ImagePrev from '../../../components/nft/ImagePrev'
 import CreateNFTLayout from '../../../components/layout/CreateNFTLayout'
-import { useFiles } from '../../../hooks/useFiles'
-import Image from 'next/image'
-import { toast } from 'react-toastify'
-import { useUser } from '@supabase/supabase-auth-helpers/react'
-import { useQueryClient } from 'react-query'
-import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
-
-export type NftModel = {
-  title?: string
-  description?: string
-  image?: string
-  additionalMetadata?: string
-}
+import {useFiles} from "../../../hooks/useFiles";
+import Image from "next/image";
+import {toast} from "react-toastify";
+import {useUser} from "@supabase/supabase-auth-helpers/react";
+import {useQueryClient} from "react-query";
+import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs";
+import {NftModel} from "../../../model/nftModel";
 
 /**
  * Creating NFT works in multiple steps.
@@ -30,15 +24,14 @@ function CreateNFT() {
   const [nftMetadata, setNftMetadata] = useState<NftModel>({
     title: '',
     description: '',
-    image: '',
-    additionalMetadata: ''
+    image: "",
   })
   const { user } = useUser()
   const [createNftForm, setCreateNftForm] = useState<{
-    metadata: string
-    active: boolean
-    selectedBlockchain: string
-    amount: number
+    metadata: string,
+    active: boolean,
+    selectedBlockchain: string,
+    amount: number,
   }>({
     metadata: '',
     active: false,
@@ -95,6 +88,7 @@ function CreateNFT() {
       user: user.id
     })
     console.log(result)
+    await queryClient.invalidateQueries('nfts')
     toast.info('NFT minted', result)
   }
 
