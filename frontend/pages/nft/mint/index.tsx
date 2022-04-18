@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ImagePrev from '../../../components/nft/ImagePrev'
 import CreateNFTLayout from '../../../components/layout/CreateNFTLayout'
@@ -18,10 +18,9 @@ import {NftModel} from "../../../model/nftModel";
  * 3. User selects on which blockchain to mint nfts
  */
 
-
 function CreateNFT() {
-  const {data: ipfsFiles, isLoading: isLoadingFiles, error: isErrorLoadingFiles} = useFiles()
-  const {accessToken} = useUser()
+  const { data: ipfsFiles, isLoading: isLoadingFiles, error: isErrorLoadingFiles } = useFiles()
+  const { accessToken } = useUser()
   const [nftMetadata, setNftMetadata] = useState<NftModel>({
     title: '',
     description: '',
@@ -32,7 +31,7 @@ function CreateNFT() {
     metadata: string,
     active: boolean,
     selectedBlockchain: string,
-    amount: number
+    amount: number,
   }>({
     metadata: '',
     active: false,
@@ -64,10 +63,10 @@ function CreateNFT() {
   }
 
   const handleChangeNftMetadata = (e) =>
-    setNftMetadata((prevState) => ({...prevState, [e.target.name]: e.target.value}))
+    setNftMetadata((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
 
   const handleChangeCreateNftForm = (e) =>
-    setCreateNftForm((prevState) => ({...prevState, [e.target.name]: e.target.value}))
+    setCreateNftForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
 
   const getData = async () => {
     const response = await axios.get('/api/nft')
@@ -81,7 +80,7 @@ function CreateNFT() {
   const submitHandler = async (e) => {
     e.preventDefault()
     console.log(createNftForm)
-    const result = await supabaseClient.from("nfts").insert({
+    const result = await supabaseClient.from('nfts').insert({
       metadata: createNftForm.metadata,
       limit: createNftForm.amount,
       active: createNftForm.active,
@@ -96,31 +95,39 @@ function CreateNFT() {
   return (
     <CreateNFTLayout>
       <form onSubmit={submitHandler}>
-        <input type="checkbox" id="image-selector-modal" className="modal-toggle"/>
-        <label htmlFor="image-selector-modal" className="modal modal-bottom sm:modal-middle cursor-pointer">
+        <input type="checkbox" id="image-selector-modal" className="modal-toggle" />
+        <label
+          htmlFor="image-selector-modal"
+          className="modal modal-bottom cursor-pointer sm:modal-middle"
+        >
           <label className="modal-box relative bg-white" htmlFor="">
             <h3 className="text-lg font-bold">Select one of your uploaded images</h3>
             <div className="h-full ">
               <div className="flex flex-wrap">
                 {isLoadingFiles ? (
-                  <div className="w-full h-full flex justify-center items-center">
+                  <div className="flex h-full w-full items-center justify-center">
                     <div className="spinner"></div>
                   </div>
                 ) : isErrorLoadingFiles ? (
-                  <div className="w-full h-full flex justify-center items-center">
+                  <div className="flex h-full w-full items-center justify-center">
                     <div className="text-red-500">{isErrorLoadingFiles}</div>
                   </div>
                 ) : (
-                  <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
+                  <div className="carousel-center carousel rounded-box max-w-md space-x-4 bg-neutral p-4">
                     {ipfsFiles.data.map((file) => (
-                      <div className="carousel-item hover:opacity-80 hover:cursor-pointer" key={file.id}>
-                        <Image onClick={() => {
-                          setNftMetadata({...nftMetadata, image: file.id})
-                          console.log(nftMetadata)
-                          document.getElementById('image-selector-modal').click()
-                        }} src={`https://cloudflare-ipfs.com/ipfs/${file.id}`}
-                               width={200}
-                               height={200}
+                      <div
+                        className="carousel-item hover:cursor-pointer hover:opacity-80"
+                        key={file.id}
+                      >
+                        <Image
+                          onClick={() => {
+                            setNftMetadata({ ...nftMetadata, image: file.id })
+                            console.log(nftMetadata)
+                            document.getElementById('image-selector-modal').click()
+                          }}
+                          src={`https://cloudflare-ipfs.com/ipfs/${file.id}`}
+                          width={200}
+                          height={200}
                         />
                       </div>
                     ))}
@@ -172,7 +179,7 @@ function CreateNFT() {
 
             <div className="w-full max-w-xs">
               <label
-                className="w-full btn btn-primary my-2"
+                className="btn btn-primary my-2 w-full"
                 onClick={async () => {
                   await uploadToServer()
                 }}
@@ -180,10 +187,10 @@ function CreateNFT() {
                 Create metadata
               </label>
             </div>
-            <label className="btn btn-ghost" >{createNftForm.metadata}</label>
+            <label className="btn btn-ghost">{createNftForm.metadata}</label>
             <div className="divider"></div>
 
-            <div className="form-control w-full max-w-xs grid grid-cols-2">
+            <div className="form-control grid w-full max-w-xs grid-cols-2">
               <div>
                 <label className="label">
                   <span className="label-text font-semibold text-slate-700">Active</span>
@@ -191,7 +198,7 @@ function CreateNFT() {
                 <input
                   name="active"
                   type="checkbox"
-                  className="toggle-primary toggle"
+                  className="toggle toggle-primary"
                   onChange={handleChangeCreateNftForm}
                 />
               </div>
@@ -230,17 +237,14 @@ function CreateNFT() {
             </div>
 
             <div className="w-full max-w-xs">
-              <button
-                className="mt-8 w-full btn btn-primary"
-                type="submit"
-              >
+              <button className="btn btn-primary mt-8 w-full" type="submit">
                 Create NFT
               </button>
             </div>
           </div>
 
           <div className="flex w-full flex-col space-y-4 md:w-1/2">
-            <ImagePrev/>
+            <ImagePrev />
 
             <div className="divider m-auto w-1/2">OR</div>
 

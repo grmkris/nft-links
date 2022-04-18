@@ -22,12 +22,14 @@ function NavbarLoginInfo() {
         <p className="text-center text-base text-gray-400">
           Logged in as <span className="font-semibold text-black">{user?.email}</span>
         </p>
-        <button
-          className="rounded-full bg-indigo-500 px-6 py-2 text-white transition-all duration-300 hover:scale-105 hover:bg-indigo-400 hover:text-black"
-          onClick={logoutHandler}
-        >
-          Sign out
-        </button>
+        <div className="rounded-full bg-gradient-to-br from-primary-focus via-primary to-secondary p-0.5">
+          <button
+            className="rounded-full px-6 py-2 text-white transition-all duration-300 hover:scale-105 hover:text-gray-200 hover:opacity-50"
+            onClick={logoutHandler}
+          >
+            Sign out
+          </button>
+        </div>
       </div>
     </div>
   )

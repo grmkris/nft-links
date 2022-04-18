@@ -2,12 +2,11 @@ import React, {useEffect, useState} from 'react'
 import {NftModel} from '../../model/nftModel'
 import {IPFS_GATEWAY} from "../../utils/constants";
 import {useNfts} from "../../hooks/useNfts";
-import {PlusCircleIcon} from "@heroicons/react/solid";
 
 
 function NFTList() {
   const [nfts, setNfts] = useState<NftModel[]>([])
-  const {data, isError, isLoading} = useNfts();
+  const {data} = useNfts();
 
   const getMetadataFromIpfs = async (metaDataArray: string[]): Promise<NftModel[]> => {
     // TODO add loading indicator somehow
@@ -32,7 +31,7 @@ function NFTList() {
   }, [data])
 
   return (
-    <div className="grid w-full grid-cols-1 justify-items-center md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5">
+    <div className="grid w-full grid-cols-1 justify-items-center px-2 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5">
       {nfts.map((nft, index) => (
         <div
           key={index}

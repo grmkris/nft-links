@@ -1,14 +1,14 @@
-import React, {useRef, useState, useEffect} from 'react'
-import {PhotographIcon} from '@heroicons/react/outline'
-import Image from "next/image";
-import axios from "axios";
-import {toast} from "react-toastify";
-import {ClipboardCopyIcon} from "@heroicons/react/solid";
+import React, { useRef, useState, useEffect } from 'react'
+import { PhotographIcon } from '@heroicons/react/outline'
+import Image from 'next/image'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { ClipboardCopyIcon } from '@heroicons/react/solid'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import {useUser} from "@supabase/supabase-auth-helpers/react";
-import {useQueryClient} from "react-query";
+import { useUser } from '@supabase/supabase-auth-helpers/react'
+import { useQueryClient } from 'react-query'
 
-const ImageUpload = (props: {onFileSelected?: (pickedFile: string) => void }) => {
+const ImageUpload = (props: { onFileSelected?: (pickedFile: string) => void }) => {
   const { accessToken } = useUser()
   const [file, setFile] = useState()
   const [fileIpfsHash, setFileIpfsHash] = useState()
@@ -68,7 +68,7 @@ const ImageUpload = (props: {onFileSelected?: (pickedFile: string) => void }) =>
   }
   return (
     <>
-      <div className="relative m-auto w-full hover:cursor-pointer">
+      <div className="relative mx-auto my-8 w-full hover:cursor-pointer">
         <input
           ref={filePickerRef}
           className="hidden"
@@ -88,25 +88,33 @@ const ImageUpload = (props: {onFileSelected?: (pickedFile: string) => void }) =>
               className="h-[415px] rounded-lg"
             />
           ) : (
-            <div className="flex w-full flex-col items-center justify-center">
-              <PhotographIcon className="h-20 w-20"/>
-              <p className="mt-2 w-full text-center">Please pick an image</p>
-              <p className="text-sm text-gray-400">Image must be in format .jpg, .jpeg or .png</p>
+            <div className="flex w-full flex-col items-center justify-center space-y-2">
+              <PhotographIcon className="h-20 w-20" />
+              <p className="w-full text-center">Please pick an image</p>
+              <p className="w-2/3 text-center text-xs text-gray-400">
+                Image must be in format .jpg, .jpeg or .png
+              </p>
             </div>
           )}
         </div>
       </div>
-      {previewUrl && !fileIpfsHash &&
-        <label className={"btn btn-secondary"} onClick={() => uploadToServer()}>
-          <PhotographIcon className="w-6 h-6 mr-2"/>
+      {previewUrl && !fileIpfsHash && (
+        <label className={'btn btn-secondary'} onClick={() => uploadToServer()}>
+          <PhotographIcon className="mr-2 h-6 w-6" />
           Upload to ipfs
         </label>
-      }
-      {previewUrl && fileIpfsHash &&
+      )}
+      {previewUrl && fileIpfsHash && (
         <CopyToClipboard text={fileIpfsHash}>
-          <div className={"btn btn-outline truncate"} onClick={() => toast.info("Copied to clipboard", {autoClose:500})}> <ClipboardCopyIcon className="w-6" /> {fileIpfsHash}</div>
+          <div
+            className={'btn btn-outline truncate'}
+            onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
+          >
+            {' '}
+            <ClipboardCopyIcon className="w-6" /> {fileIpfsHash}
+          </div>
         </CopyToClipboard>
-      }
+      )}
     </>
   )
 }
