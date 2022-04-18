@@ -6,12 +6,13 @@ function Index() {
   const renderContent = () => {
     return (
       <>
-        <div className="card m-2 max-w-prose bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title text-current">Manage your groups</h2>
-            <p className="card-text">You can create and manage your groups here.</p>
+          <div className="card m-4 rounded-xl bg-base-300 shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title">Manage your <span className="text-primary-focus underline underline-offset-2">Groups</span>{' '}
+                here.</h2>
+            </div>
           </div>
-        </div>
+
         <GroupsTable />
       </>
     )

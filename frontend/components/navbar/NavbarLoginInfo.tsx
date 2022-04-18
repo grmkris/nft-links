@@ -24,9 +24,9 @@ function NavbarLoginInfo() {
           <ToggleTheme />
         </div>
 
-        <p className="text-center text-base text-gray-400">
+        <p className="text-center text-base">
           Logged in as{' '}
-          <span className="font-semibold text-black dark:text-white">{user?.email}</span>
+          <span className="font-semibold text-accent">{user?.email}</span>
         </p>
         <div className="rounded-full bg-gradient-to-br from-primary-focus via-primary to-secondary p-0.5">
           <button

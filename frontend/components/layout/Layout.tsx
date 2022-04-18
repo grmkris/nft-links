@@ -14,7 +14,7 @@ function Layout({ children }: LayoutProps) {
 
         <NavigationBar />
 
-        <div id="container_dashboard" className="bg-gray-100 dark:bg-slate-800">
+        <div id="container_dashboard" className="bg-base-100 overflow-y-scroll">
           {children}
         </div>
       </div>

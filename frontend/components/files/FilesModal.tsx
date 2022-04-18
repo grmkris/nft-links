@@ -10,7 +10,7 @@ export const FilesModal = (props: {
     <>
       <label
         htmlFor="file-upload-modal"
-        className="btn m-auto w-2/3 bg-primary hover:bg-primary-focus md:m-0 md:w-1/3"
+        className="btn btn-primary m-auto w-2/3 md:m-0 md:w-1/3"
       >
         {props.group ? <PencilIcon className={'h-5 w-5'} /> : <PlusIcon className={'h-5 w-5'} />}
       </label>
@@ -19,7 +19,7 @@ export const FilesModal = (props: {
         <div className="modal-box">
           <h2 className={'text-2xl'}>Upload new file</h2>
           <ImagePrev />
-          <label htmlFor="file-upload-modal" className="btn btn-block mt-2">
+          <label htmlFor="file-upload-modal" className="btn btn-primary btn-block mt-2">
             Close
           </label>
         </div>

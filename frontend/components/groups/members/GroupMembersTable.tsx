@@ -1,15 +1,15 @@
 import 'react-loading-skeleton/dist/skeleton.css'
-import React, { useState } from "react";
+import React, {useState} from "react";
 import 'react-loading-skeleton/dist/skeleton.css'
-import { useTable, usePagination, useRowSelect, Hooks, HeaderProps, CellProps } from "react-table";
+import {useTable, usePagination, useRowSelect, Hooks, HeaderProps, CellProps} from "react-table";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/solid";
-import { GroupMembersModal } from "./GroupMembersModal";
-import { useGroups } from "../../../hooks/useGroups";
+import {GroupMembersModal} from "./GroupMembersModal";
+import {useGroups} from "../../../hooks/useGroups";
 import Skeleton from "react-loading-skeleton";
 
 const selectionHook = (hooks: Hooks<object>) => {
@@ -25,25 +25,27 @@ const selectionHook = (hooks: Hooks<object>) => {
       Aggregated: undefined,
       // The header can use the table's getToggleAllRowsSelectedProps method
       // to render a checkbox
-      Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<object>) => (
+      Header: ({getToggleAllRowsSelectedProps}: HeaderProps<object>) => (
         <div>
-          <input type="checkbox" id={"toggle-all-groups-selected"} className="toggle toggle-xs" {...getToggleAllRowsSelectedProps()} />
+          <input type="checkbox" id={"toggle-all-groups-selected"}
+                 className="checkbox checkbox-xs" {...getToggleAllRowsSelectedProps()} />
         </div>
       ),
       // The cell can use the individual row's getToggleRowSelectedProps method
       // to the render a checkbox
-      Cell: ({ row }: CellProps<object>) => <input type="checkbox" className="toggle toggle-xs" {...row.getToggleRowSelectedProps()} />,
+      Cell: ({row}: CellProps<object>) => <input type="checkbox"
+                                                 className="checkbox checkbox-xs" {...row.getToggleRowSelectedProps()} />,
     },
     ...columns,
   ])
-  hooks.useInstanceBeforeDimensions.push(({ headerGroups }) => {
+  hooks.useInstanceBeforeDimensions.push(({headerGroups}) => {
     // fix the parent group of the selection button to not be resizable
     const selectionGroupHeader = headerGroups[0].headers[0]
     selectionGroupHeader.canResize = false
   })
 }
 
-function Table({ columns, data, setSelectedGroupMember }) {
+function Table({columns, data}) {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -62,7 +64,7 @@ function Table({ columns, data, setSelectedGroupMember }) {
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex, pageSize }
+    state: {pageIndex, pageSize}
   } = useTable(
     {
       columns,
@@ -76,61 +78,44 @@ function Table({ columns, data, setSelectedGroupMember }) {
   // Render the UI for your table
   return (
     <>
-      <div className="flex items-center space-x-1">
-        <div>
-          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            <ChevronDoubleLeftIcon
-              className={`h-6 w-6 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
-            />
-          </button>{' '}
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            <ChevronLeftIcon
-              className={`h-6 w-6 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
-            />
-          </button>{' '}
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            <ChevronRightIcon className={`h-6 w-6 ${canNextPage ? 'text-secondary' : 'text-base'}`} />
-          </button>{' '}
-          <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-            <ChevronDoubleRightIcon
-              className={`h-6 w-6 ${canNextPage ? 'text-secondary' : 'text-base'}`}
-            />
-          </button>
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">
-              Page {pageIndex + 1} of {pageOptions.length}
-            </span>
-          </label>
-          <label className="input-group">
-            <span>Page</span>
-            <input
-              type="number"
-              defaultValue={pageIndex + 1}
-              onChange={(e) => {
-                const page = e.target.value ? Number(e.target.value) - 1 : 0
-                gotoPage(page)
-              }}
-              className="input-bordered input-xs"
-            />
-          </label>
-        </div>
-        <div>
-          <select
-            className={'select-xs'}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value))
-            }}
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className="btn-group">
+        <button className="btn" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          <ChevronDoubleLeftIcon
+            className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
+          />
+        </button>
+        {' '}
+        <button className="btn" onClick={() => previousPage()} disabled={!canPreviousPage}>
+          <ChevronLeftIcon
+            className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
+          />
+        </button>
+        {' '}
+        <button className="btn">{pageIndex + 1} / {pageOptions.length}</button>
+        <button className="btn" onClick={() => nextPage()} disabled={!canNextPage}>
+          <ChevronRightIcon
+            className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
+          />
+        </button>
+        {' '}
+        <button className="btn" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          <ChevronDoubleRightIcon
+            className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
+          />
+        </button>
+        <select
+          className={'btn'}
+          value={pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value))
+          }}
+        >
+          {[10, 20, 30, 40, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              {pageSize}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="overflow-x-auto">
@@ -150,7 +135,10 @@ function Table({ columns, data, setSelectedGroupMember }) {
           {page.map((row, i) => {
             prepareRow(row)
             return (
-              <tr key={i} {...row.getRowProps()} className={`hover cursor-pointer ${row.isSelected ? 'active' : ''}`} onClick={() => setSelectedGroupMember(row)}>
+              <tr key={i} {...row.getRowProps()} className={`hover cursor-pointer ${row.isSelected ? 'active' : ''}`}
+                  onClick={() => {
+                    row.toggleRowSelected()
+                  }}>
                 {row.cells.map((cell, id) => {
                   return (
                     <td key={id} {...cell.getCellProps()} className={'max-w-xs truncate'}>
@@ -168,10 +156,10 @@ function Table({ columns, data, setSelectedGroupMember }) {
   )
 }
 
-export const GroupMembersTable = (props : { group_id: string } ) => {
+export const GroupMembersTable = (props: { group_id: string }) => {
 
   const [selectedGroupMember, setSelectedGroupMember] = useState();
-  const { data, isLoading } = useGroups();
+  const {data, isLoading} = useGroups();
 
 
   const columns = React.useMemo(
@@ -188,13 +176,13 @@ export const GroupMembersTable = (props : { group_id: string } ) => {
     []
   )
 
-  if (isLoading) return <Skeleton />
+  if (isLoading) return <Skeleton/>
 
   if (data) {
     return (
       <>
-        <GroupMembersModal member={selectedGroupMember} group_id={props.group_id} />
-        <Table columns={columns} data={data.data.filter(id => (id.id == props.group_id))[0].user_groups} setSelectedGroupMember={setSelectedGroupMember} />
+        <GroupMembersModal member={selectedGroupMember} group_id={props.group_id}/>
+        <Table columns={columns} data={data.data.filter(id => (id.id == props.group_id))[0].user_groups}/>
       </>
     )
   }

@@ -1,27 +1,36 @@
 import React from 'react'
 import Layout from '../../components/layout/Layout'
-import { FilesTable } from '../../components/files/FilesTable'
+import {FilesTable} from '../../components/files/FilesTable'
+import {useFiles} from "../../hooks/useFiles";
 
 function Index() {
+
+  const {data, isLoading, isError} = useFiles()
+
   return (
     <Layout>
-      <div className="bg-gray-100 py-2 dark:bg-slate-800">
-        <div className="my-4 mx-2 flex flex-col items-center justify-between space-y-2 rounded-xl bg-white py-4 shadow-xl shadow-secondary/5 dark:bg-gray-700    md:mx-10 md:flex-row md:px-12">
-          <div className="text-center text-lg text-gray-700 dark:text-gray-300 sm:text-left sm:text-2xl md:text-4xl">
-            <p>
-              Your <span className="text-secondary underline underline-offset-2">File</span>{' '}
-              Collection
-            </p>
-          </div>
+      <div className="card card-side m-4 rounded-xl bg-base-300 shadow-xl">
+        <figure className={"p-5"}>{isLoading && <p>Loading...</p>}
+          {isError && <p>Error...</p>}
+          {!isLoading && data.data &&
 
-          <div className="px-5 text-center text-sm text-gray-400 sm:px-12 ">
-            <p>
-              File count <span className="font-semibold text-black dark:text-gray-200">11</span>
-            </p>
-          </div>
+            <div className="stats shadow justify-end">
+              <div className="stat">
+                <div className="stat-title">File count</div>
+                <div className="stat-value"><span
+                  className="font-semibold text-black dark:text-gray-200">{data.data.length}</span></div>
+                <div className="stat-desc">21% more than last month</div>
+              </div>
+            </div>
+          }</figure>
+        <div className="card-body">
+          <h2 className="card-title">
+            Your <span className="text-primary-focus underline underline-offset-2">File</span>{' '}
+            Collection
+          </h2>
         </div>
-        <FilesTable />
       </div>
+      <FilesTable/>
     </Layout>
   )
 }

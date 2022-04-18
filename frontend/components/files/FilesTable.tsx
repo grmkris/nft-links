@@ -88,29 +88,29 @@ function Table({ columns, data }) {
   return (
     <>
       <div className="btn-group">
-        <button className="btn" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+        <button className="btn btn-accent" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           <ChevronDoubleLeftIcon
             className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
           />
         </button>{' '}
-        <button className="btn" onClick={() => previousPage()} disabled={!canPreviousPage}>
+        <button className="btn btn-accent" onClick={() => previousPage()} disabled={!canPreviousPage}>
           <ChevronLeftIcon
             className={`h-5 w-5 ${canPreviousPage ? 'text-secondary' : 'text-base'}`}
           />
         </button>{' '}
-        <button className="btn">{pageIndex + 1} / {pageOptions.length}</button>
-        <button className="btn" onClick={() => nextPage()} disabled={!canNextPage}>
+        <button className="btn btn-accent">{pageIndex + 1} / {pageOptions.length}</button>
+        <button className="btn btn-accent" onClick={() => nextPage()} disabled={!canNextPage}>
           <ChevronRightIcon
             className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
           />
         </button>{' '}
-        <button className="btn" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+        <button className="btn btn-accent" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           <ChevronDoubleRightIcon
             className={`h-5 w-5 ${canNextPage ? 'text-secondary' : 'text-base'}`}
           />
         </button>
           <select
-            className={'btn'}
+            className={'btn btn-accent'}
             value={pageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value))
@@ -176,7 +176,7 @@ export const FilesTable = () => {
         accessor: (row) => (
           <CopyToClipboard text={row.id}>
             <div
-              className={'btn btn-sm max-w-sm inline'}
+              className={'badge hover:badge-accent'}
               onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
             >
               <ClipboardCopyIcon className="w-4 inline" /><span className={"text-xs"}> {row.id.substring(0,20)}...</span>
@@ -206,8 +206,8 @@ export const FilesTable = () => {
 
   if (data?.data) {
     return (
-      <div className={'w-full px-2 py-4 md:px-10'}>
-        <div className="rounded-xl bg-white shadow-xl dark:bg-gray-700">
+      <div className="card m-4 rounded-xl bg-base-300 shadow-xl">
+        <div className="card-body">
           <div className="flex flex-col space-y-8 p-4 sm:space-y-2">
             <FilesModal />
             <Table columns={columns} data={data.data} />

@@ -35,7 +35,7 @@ export const GroupsModal = (props: {group?: {name: string, description: string, 
       toast.success(`Group ${inputs.name} created!`)
       await queryCache.invalidateQueries('groups')
       // close the modal after successful creation
-      document.getElementById('my-modal-6')?.click()
+      document.getElementById('groups-modal')?.click()
     }
   }
 
@@ -47,8 +47,8 @@ export const GroupsModal = (props: {group?: {name: string, description: string, 
 
   return (
     <>
-      <label htmlFor="my-modal-6" className="btn hover:bg-primary-focus bg-primary">{props.group? <PencilIcon className={"w-5 h-5"}/> :<PlusIcon className={"w-5 h-5"}/>}</label><input
-        type="checkbox" id="my-modal-6" className="modal-toggle" />
+      <label htmlFor="groups-modal" className="btn btn-primary">{props.group? <PencilIcon className={"w-5 h-5"}/> :<PlusIcon className={"w-5 h-5"}/>}</label><input
+        type="checkbox" id="groups-modal" className="modal-toggle" />
         <div className="modal modal-bottom sm:modal-middle">
           <div className="modal-box">
             <h2 className={"text-2xl"}>Create a group</h2>
@@ -69,8 +69,8 @@ export const GroupsModal = (props: {group?: {name: string, description: string, 
                 value={inputs.description || ""}
                 onChange={handleChange} />
               <div className="modal-action">
-                <label htmlFor="my-modal-6" className="btn btn hover:bg-secondary-focus bg-secondary">Close</label>
-                <button data-dismiss="my-modal-6" className="btn hover:bg-primary-focus bg-primary" type={"submit"}>Submit</button>
+                <label htmlFor="groups-modal" className="btn btn-secondary">Close</label>
+                <button data-dismiss="groups-modal" className="btn btn-primary" type={"submit"}>Submit</button>
               </div>
             </form>
           </div>

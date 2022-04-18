@@ -61,11 +61,11 @@ function Index() {
     if (accountData && linkedWallets) {
       return (
         <div className="flex items-center gap-2">
-          <button className="btn" onClick={disconnect}>
+          <button className="btn btn-secondary" onClick={disconnect}>
             Disconnect
           </button>
           {!linkedWallets.data.some(element => element.wallet === accountData.address) ? (
-            <button className="btn" onClick={() => linkWithAccount(accountData.address)}>
+            <button className="btn btn-primary" onClick={() => linkWithAccount(accountData.address)}>
               Link with account
             </button>
           ) : (
@@ -104,7 +104,7 @@ function Index() {
                 <div className={'btn-group'}>
                   {connectData.connectors.map((connector) => (
                     <button
-                      className={'btn'}
+                      className={'btn btn-primary'}
                       disabled={!connector.ready}
                       key={connector.id}
                       onClick={() => connect(connector)}
