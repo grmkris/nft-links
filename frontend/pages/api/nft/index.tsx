@@ -1,24 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { pinata } from '../../../utils/server/pinataServer'
+import {supabaseServerClient} from "../../../utils/server/supabaseServer";
 
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
-  switch (req.method) {
-    default:
-    case 'GET': {
-      const filter = {
-        hashContains: 'QmWDrAa6UfDLBEzTr5aSrbJcJivqxXMu9zucYqTs5oAbYN'
-      }
-      const response = await pinata.pinList(filter)
-
-      if (response) {
-        res.status(200).json(response)
-      }
-    }
-    case 'POST': {
-      console.log(req.body)
-      //const {} = req.body
-
-      res.status(200).json({ hey: 'hey' })
-    }
+  const { uuid } = req.query
+  if (!uuid) {
+    res.status(400).json({
+      error: 'Missing address'
+    })
+    return
   }
+  // get nft information from supabase client
+  const nft = await supabaseServerClient.from('nfts').select('*').match({
+    id: uuid,
+  })
+  return res.status(200).json(nft);
 }

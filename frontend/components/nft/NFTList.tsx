@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react'
 import {NftModel} from '../../model/nftModel'
 import {IPFS_GATEWAY} from "../../utils/constants";
 import {useNfts} from "../../hooks/useNfts";
-
+import {toast} from "react-toastify";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function NFTList() {
   const [nfts, setNfts] = useState<NftModel[]>([])
@@ -33,7 +34,7 @@ function NFTList() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 space-y-4 justify-items-center">
       {nfts.map((nft, index) => (
-        <div className="card card-compact bg-base-100 shadow-2xl w-96 hover:scale-110 transition-all duration-300 cursor-pointer" key={index}>
+        <div className="card card-compact bg-base-100 shadow-2xl w-96 border-accent hover:border transition-all duration-100 cursor-pointer" key={index}>
           <figure><img src={IPFS_GATEWAY + nft.image} alt={nft.title} onError={(e)=>{e.target["onerror"] = null; e.target["src"]="https://fakeimg.pl/350x200/?text=Not available&font=lobster"} }/></figure>
           <div className="card-body">
             <h2 className="card-title">
@@ -55,7 +56,11 @@ function NFTList() {
             </div>
             <div className="btn-group justify-center">
               <button className="btn">Inspect</button>
-              <button className="btn">Copy Url</button>
+              <CopyToClipboard text={window.location.href.substring(0, window.location.href.lastIndexOf("/")) + "/" + data.data.find(element => {
+                return element.metadata === nft.metadata
+              }).id}>
+                <div className={"btn"} onClick={() => toast.info("Copied to clipboard", {autoClose:500})}>Copy</div>
+              </CopyToClipboard>
               <button className="btn">Send</button>
             </div>
           </div>
