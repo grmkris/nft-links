@@ -22,7 +22,12 @@
     "deploy:polygon": "hardhat deploy --network polygon",
     "deploy:polygon:reset": "hardhat deploy --network polygon --reset",
     "deploy:polygon:tag": "sh -c 'hardhat deploy --network polygon --tags ${0}'",
-    "deploy:polygon:tag:reset": "sh -c 'hardhat deploy --network polygon --tags ${0} --reset'"
+    "deploy:polygon:tag:reset": "sh -c 'hardhat deploy --network polygon --tags ${0} --reset'",
+    "deploy:optimism_kovan": "hardhat deploy --network optimism_kovan",
+    "deploy:optimism_kovan:reset": "hardhat deploy --network optimism_kovan --reset",
+    "deploy:optimism_kovan:tag": "sh -c 'hardhat deploy --network optimism_kovan --tags ${0}'",
+    "deploy:optimism_kovan:tag:reset": "sh -c 'hardhat deploy --network optimism_kovan --tags ${0} --reset'",
+    "deploy:optimism_ethereum": "hardhat deploy --network optimism_ethereum"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",

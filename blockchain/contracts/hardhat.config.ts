@@ -51,6 +51,15 @@ const config: HardhatUserConfig = {
       url: nodeUrl("mainnet"),
       accounts: accounts("mainnet"),
     },
+    optimism_kovan: {
+      url: nodeUrl("optimism_kovan"),
+      accounts: accounts("optimism_kovan"),
+    },
+    optimism_ethereum: {
+      url: nodeUrl("optimism_ethereum"),
+      accounts: accounts("optimism_ethereum"),
+      chainId: 80001,
+    },
     mumbai: {
       url: nodeUrl("mumbai"),
       accounts: accounts("mumbai"),
