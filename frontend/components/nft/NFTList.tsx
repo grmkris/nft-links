@@ -56,7 +56,7 @@ function NFTList() {
             </div>
             <div className="btn-group justify-center">
               <button className="btn">Inspect</button>
-              <CopyToClipboard text={window.location.href.substring(0, window.location.href.lastIndexOf("/")) + "/" + data.data.find(element => {
+              <CopyToClipboard text={window.location.href + "/" + data.data.find(element => {
                 return element.metadata === nft.metadata
               }).id}>
                 <div className={"btn"} onClick={() => toast.info("Copied to clipboard", {autoClose:500})}>Copy</div>
