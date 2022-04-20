@@ -29,7 +29,7 @@ const ViewNFT = ({data}) => {
 
   useEffect(() => {
     console.log(data);
-  }, [uuid]);
+  }, [uuid, data]);
 
   return (
     <div>
