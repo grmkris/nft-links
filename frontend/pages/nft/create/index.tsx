@@ -70,15 +70,6 @@ function CreateNFT() {
   const handleChangeCreateNftForm = (e) =>
     setCreateNftForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
 
-  const getData = async () => {
-    const response = await axios.get('/api/nft')
-    console.log(response)
-  }
-
-  useEffect(() => {
-    getData()
-  }, [createNftForm])
-
   const submitHandler = async (e) => {
     e.preventDefault()
     console.log(createNftForm)

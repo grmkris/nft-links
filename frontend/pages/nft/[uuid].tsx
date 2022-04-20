@@ -1,10 +1,18 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import {supabaseServerClient} from "../utils/server/supabaseServer";
+import {supabaseServerClient} from "../../utils/server/supabaseServer";
 
 export async function getServerSideProps({ query }) {
   // Fetch data from external API
+  console.log("getting serverside props")
   const uuid = query.uuid;
+  if (!uuid) {
+    return {
+      props: {
+        error: "No uuid provided",
+      },
+    };
+  }
   // get nft information from supabase client
   const nft = await supabaseServerClient.from('nfts').select('*').match({
     id: uuid,
@@ -18,8 +26,6 @@ export async function getServerSideProps({ query }) {
 const ViewNFT = ({data}) => {
   const router = useRouter();
   const { uuid } = router.query;
-
-
 
   useEffect(() => {
     console.log(data);
