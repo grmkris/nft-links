@@ -20,9 +20,7 @@ function NavbarLoginInfo() {
       </div>
 
       <div className="flex flex-col  items-center space-x-3 space-y-3 p-5 xl:flex-row  xl:space-y-0 xl:p-0">
-        <div className="flex cursor-pointer items-center justify-items-center rounded border-2 border-gray-500 border-opacity-40 p-2 hover:bg-gray-100 dark:hover:bg-gray-800">
           <ToggleTheme />
-        </div>
 
         <p className="text-center text-base">
           Logged in as{' '}

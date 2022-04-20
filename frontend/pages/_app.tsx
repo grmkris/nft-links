@@ -9,7 +9,6 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { QueryClient, QueryClientProvider } from 'react-query'
-
 // API key for Ethereum node
 // Two popular services are Infura (infura.io) and Alchemy (alchemy.com)
 const infuraId = process.env.INFURA_ID
@@ -52,7 +51,7 @@ function MyApp({ Component, pageProps }) {
   const { user } = useUser()
 
   return (
-    <div className="dark" data-theme="cyberpunk">
+    <div>
         {!user ? <AuthComponent /> : <Component {...pageProps} />}
     </div>
   )
