@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateNFTLayout from '../../../components/layout/CreateNFTLayout'
+import CreateNFTLayout from '../../../../components/layout/LabLayout'
 import { CubeIcon } from '@heroicons/react/outline'
 
 function Contract() {

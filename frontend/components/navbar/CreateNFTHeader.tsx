@@ -12,7 +12,7 @@ function CreateNFTHeader() {
           <Link href="/nft/info" passHref>
             <div
               className={`rounded-lg dark:text-gray-200 md:w-1/3 ${
-                router.pathname == '/nft/info'
+                router.pathname == '/nfts/info'
                   ? 'bg-slate-200 text-cyan-400 dark:bg-slate-800 dark:text-cyan-500'
                   : ''
               } py-1 hover:bg-slate-300 hover:text-cyan-400 dark:hover:bg-slate-900`}
@@ -24,7 +24,7 @@ function CreateNFTHeader() {
           <Link href="/nft/contract" passHref>
             <div
               className={`rounded-lg dark:text-gray-200 md:w-1/3  ${
-                router.pathname == '/nft/contract'
+                router.pathname == '/nfts/contract'
                   ? 'bg-slate-200 text-cyan-400 dark:bg-slate-800 dark:text-cyan-500'
                   : ''
               } py-1 hover:bg-slate-300 hover:text-cyan-400 dark:hover:bg-slate-900`}
@@ -36,7 +36,7 @@ function CreateNFTHeader() {
           <Link href="/nft/create" passHref>
             <div
               className={`rounded-lg dark:text-gray-200 md:w-1/3  ${
-                router.pathname == '/nft/create'
+                router.pathname == '/nfts/create'
                   ? 'bg-slate-200 text-cyan-400 dark:bg-slate-800 dark:text-cyan-500'
                   : ''
               } py-1 hover:bg-slate-300 hover:text-cyan-400 dark:hover:bg-slate-900`}

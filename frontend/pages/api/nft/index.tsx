@@ -9,7 +9,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     })
     return
   }
-  // get nft information from supabase client
+  // get nfts information from supabase client
   const nft = await supabaseServerClient.from('nfts').select('*').match({
     id: uuid,
   })

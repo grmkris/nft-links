@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import {supabaseServerClient} from "../../utils/server/supabaseServer";
+import {supabaseServerClient} from "../../../utils/server/supabaseServer";
 
 export async function getServerSideProps({ query }) {
   // Fetch data from external API

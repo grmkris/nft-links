@@ -9,12 +9,12 @@ function Menu() {
   const menu = [
     {
       name: 'Dashboard',
-      link: '/',
+      link: '/dashboard',
       icon: <ChartPieIcon className="mt-1 h-5 w-5" />
     },
     {
       name: 'Lab',
-      link: '/nft/info',
+      link: '/lab',
       icon: <BeakerIcon className="mt-1 h-5 w-5" />
     },
     {
@@ -40,26 +40,19 @@ function Menu() {
   ]
 
   return (
-    <div className="space-y-4 p-3">
-      <div className="mt-2 space-y-14 px-4 ">
-        <div className="space-y-4">
-          <div className="flex justify-between">
-            <h1 className="">Menu</h1>
-          </div>
-        </div>
-      </div>
 
+    <div className="space-y-4 p-3">
       {menu.map((item) => (
         <Link href={item.link} key={item.link} passHref>
           <div
             className={
-              router.pathname == item.link
+              router.pathname.includes(item.link)
                 ? 'border-r-4 border-primary-focus font-bold text-primary-focus underline decoration-2 underline-offset-4'
-                : 'text-neutral'
+                : 'text-primary'
             }
           >
             <div
-              className={`flex cursor-pointer space-x-2 border-primary-focus p-3 text-base decoration-2 underline-offset-4  transition-all duration-150 ease-in-out hover:border-r-4 hover:text-primary-focus hover:underline`}
+              className={`flex cursor-pointer space-x-2 border-primary-focus p-3 decoration-2 underline-offset-4  transition-all duration-150 ease-in-out hover:border-r-4 hover:text-primary-focus hover:underline`}
             >
               {item.icon}
               <p>{item.name}</p>

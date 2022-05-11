@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import ImagePrev from '../../../components/nft/ImagePrev'
-import CreateNFTLayout from '../../../components/layout/CreateNFTLayout'
-import {useFiles} from "../../../hooks/useFiles";
+import ImagePrev from '../../../../components/nft/ImagePrev'
+import CreateNFTLayout from '../../../../components/layout/LabLayout'
+import {useFiles} from "../../../../hooks/useFiles";
 import Image from "next/image";
 import {toast} from "react-toastify";
 import {useUser} from "@supabase/supabase-auth-helpers/react";
 import {useQueryClient} from "react-query";
 import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs";
-import {NftModel} from "../../../model/nftModel";
+import {NftModel} from "../../../../model/nftModel";
 import {ClipboardCopyIcon} from "@heroicons/react/solid";
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 /**
  * Creating NFT works in multiple steps.
- * 1. User fills information about nft metadata (title, description, image, additional json metadata)
+ * 1. User fills information about nfts metadata (title, description, image, additional json metadata)
  * 1.1 If image is not yet on ipfs, user can upload it
- * 2. User uploads nft metadata to ipfs
+ * 2. User uploads nfts metadata to ipfs
  * 3. User selects on which blockchain to create nfts
  */
 
