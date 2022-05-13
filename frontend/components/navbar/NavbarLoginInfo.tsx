@@ -14,7 +14,7 @@ function NavbarLoginInfo() {
   return (
     <div className="flex w-full items-center justify-between">
       <div className="hidden xl:block">
-        <Link href={'/'} passHref>
+        <Link href={''} passHref>
           <div className="btn btn-ghost text-xl normal-case">NFT Link</div>
         </Link>
       </div>

@@ -12,7 +12,7 @@ function Info() {
       buttonText: 'Reward system',
       icon: <GiftIcon className="mt-1 h-6 w-6"/>,
       color: 'indigo',
-      link: '/lab/rewards'
+      link: 'lab/rewards'
     },
     {
       title: 'NFT creation',
@@ -22,7 +22,7 @@ function Info() {
       buttonText: 'Generate NFTs',
       icon: <CodeIcon className="mt-1 h-6 w-6"/>,
       color: 'indigo',
-      link: '/lab/nfts/create'
+      link: 'lab/nfts/create'
     },
     {
       title: 'NFT Minting',
@@ -32,7 +32,7 @@ function Info() {
       buttonText: 'Generate contract',
       icon: <TerminalIcon className="mt-1 h-6 w-6"/>,
       color: 'cyan',
-      link: '/rewards/create'
+      link: 'rewards/create'
     },
     {
       title: 'Dummy text 1',
@@ -42,7 +42,7 @@ function Info() {
       buttonText: 'Generate contract',
       icon: <CodeIcon className="mt-1 h-6 w-6"/>,
       color: 'amber',
-      link: '/rewards/create'
+      link: 'rewards/create'
     },
     {
       title: 'Dummy text 2',
@@ -52,7 +52,7 @@ function Info() {
       buttonText: 'Generate contract',
       icon: <CodeIcon className="mt-1 h-6 w-6"/>,
       color: 'pink',
-      link: '/rewards/create'
+      link: 'rewards/create'
     }
   ]
 

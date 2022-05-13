@@ -35,7 +35,7 @@ function NavbarMobile() {
         </div>
       </div>
       <div className="navbar-center">
-        <Link href={'/'} passHref>
+        <Link href={''} passHref>
           <div className="btn btn-ghost text-xl normal-case">NFT Link</div>
         </Link>
       </div>

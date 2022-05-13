@@ -9,7 +9,7 @@ function CreateNFTHeader() {
       <div className="flex w-full flex-col items-center justify-between rounded-lg p-5 px-8 dark:bg-gray-700 dark:text-gray-300 md:flex-row">
         <div className="text-xl font-semibold">Mint NFTs</div>
         <div className="mt-4 flex w-full flex-col justify-around space-y-3 text-center text-lg text-gray-600 md:mt-0 md:w-3/4 md:flex-row md:space-x-4 md:space-y-0">
-          <Link href="/nft/info" passHref>
+          <Link href="nft/info" passHref>
             <div
               className={`rounded-lg dark:text-gray-200 md:w-1/3 ${
                 router.pathname == '/nfts/info'
@@ -21,7 +21,7 @@ function CreateNFTHeader() {
             </div>
           </Link>
 
-          <Link href="/nft/contract" passHref>
+          <Link href="nft/contract" passHref>
             <div
               className={`rounded-lg dark:text-gray-200 md:w-1/3  ${
                 router.pathname == '/nfts/contract'
@@ -33,7 +33,7 @@ function CreateNFTHeader() {
             </div>
           </Link>
 
-          <Link href="/nft/create" passHref>
+          <Link href="nft/create" passHref>
             <div
               className={`rounded-lg dark:text-gray-200 md:w-1/3  ${
                 router.pathname == '/nfts/create'

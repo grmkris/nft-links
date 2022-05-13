@@ -18,7 +18,7 @@ function LabLayout({children}) {
                     }
                     return (
                       <li key={index} className={"capitalize"}>
-                        <Link href={`/${router.pathname.split("/").slice(0, index + 1).join("/")}`}>{path}</Link>
+                        <Link href={`${router.pathname.split("/").slice(0, index + 1).join("/")}`}>{path}</Link>
                       </li>
                     )
                   })
