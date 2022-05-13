@@ -1,16 +1,17 @@
 import React, {useState} from "react";
 import LabLayout from '../../../components/layout/LabLayout'
-import {toast} from "react-toastify";
 import {useUser} from "@supabase/supabase-auth-helpers/react";
 import {useQueryClient} from "react-query";
 import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs";
 import {useNfts} from "../../../hooks/useNfts";
 import {useGroups} from "../../../hooks/useGroups";
+import {toast} from "react-toastify";
+import {router} from "next/client";
 
 function CreateReward() {
   const {user} = useUser()
   const {data, isLoading} = useNfts()
-  const {data: groupData, isLoading: isLoadingGroups } = useGroups()
+  const {data: groupData } = useGroups()
   const [createRewardForm, setCreateRewardForm] = useState<{
     name: string,
     description: string,
@@ -20,9 +21,9 @@ function CreateReward() {
   }>({
     name: '',
     description: '',
-    condition: '',
-    reward: '',
-    group: '',
+    condition: undefined,
+    reward: undefined,
+    group: undefined,
   })
   const queryClient = useQueryClient()
 
@@ -31,17 +32,33 @@ function CreateReward() {
 
   const submitHandler = async (e) => {
     e.preventDefault()
-    console.log(createRewardForm)
-    const result = await supabaseClient.from('reward_program').insert({
+    // create reward program
+    const result_reward_program = await supabaseClient.from('reward_program').insert({
       name: createRewardForm.name,
       description: createRewardForm.description,
-      condition: createRewardForm.condition,
-      reward: createRewardForm.reward,
       owner: user.id
     })
-    console.log(result)
-    await queryClient.invalidateQueries('reward_program')
-    toast.info('Reward program created', result)
+    // insert into reward_nft table
+    const rewardProgramId = result_reward_program.data
+    const result_reward_nft = await supabaseClient.from('reward_nft').insert({
+      nft: createRewardForm.reward,
+      reward_program: rewardProgramId[0].id,
+      condition: createRewardForm.condition,
+    })
+    // insert into reward_groups table
+    const result_reward_groups = await supabaseClient.from('reward_groups').insert({
+      reward_program: rewardProgramId[0].id,
+      group: createRewardForm.group,
+    })
+    if (result_reward_program.status === 201 && result_reward_nft.status === 201 && result_reward_groups.status === 201) {
+      toast.success('Reward program created successfully')
+      router.push('/lab/rewards')
+    } else {
+      toast.error('Reward program creation failed')
+      console.log('result_reward_program', result_reward_program)
+      console.log('result_reward_nft', result_reward_nft)
+      console.log('result_reward_groups', result_reward_groups)
+    }
   }
 
   return (
@@ -83,6 +100,7 @@ function CreateReward() {
                 placeholder={'props.placeholder'}
                 value={createRewardForm.reward}
                 onChange={handleChangeRewardForm}
+                defaultValue={0}
               >
                 <option value={0} disabled>
                   Select a reward
@@ -104,8 +122,8 @@ function CreateReward() {
                 name="group"
                 className="select select-secondary w-full max-w-xs"
                 placeholder={'props.placeholder'}
-                value={createRewardForm.group}
                 onChange={handleChangeRewardForm}
+                defaultValue={0}
               >
                 <option value={0} disabled>
                   Select a group
@@ -129,6 +147,7 @@ function CreateReward() {
                 placeholder={'props.placeholder'}
                 value={createRewardForm.condition}
                 onChange={handleChangeRewardForm}
+                defaultValue={0}
               >
                 <option value={0} disabled>
                   Select condition
