@@ -5,7 +5,7 @@ import Layout from "../../../components/layout/Layout";
 
 export async function getServerSideProps({ query }) {
   // Fetch data from external API
-  console.log("getting serverside props")
+  console.log("getting serverside props for claim rewards page");
   const uuid = query.uuid;
   if (!uuid) {
     return {
@@ -14,10 +14,17 @@ export async function getServerSideProps({ query }) {
       },
     };
   }
-  // get nfts information from supabase client, from tables reward_group reward_nft, reward_program
-  const reward_program = await supabaseServerClient.from('reward_program').select('*').match({
-    id: uuid,
-  })
+  // get nfts information from supabase client, from from reward_program inner join  reward_group reward_nft
+
+  const reward_program = await supabaseServerClient.from('reward_program')
+    .select(`
+      *,
+      reward_groups(*, groups(*, user_groups(*))),
+      reward_nft(*, nft(*))
+    `).match({
+      id: uuid,
+    })
+
   const data = reward_program.data
 
   // Pass data to the page via props
@@ -34,7 +41,7 @@ const ViewNFT = ({data}) => {
 
   return (
     <Layout>
-      <h1>View reward_program</h1>
+      <h1>View Reward program</h1>
       <div>{data.map((element, index) => {
         return (
           <div key={index}>
