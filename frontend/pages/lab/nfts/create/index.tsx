@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import ImagePrev from '../../../../components/nft/ImagePrev'
-import CreateNFTLayout from '../../../../components/layout/LabLayout'
+import LabLayout from '../../../../components/layout/LabLayout'
 import {useFiles} from "../../../../hooks/useFiles";
 import Image from "next/image";
 import {toast} from "react-toastify";
@@ -78,6 +78,7 @@ function CreateNFT() {
       limit: createNftForm.amount,
       active: createNftForm.active,
       chain: createNftForm.selectedBlockchain,
+      name: nftMetadata.title,
       user: user.id
     })
     console.log(result)
@@ -86,14 +87,14 @@ function CreateNFT() {
   }
 
   return (
-    <CreateNFTLayout>
+    <LabLayout>
       <form onSubmit={submitHandler}>
         <input type="checkbox" id="image-selector-modal" className="modal-toggle" />
         <label
           htmlFor="image-selector-modal"
           className="modal modal-bottom cursor-pointer sm:modal-middle"
         >
-          <label className="modal-box relative bg-white" htmlFor="">
+          <label className="modal-box relative bg-base-300" htmlFor="">
             <h3 className="text-lg font-bold">Select one of your uploaded images</h3>
             <div className="h-full ">
               <div className="flex flex-wrap">
@@ -135,24 +136,24 @@ function CreateNFT() {
           <div className="order-last flex w-full flex-col items-center space-y-3 md:order-first md:w-1/2">
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text font-semibold text-slate-700">Title</span>
+                <span className="label-text font-semibold text-secondary">Title</span>
               </label>
               <input
                 name="title"
                 type="text"
                 placeholder="Enter Title"
-                className="input input-bordered input-primary w-full max-w-xs bg-white dark:bg-slate-700"
+                className="input input-bordered w-full"
                 onChange={handleChangeNftMetadata}
               />
             </div>
 
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text font-semibold text-slate-700">Description</span>
+                <span className="label-text font-semibold text-secondary">Description</span>
               </label>
               <textarea
                 name="description"
-                className="textarea textarea-primary bg-white dark:bg-slate-700"
+                className="input input-bordered w-full"
                 placeholder="Describe your NFT"
                 onChange={handleChangeNftMetadata}
               ></textarea>
@@ -160,10 +161,10 @@ function CreateNFT() {
 
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text font-semibold text-slate-700">Additional Metadata</span>
+                <span className="label-text font-semibold text-secondary  ">Additional Metadata</span>
               </label>
               <textarea
-                className="textarea textarea-primary bg-white dark:bg-slate-700"
+                className="textarea textarea-bordered w-full"
                 placeholder="Additional JSON metadata"
                 name="additionalMetadata"
                 onChange={handleChangeNftMetadata}
@@ -172,7 +173,7 @@ function CreateNFT() {
 
             <div className="w-full max-w-xs">
               <label
-                className="btn btn-primary my-2 w-full"
+                className="btn btn-secondary my-2 w-full"
                 onClick={async () => {
                   await uploadToServer()
                 }}
@@ -194,25 +195,25 @@ function CreateNFT() {
             <div className="form-control grid w-full max-w-xs grid-cols-2">
               <div>
                 <label className="label">
-                  <span className="label-text font-semibold text-slate-700">Active</span>
+                  <span className="label-text font-semibold text-secondary">Active</span>
                 </label>
                 <input
                   name="active"
                   type="checkbox"
-                  className="checkbox checkbox-primary"
+                  className="checkbox checkbox-secondary"
                   onChange={handleChangeCreateNftForm}
                 />
               </div>
 
               <div>
                 <label className="label">
-                  <span className="label-text font-semibold text-slate-700 ">Amount</span>
+                  <span className="label-text font-semibold text-secondary">Amount</span>
                 </label>
                 <input
                   name="amount"
                   type="number"
                   placeholder="Amount"
-                  className="input input-bordered input-primary w-full max-w-xs bg-white dark:bg-slate-700"
+                  className="input input-bordered input-secondary w-full max-w-xs"
                   onChange={handleChangeCreateNftForm}
                 />
               </div>
@@ -220,11 +221,11 @@ function CreateNFT() {
 
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text font-semibold text-slate-700">Blockchain</span>
+                <span className="label-text font-semibold text-secondary">Blockchain</span>
               </label>
               <select
                 name="selectedBlockchain"
-                className="select select-primary w-full max-w-xs bg-white dark:bg-slate-700"
+                className="select select-secondary w-full max-w-xs"
                 placeholder={'props.placeholder'}
                 value={createNftForm.selectedBlockchain}
                 onChange={handleChangeCreateNftForm}
@@ -238,7 +239,7 @@ function CreateNFT() {
             </div>
 
             <div className="w-full max-w-xs">
-              <button className="btn btn-primary mt-8 w-full" type="submit">
+              <button className="btn btn-secondary mt-8 w-full" type="submit">
                 Create NFT
               </button>
             </div>
@@ -260,7 +261,7 @@ function CreateNFT() {
           </div>
         </div>
       </form>
-    </CreateNFTLayout>
+    </LabLayout>
   )
 }
 

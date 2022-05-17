@@ -3,11 +3,6 @@ import React from 'react'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useTable, usePagination, useRowSelect, Hooks, HeaderProps, CellProps } from 'react-table'
-import {ClipboardCopyIcon} from '@heroicons/react/solid'
-import { useFiles } from '../../hooks/useFiles'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { toast } from 'react-toastify'
-import {formatBytes} from "../../utils/utils";
 import {Pagination} from "../table/Pagination";
 import {useRewardProgram} from "../../hooks/useRewardProgram";
 
@@ -137,6 +132,21 @@ export const RewardProgramTable = () => {
       {
         Header: 'Description',
         accessor: 'description',
+      },
+      {
+        Header: 'Open',
+        accessor: (row) => {
+          return (
+            <button
+              className={'btn-link'}
+              onClick={() => {
+                window.open('/claim/rewards/' + row.id, '_blank')
+              }}
+            >
+              Open
+            </button>
+          )
+        },
       },
       {
         Header: 'Rewards given',

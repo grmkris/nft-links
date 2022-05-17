@@ -1,1 +1,1 @@
-export const IPFS_GATEWAY = 'https://ipfs.io/ipfs/';
+export const IPFS_GATEWAY = process.env.NEXT_PUBLIC_IPFS_GATEWAY || 'https://ipfs.io/ipfs/';

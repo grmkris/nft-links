@@ -11,8 +11,8 @@ function NFTList() {
 
   const getMetadataFromIpfs = async (metaDataArray: string[]): Promise<NftModel[]> => {
     // TODO add loading indicator somehow
-    const metadatas = await Promise.all(metaDataArray.map(async (metadata) => {
-      const response = await fetch(`${IPFS_GATEWAY}/${metadata}`)
+    const metadatas = await Promise.all(metaDataArray.filter(x => x).map(async (metadata) => {
+      const response = await fetch(`${IPFS_GATEWAY}${metadata}`)
       const json = await response.json()
       return {metadata, ...json}
     }))

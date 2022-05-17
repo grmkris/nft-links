@@ -1,14 +1,14 @@
 import React, {useState} from "react";
 import LabLayout from '../../../components/layout/LabLayout'
 import {useUser} from "@supabase/supabase-auth-helpers/react";
-import {useQueryClient} from "react-query";
 import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs";
 import {useNfts} from "../../../hooks/useNfts";
 import {useGroups} from "../../../hooks/useGroups";
 import {toast} from "react-toastify";
-import {router} from "next/client";
+import {useRouter} from "next/router";
 
 function CreateReward() {
+  const router = useRouter();
   const {user} = useUser()
   const {data, isLoading} = useNfts()
   const {data: groupData } = useGroups()
@@ -25,7 +25,6 @@ function CreateReward() {
     reward: undefined,
     group: undefined,
   })
-  const queryClient = useQueryClient()
 
   const handleChangeRewardForm = (e) =>
     setCreateRewardForm((prevState) => ({...prevState, [e.target.name]: e.target.value}))
@@ -108,7 +107,7 @@ function CreateReward() {
                 {isLoading ? <option>Loading...</option> : data.data &&
                  data.data.map((nft) => (
                   <option key={nft.id} value={nft.id}>
-                    {nft.metadata}
+                    {nft.name}
                   </option>
                 ))}
               </select>

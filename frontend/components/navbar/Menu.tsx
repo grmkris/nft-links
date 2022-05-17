@@ -9,32 +9,32 @@ function Menu() {
   const menu = [
     {
       name: 'Dashboard',
-      link: 'dashboard',
+      link: '/',
       icon: <ChartPieIcon className="mt-1 h-5 w-5"/>
     },
     {
       name: 'Lab',
-      link: 'lab',
+      link: '/lab',
       icon: <BeakerIcon className="mt-1 h-5 w-5"/>
     },
     {
       name: "NFT's",
-      link: 'nft',
+      link: '/nft',
       icon: <ClipboardCheckIcon className="mt-1 h-5 w-5"/>
     },
     {
       name: 'Files',
-      link: 'files',
+      link: '/files',
       icon: <DatabaseIcon className="mt-1 h-5 w-5"/>
     },
     {
       name: 'Groups',
-      link: 'groups',
+      link: '/groups',
       icon: <UserGroupIcon className="mt-1 h-5 w-5"/>
     },
     {
       name: 'Settings',
-      link: 'settings',
+      link: '/settings',
       icon: <CogIcon className="mt-1 h-5 w-5"/>
     }
   ]
@@ -46,7 +46,7 @@ function Menu() {
         <Link href={item.link} key={item.link} passHref>
           <div
             className={
-              router.pathname.includes(item.link)
+              (router.pathname == item.link)
                 ? 'border-r-4 border-primary-focus font-bold text-primary-focus underline decoration-2 underline-offset-4'
                 : 'text-primary'
             }

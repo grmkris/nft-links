@@ -15,7 +15,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'POST': {
       const form = new formidable.IncomingForm()
       try {
-        const user = await supabaseServerClient.auth.api.getUser(req.headers.authorization.slice(7))
+        const jwt = req.headers.authorization.slice(7)
+        const user = await supabaseServerClient.auth.api.getUser(jwt)
         form.parse(req, async function (err, fields, files) {
           if (fields.json) {
             console.log(fields.json)
@@ -31,15 +32,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(201).send(supabaseResult)
           }
           if (files.file) {
-            const pinataFile = await pinata.pinFromFS(files.file?.filepath)
-            const supabaseResult = await supabaseServerClient.from('files').insert({
-              id: pinataFile.IpfsHash,
-              user: user.user.id,
-              size: pinataFile.PinSize,
-              type: files.file.mimetype,
-              name: files.file.originalFilename,
-            });
-            return res.status(201).send(supabaseResult)
+            try {
+              const pinataFile = await pinata.pinFromFS(files.file?.filepath)
+              const supabaseResult = await supabaseServerClient.from('files').insert({
+                id: pinataFile.IpfsHash,
+                user: user.user.id,
+                size: pinataFile.PinSize,
+                type: files.file.mimetype,
+                name: files.file.originalFilename,
+              });
+              return res.status(201).send(supabaseResult)
+            } catch (e) {
+              console.log(e)
+              return res.status(500).send(e)
+            }
           }
         })
       } catch (e) {
