@@ -1,9 +1,11 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import {useRouter} from "next/router";
+import React from "react";
 import {supabaseServerClient} from "../../../utils/server/supabaseServer";
 import Layout from "../../../components/layout/Layout";
+import NftCard from "../../../components/nft/NftCard";
 
-export async function getServerSideProps({ query }) {
+
+export async function getServerSideProps({query}) {
   // Fetch data from external API
   console.log("getting serverside props for claim rewards page");
   const uuid = query.uuid;
@@ -28,28 +30,31 @@ export async function getServerSideProps({ query }) {
   const data = reward_program.data
 
   // Pass data to the page via props
-  return { props: { data } }
+  return {props: {data}}
 }
 
 const ViewNFT = ({data}) => {
   const router = useRouter();
-  const { uuid } = router.query;
-
-  useEffect(() => {
-    console.log(data);
-  }, [uuid, data]);
+  const {uuid} = router.query;
 
   return (
     <Layout>
-      <h1>View Reward program</h1>
       <div>{data.map((element, index) => {
         return (
           <div key={index}>
-            <h2>{element.name}</h2>
-            <p>{element.description}</p>
-            <p>{element.created_at}</p>
-          </div>
-        )
+
+            <div className="flex flex-col m-10">
+              <h1 className={"text-lg"}>{element.name}</h1>
+              <p>{element.description}</p>
+              <p>Created: {new Date(element.created_at).toLocaleString()}</p>
+
+            </div>
+            <div className="divider text-lg text-success">Reward</div>
+            <div className="grid place-items-center">
+              <NftCard nft={data[0].reward_nft[0].nft}/>
+            </div>
+      </div>
+      )
       })}</div>
     </Layout>
   );
