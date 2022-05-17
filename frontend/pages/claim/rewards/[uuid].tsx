@@ -14,7 +14,7 @@ export async function getServerSideProps({ query }) {
       },
     };
   }
-  // get nfts information from supabase client
+  // get nfts information from supabase client, from tables reward_group reward_nft, reward_program
   const reward_program = await supabaseServerClient.from('reward_program').select('*').match({
     id: uuid,
   })
