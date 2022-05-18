@@ -1,4 +1,3 @@
-import {useRouter} from "next/router";
 import React from "react";
 import {supabaseServerClient} from "../../../utils/server/supabaseServer";
 import Layout from "../../../components/layout/Layout";
@@ -34,8 +33,6 @@ export async function getServerSideProps({query}) {
 }
 
 const ViewNFT = ({data}) => {
-  const router = useRouter();
-  const {uuid} = router.query;
 
   return (
     <Layout>
