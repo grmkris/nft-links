@@ -1,10 +1,7 @@
 import {formidable} from 'formidable'
 import xlsx from 'node-xlsx';
 import {NextApiRequest, NextApiResponse} from 'next'
-import {pinata} from '../../../utils/server/pinataServer'
-import {supabaseServerClient} from "../../../utils/server/supabaseServer";
 import * as fs from "fs";
-import {number} from "prop-types";
 
 export const config = {
   api: {

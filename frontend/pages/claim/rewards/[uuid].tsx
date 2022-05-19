@@ -110,7 +110,7 @@ const ViewReward = ({data}) => {
                 <label
                   htmlFor="file-upload-modal"
                   className="btn btn-primary m-auto w-2/3 md:m-0 md:w-1/3"
-                  onClick={()=>{}}
+                  onClick={()=>{console.log("asdf")}}
                 >
                   Claim
                 </label>
