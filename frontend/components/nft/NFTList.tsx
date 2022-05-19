@@ -7,12 +7,10 @@ function NFTList() {
 
   return (
     <div
-      className="grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 space-y-4 justify-items-center">
+      className="grid grid-cols-1 md:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 space-x-5 space-y-5 justify-items-center">
       {data.data.map((nft, index) => {
         return (
-          <div key={index}>
-            <NftCard nft={nft}/>
-          </div>
+            <NftCard nft={nft} key={index}/>
         )
       })}
     </div>

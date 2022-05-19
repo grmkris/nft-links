@@ -3,7 +3,6 @@ import {supabaseServerClient} from "../../../utils/server/supabaseServer";
 import Layout from "../../../components/layout/Layout";
 import NftCard from "../../../components/nft/NftCard";
 import {ClipboardCopyIcon, TableIcon} from "@heroicons/react/solid";
-import Image from "next/image";
 import {PhotographIcon} from "@heroicons/react/outline";
 import {toast} from "react-toastify";
 import axios from "axios";
@@ -61,7 +60,7 @@ const ViewReward = ({data}) => {
   const uploadToServer = async () => {
     const body = new FormData()
     body.append('file', file)
-    const result = await axios.post('/api/ipfs/upload', body, {
+    const result = await axios.post('/api/reward/xlsx', body, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
@@ -105,11 +104,13 @@ const ViewReward = ({data}) => {
                   <h1>{element.name}</h1>
                   <p>{element.description}</p>
                   <p>Created: {new Date(element.created_at).toLocaleString()}</p>
+                  <p>Condition: {element.reward_nft[0]?.condition}</p>
                 </div>
               <>
                 <label
                   htmlFor="file-upload-modal"
                   className="btn btn-primary m-auto w-2/3 md:m-0 md:w-1/3"
+                  onClick={()=>{}}
                 >
                   Claim
                 </label>
@@ -166,7 +167,7 @@ const ViewReward = ({data}) => {
             </div>
             <div className="divider text-lg text-success">Reward</div>
             <div className="grid place-items-center">
-              <NftCard nft={data[0].reward_nft[0].nft}/>
+              {data[0]?.reward_nft[0] && <NftCard nft={data[0]?.reward_nft[0].nft}/>}
             </div>
       </div>
       )
