@@ -7,8 +7,9 @@ import {toast} from "react-toastify";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {ClipboardCopyIcon} from "@heroicons/react/solid";
 import * as isIpfs from "is-ipfs"
+import {definitions} from "../../types/database";
 
-function NftCard(props: { nft: { id: string, created_at: string, metadata: string, limit: number, active: boolean, user: string } }) {
+function NftCard(props: { nft: definitions["nfts"]  }) {
   const nft = props.nft;
   const [nftMetadata, setNftMetadata] = useState<NftModel>();
   const [isMetadataFail, setIsMetadataFail] = useState(false)

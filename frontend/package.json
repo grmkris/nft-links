@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "update-types": "npx openapi-typescript https://gqnzjwwfaopfoilvxbcm.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdxbnpqd3dmYW9wZm9pbHZ4YmNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDkyNzY4MzksImV4cCI6MTk2NDg1MjgzOX0.dDBY5Vmz49jraifyOnCjLZ5Q27245c6AcFHqCf2BYOY --version=2 --output types/database/index.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -30,6 +31,7 @@
     "react-countup": "^6.2.0",
     "react-dom": "18.0.0",
     "react-drag-drop-files": "^2.3.5",
+    "react-hot-toast": "^2.2.0",
     "react-loading-skeleton": "^3.0.3",
     "react-query": "^3.34.19",
     "react-spinners": "^0.11.0",

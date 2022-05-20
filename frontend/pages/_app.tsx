@@ -9,6 +9,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import {Toaster} from "react-hot-toast";
 // API key for Ethereum node
 // Two popular services are Infura (infura.io) and Alchemy (alchemy.com)
 const infuraId = process.env.INFURA_ID
@@ -63,6 +64,7 @@ function MyAppWithProvider({ Component, pageProps }) {
       <QueryClientProvider client={queryClient}>
         <WagmiProvider autoConnect connectors={connectors}>
           <ToastContainer />
+          <Toaster />
           <MyApp Component={Component} pageProps={pageProps} />
         </WagmiProvider>
       </QueryClientProvider>

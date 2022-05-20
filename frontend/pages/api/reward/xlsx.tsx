@@ -15,7 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'POST': {
       const form = new formidable.IncomingForm()
       try {
-        const jwt = req.headers.authorization.slice(7)
         form.parse(req, async function (err, fields, files) {
           if (files.file) {
             let sum = 0;
@@ -32,11 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                   })
                 })
               })
-
-              if (sum >= 10) {
-                console.log("NFT IS REtrIEVED")
-              }
-              return res.status(201).send(sum)
+              return res.status(201).send({claimed: sum>=10, sum: sum})
             } catch (e) {
               console.log(e)
               return res.status(500).send(e)
