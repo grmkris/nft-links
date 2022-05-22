@@ -68,7 +68,7 @@ const ImageUpload = (props: { onFileSelected?: (pickedFile: string) => void }) =
   }
   return (
     <>
-      <div className="relative mx-auto my-8 w-full hover:cursor-pointer">
+      <div className="items-center flex flex-col hover:cursor-pointer">
         <input
           ref={filePickerRef}
           className="hidden"
@@ -77,7 +77,7 @@ const ImageUpload = (props: { onFileSelected?: (pickedFile: string) => void }) =
           onChange={pickedHandler}
         />
         <div
-          className={`m-auto flex h-[440px] max-w-md items-center rounded-lg bg-gray-50 p-5 shadow-2xl dark:bg-slate-700`}
+          className={`w-full flex h-[340px] items-center rounded-lg bg-gray-50 p-5 shadow-2xl bg-neutral mx-2`}
           onClick={pickImageHandler}
         >
           {previewUrl ? (
@@ -85,13 +85,13 @@ const ImageUpload = (props: { onFileSelected?: (pickedFile: string) => void }) =
               layout={'fill'}
               src={previewUrl ? previewUrl.toString() : undefined}
               alt="Preview"
-              className="h-[415px] rounded-lg"
+              className="h-[315px] rounded-lg"
             />
           ) : (
-            <div className="flex w-full flex-col items-center justify-center space-y-2">
+            <div className="flex w-full flex-col items-center justify-center space-y-2 text-accent">
               <PhotographIcon className="h-20 w-20" />
               <p className="w-full text-center">Please pick an image</p>
-              <p className="w-2/3 text-center text-xs text-gray-400">
+              <p className="w-2/3 text-center text-xs">
                 Image must be in format .jpg, .jpeg or .png
               </p>
             </div>

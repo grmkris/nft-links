@@ -130,3 +130,7 @@ dist
 /blockchain/subgraphs/nft-links/build/
 
 node_modules
+
+# Supabase
+**/supabase/.branches
+**/supabase/.temp
