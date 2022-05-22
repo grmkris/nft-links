@@ -1,7 +1,7 @@
 import 'react-loading-skeleton/dist/skeleton.css'
 import React from 'react'
 import { PencilIcon, PlusIcon } from '@heroicons/react/solid'
-import ImagePrev from '../nft/ImagePrev'
+import ImageUpload from '../nft/ImageUpload'
 
 export const FilesModal = (props: {
   group?: { name: string; description: string; image: string }
@@ -17,8 +17,8 @@ export const FilesModal = (props: {
       <input type="checkbox" id="file-upload-modal" className="modal-toggle" />
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
-          <h2 className={'text-2xl'}>Upload new file</h2>
-          <ImagePrev />
+          <h2 className={'text-2xl mb-2'}>Upload new file</h2>
+          <ImageUpload />
           <label htmlFor="file-upload-modal" className="btn btn-primary btn-block mt-2">
             Close
           </label>

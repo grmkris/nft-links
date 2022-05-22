@@ -28,10 +28,14 @@ export default function CreateNftWizard() {
 
   return (
     <div className="flex w-full flex-col items-center space-y-3">
-      <Wizard footer={<Footer/>} header={<Header/>}>
-        <CreateNftStep1Metadata setCreateNftForm={setCreateNftForm} createNftForm={createNftForm} setNftMetadata={setNftMetadata} nftMetadata={nftMetadata}/>
-        <CreateNftStep2SelectImage setCreateNftForm={setCreateNftForm} createNftForm={createNftForm}/>
+      <Wizard startIndex={0} footer={<Footer/>} header={<Header/>}>
+        <CreateNftStep1Metadata setCreateNftForm={setCreateNftForm} createNftForm={createNftForm}
+                                setNftMetadata={setNftMetadata} nftMetadata={nftMetadata}/>
+        <CreateNftStep2SelectImage setCreateNftForm={setCreateNftForm} createNftForm={createNftForm}
+                                   setNftMetadata={setNftMetadata} nftMetadata={nftMetadata}/>
+
         <CreateNftStep3Config setCreateNftForm={setCreateNftForm} createNftForm={createNftForm}/>
+
       </Wizard>
     </div>
   );
@@ -64,23 +68,23 @@ const Footer = () => {
 
   return (
 
-<div className={"items-center flex flex-col w-full"}>
-    <div className="btn-group grid grid-cols-2 m-2 w-4/5">
-      <button
-        className={'btn-primary btn'}
-        onClick={() => previousStep()}
-        disabled={isLoading || isFirstStep}
-      >
-        <RewindIcon className={"h-4"}/>
+    <div className={"items-center flex flex-col max-w-2xl w-full"}>
+      <div className="btn-group grid grid-cols-2 m-2 w-4/5">
+        <button
+          className={'btn-primary btn'}
+          onClick={() => previousStep()}
+          disabled={isLoading || isFirstStep}
+        >
+          <RewindIcon className={"h-4"}/>
           Back
-      </button>
-      <button
-        className={'btn-primary btn'}
-        onClick={() => nextStep()} disabled={isLoading || isLastStep}>
-        Next
-        <FastForwardIcon className={"h-4"}/>
-      </button>
+        </button>
+        <button
+          className={'btn-primary btn'}
+          onClick={() => nextStep()} disabled={isLoading || isLastStep}>
+          Next
+          <FastForwardIcon className={"h-4"}/>
+        </button>
+      </div>
     </div>
-</div>
   );
 };

@@ -15,7 +15,7 @@ export default function CreateNftStep3Config(props: {createNftForm, setCreateNft
     props.setCreateNftForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
 
   return (
-    <div className="flex w-full flex-col items-center space-y-3 h-[500px] max-h-[500px]">
+    <div className="flex w-full flex-col items-center space-y-3 h-[500px] max-h-[500px] shadow-xl">
       <div className="form-control grid w-full max-w-xs grid-cols-2">
         <div>
           <label className="label">

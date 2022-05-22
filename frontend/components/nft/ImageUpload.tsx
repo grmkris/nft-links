@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { PhotographIcon } from '@heroicons/react/outline'
 import Image from 'next/image'
 import axios from 'axios'
@@ -7,30 +7,25 @@ import { ClipboardCopyIcon } from '@heroicons/react/solid'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 import { useQueryClient } from 'react-query'
+import {useFilePicker} from "use-file-picker";
 
 const ImageUpload = (props: { onFileSelected?: (pickedFile: string) => void }) => {
   const { accessToken } = useUser()
-  const [file, setFile] = useState()
   const [fileIpfsHash, setFileIpfsHash] = useState()
-  const [previewUrl, setPreviewUrl] = useState<string | ArrayBuffer | null>()
   const queryClient = useQueryClient()
 
-  const filePickerRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (!file) {
-      return
-    }
-    const fileReader = new FileReader()
-    fileReader.onload = () => {
-      setPreviewUrl(fileReader.result)
-    }
-    fileReader.readAsDataURL(file)
-  }, [file])
+  const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
+    readAs: 'DataURL',
+    accept: 'image/*',
+    multiple: true,
+    limitFilesConfig: { max: 1 },
+    // minFileSize: 0.1, // in megabytes
+    maxFileSize: 50
+  });
 
   const uploadToServer = async () => {
     const body = new FormData()
-    body.append('file', file)
+    body.append('file', filesContent[0].content)
     const result = await axios.post('/api/ipfs/upload', body, {
       headers: {
         Authorization: `Bearer ${accessToken}`
@@ -50,45 +45,32 @@ const ImageUpload = (props: { onFileSelected?: (pickedFile: string) => void }) =
     await queryClient.invalidateQueries('files')
   }
 
-  const pickImageHandler = () => {
-    filePickerRef.current?.click()
-  }
 
-  const pickedHandler = (event: React.FormEvent<HTMLInputElement>) => {
-    let pickedFile
-    if (
-      (event.target as HTMLInputElement).files &&
-      (event.target as HTMLInputElement).files.length === 1
-    ) {
-      pickedFile = (event.target as HTMLInputElement).files[0]
-      setFile(pickedFile)
-    } else {
-      setPreviewUrl(null)
-    }
-  }
   return (
     <>
+      {loading && <div>Loading...</div>}
+      {errors && <div>{errors}</div>}
       <div className="items-center flex flex-col hover:cursor-pointer">
-        <input
-          ref={filePickerRef}
-          className="hidden"
-          type="file"
-          accept=".jpg, .png, .jpeg"
-          onChange={pickedHandler}
-        />
         <div
-          className={`w-full flex h-[340px] items-center rounded-lg bg-gray-50 p-5 shadow-2xl bg-neutral mx-2`}
-          onClick={pickImageHandler}
+          className={`flex w-full flex-col items-center flex h-[340px] rounded-lg bg-gray-50 p-5 shadow-2xl bg-neutral mx-2`}
+          onClick={() => {
+            console.log('clicked')
+            openFileSelector()
+          }}
         >
-          {previewUrl ? (
-            <Image
-              layout={'fill'}
-              src={previewUrl ? previewUrl.toString() : undefined}
-              alt="Preview"
-              className="h-[315px] rounded-lg"
-            />
+          {filesContent.length > 0 ? (
+            filesContent.map((file, index) => (
+              <Image
+                key={index}
+                width={300}
+                height={300}
+                src={file.content}
+                alt="Preview"
+                className="rounded-lg"
+              />
+            ))
           ) : (
-            <div className="flex w-full flex-col items-center justify-center space-y-2 text-accent">
+            <div className="grid place-items-center mt-20">
               <PhotographIcon className="h-20 w-20" />
               <p className="w-full text-center">Please pick an image</p>
               <p className="w-2/3 text-center text-xs">
@@ -98,13 +80,13 @@ const ImageUpload = (props: { onFileSelected?: (pickedFile: string) => void }) =
           )}
         </div>
       </div>
-      {previewUrl && !fileIpfsHash && (
-        <label className={'btn btn-secondary'} onClick={() => uploadToServer()}>
+      {filesContent.length>0 && !fileIpfsHash && (
+        <label className={'btn btn-secondary w-full mt-2'} onClick={() => uploadToServer()}>
           <PhotographIcon className="mr-2 h-6 w-6" />
-          Upload to ipfs
+          Upload
         </label>
       )}
-      {previewUrl && fileIpfsHash && (
+      {filesContent.length>0 && fileIpfsHash && (
         <CopyToClipboard text={fileIpfsHash}>
           <div
             className={'btn btn-outline truncate'}
