@@ -13,7 +13,14 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./components/*"],
+      "~/*": ["./public/*"],
+      "types/*": ["./types/*"],
+      "hooks/*": ["./hooks/*"],
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "middleware/middleware.js"],
   "exclude": ["node_modules"]

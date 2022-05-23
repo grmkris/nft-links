@@ -1,6 +1,6 @@
-import React  from 'react'
-import LabLayout from '../../../../components/layout/LabLayout'
-import CreateNftWizard from "../../../../components/nft/create-nft/CreateNftWizard";
+import React from 'react';
+import LabLayout from '@/layout/LabLayout';
+import CreateNftWizard from '@/nft/create-nft/CreateNftWizard';
 
 /**
  * Creating NFT works in multiple steps.
@@ -13,12 +13,11 @@ import CreateNftWizard from "../../../../components/nft/create-nft/CreateNftWiza
 function CreateNFT() {
   return (
     <LabLayout>
-      <div className="card bg-base-200 shadow-xl mt-2">
-        <CreateNftWizard/>
+      <div className='card mt-2 bg-base-200 shadow-xl'>
+        <CreateNftWizard />
       </div>
-
     </LabLayout>
-  )
+  );
 }
 
-export default CreateNFT
+export default CreateNFT;

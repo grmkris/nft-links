@@ -1,7 +1,7 @@
 import React from 'react';
 import { useWizard } from 'react-use-wizard';
 
-export default function CreateNftStep3Config(props: {
+export default function CreateNftStep4Finish(props: {
   createNftForm;
   setCreateNftForm;
 }) {

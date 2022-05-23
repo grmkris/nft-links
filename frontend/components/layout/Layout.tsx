@@ -1,25 +1,29 @@
-import React from 'react'
-import NavigationBar from '../navbar/NavigationBar'
-import SiteHeaderInfo from './SiteHeaderInfo'
+import React from 'react';
+import HeaderBar from './navbar/HeaderBar';
+import Menu from './navbar/Menu';
 
 interface LayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 function Layout({ children }: LayoutProps) {
   return (
     <>
-      <div>
-        <SiteHeaderInfo />
-
-        <NavigationBar />
-
-        <div id="container_dashboard" className="bg-base-100 overflow-y-scroll">
+      <HeaderBar />
+      <div className='drawer-mobile drawer'>
+        <input id='my-drawer-2' type='checkbox' className='drawer-toggle' />
+        <div className='drawer-content h-screen overflow-y-scroll'>
           {children}
+        </div>
+        <div className='drawer-side'>
+          <label htmlFor='my-drawer-2' className='drawer-overlay'></label>
+          <ul className='menu w-80 overflow-y-auto bg-base-200 p-4 text-base-content'>
+            <Menu />
+          </ul>
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Layout
+export default Layout;
