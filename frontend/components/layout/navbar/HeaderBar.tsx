@@ -20,13 +20,12 @@ function HeaderBar() {
         <ToggleTheme />
         <div className='dropdown-end dropdown'>
           <label tabIndex={0} className='avatar btn btn-ghost btn-circle'>
-            <div className='w-10 rounded-full'>
-              <Image
-                src='https://api.lorem.space/image/face?hash=33791'
-                layout={'fill'}
-                alt={'Avatar'}
-              />
-            </div>
+            <Image
+              className={'w-10 rounded-full'}
+              src='https://api.lorem.space/image/face?hash=33791'
+              layout={'fill'}
+              alt={'Avatar'}
+            />
           </label>
           <ul
             tabIndex={0}
