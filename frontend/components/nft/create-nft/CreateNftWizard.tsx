@@ -7,10 +7,6 @@ import CreateNftStep2Metadata from '@/nft/create-nft/CreateNftStep2Metadata';
 import CreateNftStep3SelectImage from '@/nft/create-nft/CreateNftStep3SelectImage';
 import CreateNftStep1Config from '@/nft/create-nft/CreateNftStep1Config';
 import { useRouter } from 'next/router';
-import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
-import { toast } from 'react-toastify';
-import { useQueryClient } from 'react-query';
-import { useUser } from '@supabase/supabase-auth-helpers/react';
 
 export default function CreateNftWizard() {
   const [nftMetadata, setNftMetadata] = useState<NftModel>({
@@ -32,11 +28,7 @@ export default function CreateNftWizard() {
 
   return (
     <div className='flex w-full flex-col items-center space-y-3'>
-      <Wizard
-        startIndex={0}
-        footer={<Footer createNftForm={createNftForm} nftMetadata={nftMetadata} />}
-        header={<Header />}
-      >
+      <Wizard startIndex={0} footer={<Footer />} header={<Header />}>
         <CreateNftStep1Config setCreateNftForm={setCreateNftForm} createNftForm={createNftForm} />
         <CreateNftStep2Metadata
           setCreateNftForm={setCreateNftForm}
@@ -50,7 +42,7 @@ export default function CreateNftWizard() {
           setNftMetadata={setNftMetadata}
           nftMetadata={nftMetadata}
         />
-        <CreateNftStep4Finish setCreateNftForm={setCreateNftForm} createNftForm={createNftForm} />
+        <CreateNftStep4Finish />
       </Wizard>
     </div>
   );
@@ -70,7 +62,7 @@ const Header = () => {
   );
 };
 
-const Footer = (props: { createNftForm; nftMetadata }) => {
+const Footer = () => {
   const { nextStep, previousStep, isLoading, isLastStep, isFirstStep, activeStep } = useWizard();
   const router = useRouter();
 

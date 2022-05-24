@@ -61,9 +61,9 @@ export default function CreateNftStep3SelectImage(props: {
     await queryClient.invalidateQueries('files');
   };
 
-  // Async function
   handleStep(async () => {
     if (props.createNftForm.metadata !== '') {
+      await toast.warn('Metadata empty, please fill in the metadata');
       return;
     }
     await createNft();
