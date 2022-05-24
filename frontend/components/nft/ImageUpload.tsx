@@ -9,14 +9,12 @@ import { useUser } from '@supabase/supabase-auth-helpers/react';
 import { useQueryClient } from 'react-query';
 import { useFilePicker } from 'use-file-picker';
 
-const ImageUpload = (props: {
-  onFileSelected?: (pickedFile: string) => void;
-}) => {
+const ImageUpload = (props: { onFileSelected?: (pickedFile: string) => void }) => {
   const { accessToken } = useUser();
   const [fileIpfsHash, setFileIpfsHash] = useState();
   const queryClient = useQueryClient();
 
-  const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
+  const [openFileSelector, { filesContent, loading, errors, plainFiles }] = useFilePicker({
     readAs: 'DataURL',
     accept: 'image/*',
     multiple: true,
@@ -26,8 +24,11 @@ const ImageUpload = (props: {
   });
 
   const uploadToServer = async () => {
+    const toastInfo = toast.info('Uploading to server...', {
+      isLoading: true,
+    });
     const body = new FormData();
-    body.append('file', filesContent[0].content);
+    body.append('file', plainFiles[0]);
     const result = await axios.post('/api/ipfs/upload', body, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -39,7 +40,8 @@ const ImageUpload = (props: {
       toast.error(result.data.error.message);
       return;
     }
-    toast.info('File uploaded to IPFS, hash: ' + result.data.data[0].id);
+    toast.dismiss(toastInfo);
+    toast.success('File uploaded to IPFS, hash: ' + result.data.data[0].id);
     setFileIpfsHash(result.data.data[0].id);
     if (props.onFileSelected) {
       props.onFileSelected(result.data.data[0].id);
@@ -82,10 +84,7 @@ const ImageUpload = (props: {
         </div>
       </div>
       {filesContent.length > 0 && !fileIpfsHash && (
-        <label
-          className={'btn btn-secondary mt-2 w-full'}
-          onClick={() => uploadToServer()}
-        >
+        <label className={'btn btn-secondary mt-2 w-full'} onClick={() => uploadToServer()}>
           <PhotographIcon className='mr-2 h-6 w-6' />
           Upload
         </label>
@@ -94,9 +93,7 @@ const ImageUpload = (props: {
         <CopyToClipboard text={fileIpfsHash}>
           <div
             className={'btn btn-outline truncate'}
-            onClick={() =>
-              toast.info('Copied to clipboard', { autoClose: 500 })
-            }
+            onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
           >
             {' '}
             <ClipboardCopyIcon className='w-6' /> {fileIpfsHash}

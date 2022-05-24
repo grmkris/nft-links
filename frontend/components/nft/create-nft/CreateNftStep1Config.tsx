@@ -1,10 +1,7 @@
 import React from 'react';
 import { useWizard } from 'react-use-wizard';
 
-export default function CreateNftStep3Config(props: {
-  createNftForm;
-  setCreateNftForm;
-}) {
+export default function CreateNftStep1Config(props: { createNftForm; setCreateNftForm }) {
   const { handleStep } = useWizard();
 
   // Async function
@@ -23,43 +20,39 @@ export default function CreateNftStep3Config(props: {
       <div className='form-control grid w-full max-w-xs grid-cols-2'>
         <div>
           <label className='label'>
-            <span className='label-text font-semibold text-secondary'>
-              Active
-            </span>
+            <span className='label-text font-semibold text-primary'>Active</span>
           </label>
           <input
             name='active'
             type='checkbox'
-            className='checkbox checkbox-secondary'
+            className='checkbox checkbox-primary'
             onChange={handleChangeCreateNftForm}
+            value={props.createNftForm.active}
           />
         </div>
 
         <div>
           <label className='label'>
-            <span className='label-text font-semibold text-secondary'>
-              Amount
-            </span>
+            <span className='label-text font-semibold text-primary'>Amount</span>
           </label>
           <input
             name='amount'
             type='number'
             placeholder='Amount'
-            className='input input-bordered input-secondary w-full max-w-xs'
+            className='input input-bordered input-primary w-full max-w-xs'
             onChange={handleChangeCreateNftForm}
+            value={props.createNftForm.amount}
           />
         </div>
       </div>
 
       <div className='form-control w-full max-w-xs'>
         <label className='label'>
-          <span className='label-text font-semibold text-secondary'>
-            Blockchain
-          </span>
+          <span className='label-text font-semibold text-primary'>Blockchain</span>
         </label>
         <select
           name='selectedBlockchain'
-          className='select select-secondary w-full max-w-xs'
+          className='select select-primary w-full max-w-xs'
           placeholder={'props.placeholder'}
           value={props.createNftForm.selectedBlockchain}
           onChange={handleChangeCreateNftForm}

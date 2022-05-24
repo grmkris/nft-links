@@ -1,20 +1,21 @@
-import { CodeIcon, TerminalIcon } from '@heroicons/react/outline';
-import { GiftIcon } from '@heroicons/react/solid';
-import Link from 'next/link';
 import LabLayout from '@/layout/LabLayout';
+import { GiftIcon } from '@heroicons/react/solid';
+import { CodeIcon, TerminalIcon } from '@heroicons/react/outline';
+import Link from 'next/link';
 
-function Info() {
+function NftManager() {
   const cards = [
     {
-      title: 'Reward system',
+      title: 'Deploy ERC-721 Collection',
       description:
-        'Create a reward system for tasks that you want to do. You can reward your users with tokens or other assets.',
+        'Deploy your own ERC-721 collection of NFTs to the blockchain, NFTs will be deployed through your own wallet so you will be full owner of it. You will also be be able to verify your contract and get a custom subgrah for it' +
+        'https://github.com/hashlips-lab/nft-erc721-collection',
       buttonText: 'Open',
       icon: <GiftIcon className='mt-1 h-6 w-6' />,
       link: 'lab/rewards',
     },
     {
-      title: 'Simple NFT',
+      title: 'Deploy ERC-1155 Collection',
       description:
         'Create and distribute your NFTs in a simple way, free for users to use. Useful for event tickets, digital souvenir, loyalty points etc...',
       buttonText: 'Open',
@@ -22,26 +23,25 @@ function Info() {
       link: 'lab/nfts/create',
     },
     {
-      title: 'NFT Manager',
+      title: 'Renting NFTs',
       description:
-        'Import or Deploy your own collection, create a space for collections, allow for advanced modifications to the contract and more... ',
+        'Make your NFTs available for renting, you can set a price and the owner will be able to pay you for the NFTs. You can also set a time period for the NFTs to be available for renting.',
       buttonText: 'Open',
       icon: <TerminalIcon className='mt-1 h-6 w-6' />,
       link: 'lab/nft-manager',
     },
     {
-      title: 'Dummy text 1',
+      title: 'Staking NFTs',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime minima odit aspernatur aliquam deleniti in corporis omnis cupiditate optio, voluptatum quasi reiciendis dolor, nostrum nihil quaerat est, doloremque mollitia possimus.',
-      bottomText: 'Lorem ipsum dolor sit amet consectetur adipisicing',
+        'Make your NFTs available for staking, users will be able to lock the NFTs and earn a reward for it. You can also set a time period for the NFTs to be available for staking.',
       buttonText: 'Open',
       icon: <CodeIcon className='mt-1 h-6 w-6' />,
       link: 'rewards/create',
     },
     {
-      title: 'Dummy text 2',
+      title: 'Analytics',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime minima odit aspernatur aliquam deleniti in corporis omnis cupiditate optio, voluptatum quasi reiciendis dolor, nostrum nihil quaerat est, doloremque mollitia possimus.',
+        'Integrate analytics (https://docs.dune.com/) with NFTs and have an overview of your NFTs.',
       bottomText: 'Lorem ipsum dolor sit amet consectetur adipisicing',
       buttonText: 'Open',
       icon: <CodeIcon className='mt-1 h-6 w-6' />,
@@ -73,4 +73,4 @@ function Info() {
   );
 }
 
-export default Info;
+export default NftManager;

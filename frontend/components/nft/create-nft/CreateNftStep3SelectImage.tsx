@@ -8,8 +8,9 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useUser } from '@supabase/supabase-auth-helpers/react';
 import { useQueryClient } from 'react-query';
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
 
-export default function CreateNftStep2SelectImage(props: {
+export default function CreateNftStep3SelectImage(props: {
   createNftForm;
   setCreateNftForm;
   nftMetadata;
@@ -19,31 +20,44 @@ export default function CreateNftStep2SelectImage(props: {
   const { data: ipfsFiles, isLoading: isLoadingFiles, error: isErrorLoadingFiles } = useFiles();
   const { handleStep } = useWizard();
   const queryClient = useQueryClient();
+  const { user } = useUser();
 
-  const uploadToServer = async () => {
+  const createNft = async () => {
     const toastId = toast.info('Uploading to server...', {
       position: 'top-right',
       isLoading: true,
     });
     const body = new FormData();
     body.append('json', JSON.stringify(props.nftMetadata));
-    const result = await axios.post('/api/ipfs/upload', body, {
+    const metadataResult = await axios.post('/api/ipfs/upload', body, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
 
-    console.log(result);
+    console.log(metadataResult);
     await toast.dismiss(toastId);
-    if (result.data.error) {
-      toast.error(result.data.error.message);
+    if (metadataResult.data.error) {
+      toast.error(metadataResult.data.error.message);
       return;
     }
     toast.info('Metadata created');
     props.setCreateNftForm({
       ...props.createNftForm,
-      metadata: result.data.data[0].id,
+      metadata: metadataResult.data.data[0].id,
     });
+    console.log(props.createNftForm);
+    const result = await supabaseClient.from('nfts').insert({
+      metadata: metadataResult.data.data[0].id,
+      limit: props.createNftForm.amount,
+      active: props.createNftForm.active,
+      chain: props.createNftForm.selectedBlockchain,
+      name: props.nftMetadata.title,
+      user: user.id,
+    });
+    toast.info('NFT Created', result);
+    console.log(result);
+    await queryClient.invalidateQueries('nfts');
     await queryClient.invalidateQueries('files');
   };
 
@@ -52,13 +66,21 @@ export default function CreateNftStep2SelectImage(props: {
     if (props.createNftForm.metadata !== '') {
       return;
     }
-    await uploadToServer();
+    await createNft();
   });
 
   return (
     <div className='flex w-full flex-col items-center space-y-3'>
       <div>
-        <ImageUpload />
+        <ImageUpload
+          onFileSelected={async (hash: string) => {
+            await toast.info('TEST Uploading to IPFS...' + hash);
+            props.setNftMetadata({
+              ...props.nftMetadata,
+              image: hash,
+            });
+          }}
+        />
       </div>
 
       <div className='divider m-auto'>OR</div>

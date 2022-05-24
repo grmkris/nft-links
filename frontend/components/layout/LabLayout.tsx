@@ -9,7 +9,7 @@ function LabLayout({ children }) {
     <>
       <Layout>
         <div className='bg-base-100 p-4'>
-          <div className='breadcrumbs card bg-base-200 p-4 text-accent shadow-xl'>
+          <div className='breadcrumbs card bg-base-200 p-4 shadow-xl'>
             <ul>
               {router.pathname.split('/').map((path, index) => {
                 if (index === 0) {

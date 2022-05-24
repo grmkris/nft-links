@@ -1,15 +1,16 @@
 import { useWizard, Wizard } from 'react-use-wizard';
 import React, { useState } from 'react';
-import CreateNftStep1Metadata from './CreateNftStep1Metadata';
-import CreateNftStep2SelectImage from './CreateNftStep2SelectImage';
-import CreateNftStep3Config from './CreateNftStep3Config';
 import { NftModel } from '../../../model/nftModel';
-import {
-  FastForwardIcon,
-  RewindIcon,
-  UploadIcon,
-} from '@heroicons/react/solid';
+import { FastForwardIcon, RewindIcon } from '@heroicons/react/solid';
 import CreateNftStep4Finish from './CreateNftStep4Finish';
+import CreateNftStep2Metadata from '@/nft/create-nft/CreateNftStep2Metadata';
+import CreateNftStep3SelectImage from '@/nft/create-nft/CreateNftStep3SelectImage';
+import CreateNftStep1Config from '@/nft/create-nft/CreateNftStep1Config';
+import { useRouter } from 'next/router';
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
+import { toast } from 'react-toastify';
+import { useQueryClient } from 'react-query';
+import { useUser } from '@supabase/supabase-auth-helpers/react';
 
 export default function CreateNftWizard() {
   const [nftMetadata, setNftMetadata] = useState<NftModel>({
@@ -31,27 +32,25 @@ export default function CreateNftWizard() {
 
   return (
     <div className='flex w-full flex-col items-center space-y-3'>
-      <Wizard startIndex={0} footer={<Footer />} header={<Header />}>
-        <CreateNftStep1Metadata
+      <Wizard
+        startIndex={0}
+        footer={<Footer createNftForm={createNftForm} nftMetadata={nftMetadata} />}
+        header={<Header />}
+      >
+        <CreateNftStep1Config setCreateNftForm={setCreateNftForm} createNftForm={createNftForm} />
+        <CreateNftStep2Metadata
           setCreateNftForm={setCreateNftForm}
           createNftForm={createNftForm}
           setNftMetadata={setNftMetadata}
           nftMetadata={nftMetadata}
         />
-        <CreateNftStep2SelectImage
+        <CreateNftStep3SelectImage
           setCreateNftForm={setCreateNftForm}
           createNftForm={createNftForm}
           setNftMetadata={setNftMetadata}
           nftMetadata={nftMetadata}
         />
-        <CreateNftStep3Config
-          setCreateNftForm={setCreateNftForm}
-          createNftForm={createNftForm}
-        />
-        <CreateNftStep4Finish
-          setCreateNftForm={setCreateNftForm}
-          createNftForm={createNftForm}
-        />
+        <CreateNftStep4Finish setCreateNftForm={setCreateNftForm} createNftForm={createNftForm} />
       </Wizard>
     </div>
   );
@@ -62,29 +61,22 @@ const Header = () => {
   return (
     <div className={'mt-4 flex flex-col items-center'}>
       <ul className='btn-group steps'>
-        <li className={'step step-primary'}>Create metadata</li>
-        <li className={activeStep >= 1 ? 'step step-primary' : 'step'}>
-          Select image
-        </li>
-        <li className={activeStep >= 2 ? 'step step-primary' : 'step'}>
-          Configure NFT
-        </li>
-        <li className={activeStep >= 3 ? 'step step-primary' : 'step'}>
-          Finish
-        </li>
+        <li className={'step step-primary'}>Configure NFT</li>
+        <li className={activeStep >= 1 ? 'step step-primary' : 'step'}>Metadata</li>
+        <li className={activeStep >= 2 ? 'step step-primary' : 'step'}>Image</li>
+        <li className={activeStep >= 3 ? 'step step-primary' : 'step'}>Finish</li>
       </ul>
     </div>
   );
 };
-const Footer = () => {
-  const {
-    nextStep,
-    previousStep,
-    isLoading,
-    isLastStep,
-    isFirstStep,
-    activeStep,
-  } = useWizard();
+
+const Footer = (props: { createNftForm; nftMetadata }) => {
+  const { nextStep, previousStep, isLoading, isLastStep, isFirstStep, activeStep } = useWizard();
+  const router = useRouter();
+
+  async function finishWithWizard() {
+    await router.push('/lab/nfts');
+  }
 
   // return Text + icon
   function renderNextButtonText() {
@@ -98,11 +90,11 @@ const Footer = () => {
       case 1:
         return (
           <>
-            Upload <UploadIcon className={'h-4'} />{' '}
+            Next <FastForwardIcon className={'h-4'} />{' '}
           </>
         );
       case 2:
-        return <>Create NFT 🎉</>;
+        return <>Create 🎉</>;
       case 3:
         return <>Finish 🏁</>;
     }
@@ -121,8 +113,8 @@ const Footer = () => {
         </button>
         <button
           className={'btn btn-primary'}
-          onClick={() => nextStep()}
-          disabled={isLoading || isLastStep}
+          onClick={() => (isLastStep ? finishWithWizard() : nextStep())}
+          disabled={isLoading}
         >
           {renderNextButtonText()}
         </button>
