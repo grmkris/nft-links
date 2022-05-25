@@ -27,7 +27,7 @@ contract Niftios721ACloneFactory {
         NiftiosERC721V2 niftiosERC721Address = NiftiosERC721V2(Clones.clone(tokenImplementation));
 
         // since the clone create a proxy, the constructor is redundant and you have to use the initialize function
-        niftiosERC721Address.initialize(name, symbol);
+        niftiosERC721Address.initialize(name, symbol, baseTokenURI, msg.sender);
 
         //Adding the new NiftiosERC721 to our list of crew addresses
         NiftiosERC721Addresses.push(niftiosERC721Address);
