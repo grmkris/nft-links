@@ -11,8 +11,13 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const { deployer } = await getNamedAccounts();
   const chainId = await getChainId();
 
-  console.log(deployer);
-  if (+chainId === 4 || +chainId === 80001 || +chainId === 69) {
+  console.log("Deployer:" + deployer);
+  if (
+    +chainId === 4 ||
+    +chainId === 80001 ||
+    +chainId === 69 ||
+    +chainId === 31337
+  ) {
     await deploy(contractName, {
       contract: contractName,
       from: deployer,

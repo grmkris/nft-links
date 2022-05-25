@@ -1,29 +1,19 @@
-import { config as dotEnvConfig } from "dotenv";
-import { HardhatUserConfig } from "hardhat/types";
-import "@typechain/hardhat";
-import "@nomiclabs/hardhat-waffle";
-import "@nomiclabs/hardhat-ethers";
-import "hardhat-deploy";
-import "hardhat-gas-reporter";
-import { accounts, nodeUrl } from "./utils/network";
+import * as dotenv from "dotenv"
+
+import type { HardhatUserConfig } from "hardhat/config"
+import "@nomiclabs/hardhat-waffle"
+import "@nomiclabs/hardhat-ethers"
+import "@nomiclabs/hardhat-etherscan"
+import "@typechain/hardhat"
+import "hardhat-deploy"
+import "solidity-coverage"
+import "hardhat-gas-reporter"
+import "hardhat-contract-sizer"
 import "./tasks/tasks"
-import "./tasks/mint";
+import "./tasks/mint"
+import {accounts, nodeUrl} from "./utils/network";
 
-dotEnvConfig();
-
-// Go to https://www.alchemyapi.io, sign up, create
-// a new App in its dashboard, and replace "KEY" with its key
-const INFURA_API_KEY = process.env.INFURA_API_KEY;
-const MNEMONIC = process.env.MNEMONIC;
-
-// Replace this private key with your Ropsten account private key
-// To export your private key from Metamask, open Metamask and
-// go to Account Details > Export Private Key
-// Be aware of NEVER putting real Ether into testing accounts
-const ROPSTEN_PRIVATE_KEY = "YOUR ROPSTEN PRIVATE KEY";
-
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
+dotenv.config()
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -39,10 +29,6 @@ const config: HardhatUserConfig = {
     deployer: 0,
   },
   networks: {
-    localhost: {
-      url: nodeUrl("localhost"),
-      accounts: accounts(),
-    },
     rinkeby: {
       url: nodeUrl("rinkeby"),
       accounts: accounts("rinkeby"),
@@ -87,7 +73,7 @@ const config: HardhatUserConfig = {
     alwaysGenerateOverloads: false,
   },
   mocha: {
-    timeout: 0,
+    timeout: 200000, // 200 seconds max for running tests
   },
 };
 
