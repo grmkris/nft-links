@@ -78,6 +78,7 @@ If Bob's connected metamask account has the right permissions on the contract (o
 - https://www.salesforce.com/eu/ (link to your salesforce account, connect your salesforce data with onchain data)
 - https://twitter.com/ (give users a NFT for tweeting specific content, give NFTs to followers)
 - https://github.com/ (give rewards to contributors on github (dynamic NFT based on number of commits))
+- https://github.com/kenany/strawpoll 
 
 #### Web3
 - Onchain commenting system using the blockchain and the NFTs to reward users for their comments or limit commenting to nft holders only. 
