@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import {supabaseServerClient} from "../../utils/server/supabaseServer";
+import NftCard from "@/nft/NftCard";
 
 export async function getServerSideProps({ query }) {
   // Fetch data from external API
@@ -31,22 +32,19 @@ const ViewNFT = ({data}) => {
     console.log(data);
   }, [uuid, data]);
 
+
   return (
     <div>
-      <h1>View NFT</h1>
-      <div>{data.map((element, index) => {
-        return (
-          <div key={index}>
-            <h2>{element.active}</h2>
-            <p>{element.chain}</p>
-            <p>{element.created_at}</p>
-            <p>{element.id}</p>
-            <p>{element.limit}</p>
-            <p>{element.metadata}</p>
-            <p>{element.user}</p>
-          </div>
-        )
-      })}</div>
+      <div className='grid place-items-center h-screen'>
+        {data[0] &&
+          <>
+            <NftCard nft={data[0]} />
+            {// big flashy button for claiming the nft reward
+            }
+            <button className='btn btn-lg btn-accent'>Claim</button>
+          </>
+        }
+      </div>
     </div>
   );
 };

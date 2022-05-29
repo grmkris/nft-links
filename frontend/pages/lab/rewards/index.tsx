@@ -11,7 +11,7 @@ function Rewards() {
 
   return (
     <LabLayout>
-      <div className='card card-side m-4 rounded-xl bg-base-300 shadow-xl'>
+      <div className='card card-side rounded-xl bg-base-300 shadow-xl'>
         <figure className={'p-5'}>
           {isLoading && <p>Loading...</p>}
           {isError && <p>Error...</p>}
@@ -35,7 +35,7 @@ function Rewards() {
             <span className='text-primary-focus underline underline-offset-2'>Reward programs</span>{' '}
           </h2>
           <div className='card-actions'>
-            <Link href={'/rewards/create'}>
+            <Link href={'/lab/rewards/create'}>
               <a className='btn btn-primary m-auto w-2/3 md:m-0 md:w-1/3'>
                 <PlusIcon className={'h-5 w-5'} />
               </a>

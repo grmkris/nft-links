@@ -13,7 +13,7 @@ function NFT() {
       <div className='card card-side m-4 rounded-xl bg-base-300 shadow-xl'>
         <div className='card-body'>
           <h2 className='card-title'>
-            Your <span className='text-accent underline'>NFT</span> Collection
+            Your <span className='text-accent underline'>NFTs</span>
           </h2>
 
           <div className='stats shadow'>

@@ -3,9 +3,6 @@ import React, { useMemo, useState } from 'react';
 import { NftModel } from '../../model/nftModel';
 import Skeleton from 'react-loading-skeleton';
 import Image from 'next/image';
-import { toast } from 'react-toastify';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { ClipboardCopyIcon } from '@heroicons/react/solid';
 import * as isIpfs from 'is-ipfs';
 import { definitions } from 'types/database';
 
@@ -41,7 +38,7 @@ function NftCard(props: { nft: definitions['nfts'] }) {
     return <Skeleton height={200} />;
   }
   return (
-    <div className='card cursor-pointer border-accent bg-base-100 shadow-2xl transition-all duration-100 hover:border lg:card-side'>
+    <div className='card cursor-pointer border-accent bg-base-200 shadow-2xl transition-all duration-500 hover:border lg:card-side'>
       {!isMetadataFail && (
         <figure className={'avatar'}>
           {nftMetadata.image ? (
@@ -57,7 +54,7 @@ function NftCard(props: { nft: definitions['nfts'] }) {
               className={'mask mask-hexagon-2'}
               width={200}
               height={200}
-              src='https://fakeimg.pl/350x200/?text=Notavailable&font=lobster'
+              src='https://fakeimg.pl/200x200/?text=Notavailable&font=lobster'
               alt={nftMetadata.title}
             />
           )}
@@ -79,16 +76,6 @@ function NftCard(props: { nft: definitions['nfts'] }) {
           <div className='badge badge-outline'>Claimed: {nft.limit - 5}</div>
           <div className='badge badge-outline'>
             Created: {new Date(nft.created_at).toDateString()}
-          </div>
-          <div className='btn-group justify-center'>
-            <CopyToClipboard text={window.location.href + '/' + nft.id}>
-              <div
-                className={'btn btn-circle btn-sm'}
-                onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
-              >
-                <ClipboardCopyIcon className={'w-4'} />
-              </div>
-            </CopyToClipboard>
           </div>
         </div>
       </div>
