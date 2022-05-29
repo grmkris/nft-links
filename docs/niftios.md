@@ -1,5 +1,7 @@
 # Niftios^(name subject to change)^
 
+[TOC]
+
 ## Description
 
 Niftios is a service that allows you to 
