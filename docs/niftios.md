@@ -83,6 +83,7 @@ If Bob's connected metamask account has the right permissions on the contract (o
 #### Web3
 - Onchain commenting system using the blockchain and the NFTs to reward users for their comments or limit commenting to nft holders only. 
 - Onchain voting system using the blockchain and the NFTs to reward users for their votes or limit voting to nft holders only.
+- Create posts only nft owners can see
 - NFT puzzle game using the blockchain and the NFTs as puzzles
 - NFT flipbook (collect all nfts to complete the flipbook)
 - https://snapshot.org/
