@@ -9,14 +9,11 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
-// API key for Ethereum node
-// Two popular services are Infura (infura.io) and Alchemy (alchemy.com)
-const infuraId = process.env.INFURA_ID;
+import ReactRotatingText from 'react-rotating-text';
 
-// Chains for connectors to support
+const infuraId = process.env.INFURA_ID;
 const chains = defaultChains;
 
-// Set up connectors
 const connectors = ({ chainId }) => {
   const rpcUrl = chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ?? chain.mainnet.rpcUrls[0];
   return [
@@ -48,9 +45,21 @@ const queryClient = new QueryClient({
 });
 
 function MyApp({ Component, pageProps }) {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
 
-  return <div>{!user ? <AuthComponent /> : <Component {...pageProps} />}</div>;
+  if (isLoading) {
+    return (
+      <div className="grid place-items-center h-screen">
+        <div className={"animate-bounce"}>Loading <ReactRotatingText items={['NFTs 🎁', 'Metadata 📜', 'Zombies 🧟‍♀️']} /></div>;
+      </div>
+    )
+  }
+  if (!user) {
+    return <AuthComponent />;
+  }
+  return (
+    <Component {...pageProps} />
+  );
 }
 
 function MyAppWithProvider({ Component, pageProps }) {

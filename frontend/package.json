@@ -33,6 +33,7 @@
     "react-drag-drop-files": "^2.3.5",
     "react-loading-skeleton": "^3.0.3",
     "react-query": "^3.34.19",
+    "react-rotating-text": "^1.4.1",
     "react-spinners": "^0.11.0",
     "react-table": "^7.7.0",
     "react-toastify": "^8.2.0",

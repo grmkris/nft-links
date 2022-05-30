@@ -30,18 +30,17 @@ function Info() {
       link: 'lab/nft-manager',
     },
     {
-      title: 'Dummy text 1',
+      title: 'Integrations',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime minima odit aspernatur aliquam deleniti in corporis omnis cupiditate optio, voluptatum quasi reiciendis dolor, nostrum nihil quaerat est, doloremque mollitia possimus.',
-      bottomText: 'Lorem ipsum dolor sit amet consectetur adipisicing',
+        'Browse and connect to other services to integrate with your NFTs. Connect with services like: eventbrite, airtable, discord, mailchimp etc...',
       buttonText: 'Open',
       icon: <CodeIcon className='mt-1 h-6 w-6' />,
       link: 'rewards/create',
     },
     {
-      title: 'Dummy text 2',
+      title: 'Web3 native integrations',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime minima odit aspernatur aliquam deleniti in corporis omnis cupiditate optio, voluptatum quasi reiciendis dolor, nostrum nihil quaerat est, doloremque mollitia possimus.',
+        'Add web3 native features to your products like blockchain comments, voting, social media integration, etc...',
       bottomText: 'Lorem ipsum dolor sit amet consectetur adipisicing',
       buttonText: 'Open',
       icon: <CodeIcon className='mt-1 h-6 w-6' />,
