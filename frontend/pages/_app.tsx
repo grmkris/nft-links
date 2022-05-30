@@ -50,7 +50,7 @@ function MyApp({ Component, pageProps }) {
   if (isLoading) {
     return (
       <div className="grid place-items-center h-screen">
-        <div className={"animate-bounce"}>Loading <ReactRotatingText items={['NFTs 🎁', 'Metadata 📜', 'Zombies 🧟‍♀️']} /></div>;
+        <div className={"animate-bounce"}>Loading <ReactRotatingText items={['NFTs 🎁', 'Metadata 📜', 'Zombies 🧟‍♀️']} /></div>
       </div>
     )
   }
