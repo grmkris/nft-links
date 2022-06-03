@@ -1,4 +1,10 @@
 {
   "extends": "@graphprotocol/graph-ts/types/tsconfig.base.json",
-  "include": ["src"]
+  "include": ["src"],
+  "compilerOptions": {
+    "lib": [
+      "esnext.full",
+      "es2020.bigint"
+    ]
+  }
 }

@@ -3,44 +3,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: NftLink
-    network: mumbai
-    source:
-      address: "0xE3498F8d5d8DF83F5F0EA9aB1B920816A5953b61"
-      abi: NftLink
-      startBlock: 25960029
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - Approval
-        - ApprovalForAll
-        - Minted
-        - OwnershipTransferred
-        - Transfer
-      abis:
-        - name: NftLink
-          file: ./abis/NftLink.json
-      eventHandlers:
-        - event: Approval(indexed address,indexed address,indexed uint256)
-          handler: handleApproval
-        - event: ApprovalForAll(indexed address,indexed address,bool)
-          handler: handleApprovalForAll
-        - event: Minted(indexed address,indexed address,uint256,string)
-          handler: handleMinted
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: Transfer(indexed address,indexed address,indexed uint256)
-          handler: handleTransfer
-      file: ./src/mapping.ts
-  - kind: ethereum/contract
     name: CMS
     network: mumbai
     source:
-      address: "0x3CEF7eA6246b42D34fBc26Cebb7a737f7788901c"
+      address: "0xb6B2Fe6f02704E4E86771ab33F04F87BA540Fe17"
       abi: CMS
-      startBlock: 26540819
+      startBlock: 26574447
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
