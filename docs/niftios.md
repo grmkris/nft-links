@@ -1,5 +1,9 @@
 # Niftios^(name subject to change)^
 
+## Glossary
+Bob = Admin / Creator user of the application
+Alice = End user of the Bob's NFTs / products
+
 ## Description
 
 Niftios is a service that allows you to 

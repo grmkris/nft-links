@@ -2,11 +2,11 @@ type Nft @entity {
     "unique identifier and primary key of the entity"
     id: ID!
     "creator of the nft"
-    creator: User!
+    creator: UserNft!
     "owner history linked to this platform"
     ownersHistory: [NftOwnerMapping!]! @derivedFrom(field: "nft")
     "current owner of the nft"
-    owner: User!
+    owner: UserNft!
     "nft metadata"
     metadata: String!
 
@@ -15,7 +15,7 @@ type Nft @entity {
     txHash: Bytes!
 }
 
-type User @entity {
+type UserNft @entity {
     "unique identifier and primary key of the entity"
     id: ID! # address
     "nfts this user is creator of"
@@ -31,7 +31,7 @@ type User @entity {
 
 type NftOwnerMapping @entity {
     id: ID!
-    user: User!
+    user: UserNft!
     nft: Nft!
     deployBlock: BigInt!
     deployTimestamp: BigInt!

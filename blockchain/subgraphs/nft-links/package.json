@@ -9,7 +9,7 @@
 
     "generate-schema": "cat schema/* > schema.graphql",
     "prepare:mumbai": "yarn mustache config/mumbai.json subgraph.template.yaml subgraph.yaml",
-    "codegen": "graph codegen",
+    "codegen": "cat schema/* > schema.graphql && graph codegen",
     "build": "graph build",
     "deploy:mumbai": "graph deploy --node https://api.thegraph.com/deploy/ grmkris/nft-link subgraph.yaml",
     "generate-and-deploy:mumbai": "yarn generate-schema && yarn prepare:mumbai && yarn codegen && yarn build && yarn deploy:mumbai"

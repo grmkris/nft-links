@@ -1,0 +1,2 @@
+- mount filesystem to the browser to handle large file collections
+- add remix / vscode integration to the nft collection / token
