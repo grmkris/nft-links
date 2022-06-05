@@ -4,7 +4,7 @@ type Space @entity {
   "owner of the space - user who initiated the space"
   owner: User!
   "comments linked to this space"
-  comments: [Comment!]! @derivedFrom(field: "space")
+  posts: [Post!]! @derivedFrom(field: "space")
 
   deployBlock: BigInt!
   deployTimestamp: BigInt!
@@ -12,17 +12,31 @@ type Space @entity {
 
 }
 
+type Post @entity {
+    "unique identifier and primary key of the entity"
+    id: ID!
+    "owner of the post - user who initiated the post"
+    owner: User!
+    "space to which the post belongs"
+    space: Space!
+    "comments linked to this post"
+    comments: [Comment!]! @derivedFrom(field: "post")
+    content: String!
+    deployBlock: BigInt!
+    deployTimestamp: BigInt!
+    txHash: Bytes!
+
+}
+
 type Comment @entity {
   "unique identifier and primary key of the entity"
   id: ID!
   "owner of the platform - user who created the comment"
-  creator: User!
+  owner: User!
   "space to which the comment belongs"
-  space: Space!
+  post: Post!
   "content of the comment - ipfs hash"
   content: String!
-  "post identifier - up to consumer to define"
-  postId: String!
 
   deployBlock: BigInt!
   deployTimestamp: BigInt!
@@ -33,9 +47,9 @@ type User @entity {
   "unique identifier and primary key of the entity"
   id: ID! # address
   "spaces this user is owner of"
-  spacesOwner: Space @derivedFrom(field: "owner")
+  spaces: Space @derivedFrom(field: "owner")
   "platforms this user is owner of"
-  commentCreator: [Comment!]! @derivedFrom(field: "creator")
+  comments: [Comment!]! @derivedFrom(field: "owner")
 
   deployBlock: BigInt!
   deployTimestamp: BigInt!

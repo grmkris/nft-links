@@ -1,5 +1,5 @@
 {
-    "network": "mumbai",
+    "network": "localhost",
     "nftLinkAddress": "0xE3498F8d5d8DF83F5F0EA9aB1B920816A5953b61",
     "nftLinkStartBlock": 25960029,
     "cms": "0xb6B2Fe6f02704E4E86771ab33F04F87BA540Fe17",
