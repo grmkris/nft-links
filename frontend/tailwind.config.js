@@ -9,5 +9,8 @@ module.exports = {
       },
     },
   },
+  daisyui: {
+    themes: ["corporate"],
+  },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
 }

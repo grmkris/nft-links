@@ -17,7 +17,6 @@ function HeaderBar() {
         <a className='btn btn-ghost text-xl normal-case'>EmanuelT2</a>
       </div>
       <div className='flex-none'>
-        <ToggleTheme />
         <div className='dropdown-end dropdown'>
           <label tabIndex={0} className='avatar btn btn-ghost btn-circle'>
             <Image
