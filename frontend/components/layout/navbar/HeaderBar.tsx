@@ -14,7 +14,7 @@ function HeaderBar() {
         <MenuIcon className={'h-6'} />
       </label>
       <div className='flex-1'>
-        <a className='btn btn-ghost text-xl normal-case'>NiftiOS</a>
+        <a className='btn btn-ghost text-xl normal-case'>EmanuelT2</a>
       </div>
       <div className='flex-none'>
         <ToggleTheme />
