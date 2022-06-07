@@ -1,5 +1,4 @@
 import React from 'react';
-import CountUp from 'react-countup';
 import { useNfts } from 'hooks/useNfts';
 import Layout from '@/layout/Layout';
 import NFTList from '@/nft/NFTList';
