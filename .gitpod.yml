@@ -1,0 +1,16 @@
+tasks:
+# prep steps for ICP 
+  - init: |
+      sh -ci "$(curl -fsSL https://smartcontracts.org/install.sh)"
+      export PATH=$PATH:/home/gitpod/bin
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      cargo install --git https://github.com/dfinity/experimental-minting-tool
+    command: |
+      dfx start --background --clean
+      minting-tool local "$(dfx canister id dip721_nft_container)" --owner "$(dfx identity get-principal)" --file ./blockchain/icp/dip721-nft-container/logo.png --sha2-auto
+      
+  
+  
+
+
+
