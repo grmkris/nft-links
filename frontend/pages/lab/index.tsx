@@ -1,4 +1,4 @@
-import { CodeIcon, TerminalIcon } from '@heroicons/react/outline';
+import { CodeIcon } from '@heroicons/react/outline';
 import { GiftIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import LabLayout from '@/layout/LabLayout';
