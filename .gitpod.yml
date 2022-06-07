@@ -2,11 +2,13 @@ tasks:
 # prep steps for ICP 
   - init: |
       sh -ci "$(curl -fsSL https://smartcontracts.org/install.sh)"
-      export PATH=$PATH:/home/gitpod/bin
-      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      echo 'export PATH=$PATH:/home/gitpod/bin' >> ~/.bash_profile
+      source ~/.bash_profile
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      source /workspace/.cargo/env
       cargo install --git https://github.com/dfinity/experimental-minting-tool
     command: |
-      cd /workspace/nft-links/blockchain/icp
+      cd /workspace/nft-links/blockchain/icp/dip721-nft-container
       dfx start --background --clean
       dfx deploy --no-wallet --argument \
       "(record {
@@ -20,7 +22,7 @@ tasks:
       })"
       minting-tool local "$(dfx canister id dip721_nft_container)" --owner "$(dfx identity get-principal)" --file ./logo.png --sha2-auto
 
-# inits dip721
+# inits canister dip721
 # mints NFT
   
   
