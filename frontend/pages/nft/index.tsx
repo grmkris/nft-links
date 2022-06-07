@@ -13,25 +13,8 @@ function NFT() {
       <div className='card card-side m-4 rounded-xl bg-base-300 shadow-xl'>
         <div className='card-body'>
           <h2 className='card-title'>
-            Your <span className='text-accent underline'>NFTs</span>
+            Your <span className='text-accent underline'>Coupons</span>
           </h2>
-
-          <div className='stats shadow'>
-            <div className='stat'>
-              <div className='stat-title'>Total Volume</div>
-              <CountUp className='stat-value text-primary' delay={1} end={9717901} />
-            </div>
-
-            <div className='stat'>
-              <div className='stat-title'>Weekly Volume</div>
-              <CountUp delay={1} end={72524} className='stat-value text-accent' />
-            </div>
-
-            <div className='stat'>
-              <div className='stat-title'>Total NFT&apos;s</div>
-              <CountUp delay={1} end={5215} className='stat-value text-secondary' />
-            </div>
-          </div>
         </div>
       </div>
 
