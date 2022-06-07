@@ -14,38 +14,13 @@ function Info() {
       link: 'lab/rewards',
     },
     {
-      title: 'Simple NFT',
+      title: 'NFT Creator',
       description:
         'Create and distribute your NFTs in a simple way, free for users to use. Useful for event tickets, digital souvenir, loyalty points etc...',
       buttonText: 'Open',
       icon: <CodeIcon className='mt-1 h-6 w-6' />,
       link: 'lab/nfts/create',
-    },
-    {
-      title: 'NFT Manager',
-      description:
-        'Import or Deploy your own collection, create a space for collections, allow for advanced modifications to the contract and more... ',
-      buttonText: 'Open',
-      icon: <TerminalIcon className='mt-1 h-6 w-6' />,
-      link: 'lab/nft-manager',
-    },
-    {
-      title: 'Integrations',
-      description:
-        'Browse and connect to other services to integrate with your NFTs. Connect with services like: eventbrite, airtable, discord, mailchimp etc...',
-      buttonText: 'Open',
-      icon: <CodeIcon className='mt-1 h-6 w-6' />,
-      link: 'rewards/create',
-    },
-    {
-      title: 'Web3 native integrations',
-      description:
-        'Add web3 native features to your products like blockchain comments, voting, social media integration, etc...',
-      bottomText: 'Lorem ipsum dolor sit amet consectetur adipisicing',
-      buttonText: 'Open',
-      icon: <CodeIcon className='mt-1 h-6 w-6' />,
-      link: 'rewards/create',
-    },
+    }
   ];
 
   return (

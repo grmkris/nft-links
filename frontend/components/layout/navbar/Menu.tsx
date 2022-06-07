@@ -1,6 +1,5 @@
 import {
   BeakerIcon,
-  ChartPieIcon,
   ClipboardCheckIcon,
   CogIcon,
 } from '@heroicons/react/outline';
@@ -13,12 +12,7 @@ function Menu() {
   const router = useRouter();
   const menu = [
     {
-      name: 'Dashboard',
-      link: '/',
-      icon: <ChartPieIcon className='mt-1 h-5 w-5' />,
-    },
-    {
-      name: 'Lab',
+      name: 'Rewards & NFTs',
       link: '/lab',
       icon: <BeakerIcon className='mt-1 h-5 w-5' />,
     },
