@@ -6,9 +6,22 @@ tasks:
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
       cargo install --git https://github.com/dfinity/experimental-minting-tool
     command: |
+      cd /workspace/nft-links/blockchain/icp
       dfx start --background --clean
-      minting-tool local "$(dfx canister id dip721_nft_container)" --owner "$(dfx identity get-principal)" --file ./blockchain/icp/dip721-nft-container/logo.png --sha2-auto
-      
+      dfx deploy --no-wallet --argument \
+      "(record {
+          name = \"Numbers One Through Fifty\";
+          symbol = \"NOTF\";
+          logo = opt record {
+              data = \"$(base64 -i ./logo.png)\";
+              logo_type = \"image/png\";
+          };
+          custodians = opt vec { principal \"$(dfx identity get-principal)\" };
+      })"
+      minting-tool local "$(dfx canister id dip721_nft_container)" --owner "$(dfx identity get-principal)" --file ./logo.png --sha2-auto
+
+# inits dip721
+# mints NFT
   
   
 
