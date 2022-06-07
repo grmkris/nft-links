@@ -1,8 +1,4 @@
-import {
-  BeakerIcon,
-  ClipboardCheckIcon,
-  CogIcon,
-} from '@heroicons/react/outline';
+import { BeakerIcon, ClipboardCheckIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -12,12 +8,12 @@ function Menu() {
   const router = useRouter();
   const menu = [
     {
-      name: 'Rewards & NFTs',
+      name: 'Promotions & Coupons',
       link: '/lab',
       icon: <BeakerIcon className='mt-1 h-5 w-5' />,
     },
     {
-      name: "NFT's",
+      name: 'My Coupons',
       link: '/nft',
       icon: <ClipboardCheckIcon className='mt-1 h-5 w-5' />,
     },
@@ -30,11 +26,6 @@ function Menu() {
       name: 'Groups',
       link: '/groups',
       icon: <UserGroupIcon className='mt-1 h-5 w-5' />,
-    },
-    {
-      name: 'Settings',
-      link: '/settings',
-      icon: <CogIcon className='mt-1 h-5 w-5' />,
     },
   ];
 

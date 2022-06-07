@@ -6,17 +6,17 @@ import LabLayout from '@/layout/LabLayout';
 function Info() {
   const cards = [
     {
-      title: 'Reward system',
+      title: 'Promotion system',
       description:
-        'Create a reward system for tasks that you want to do. You can reward your users with tokens or other assets.',
+        'Create a promotion system for tasks that you want to do. You can reward your users with tokens or other assets.',
       buttonText: 'Open',
       icon: <GiftIcon className='mt-1 h-6 w-6' />,
       link: 'lab/rewards',
     },
     {
-      title: 'NFT Creator',
+      title: 'Coupon Creator',
       description:
-        'Create and distribute your NFTs in a simple way, free for users to use. Useful for event tickets, digital souvenir, loyalty points etc...',
+        'Create and distribute new reward coupons for your users. You can use the coupon to reward them with tokens or other assets.',
       buttonText: 'Open',
       icon: <CodeIcon className='mt-1 h-6 w-6' />,
       link: 'lab/nfts/create',
