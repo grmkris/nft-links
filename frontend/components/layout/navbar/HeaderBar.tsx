@@ -1,5 +1,4 @@
 import React from 'react';
-import ToggleTheme from './ToggleTheme';
 import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
 import Link from 'next/link';
 import { MenuIcon } from '@heroicons/react/solid';
