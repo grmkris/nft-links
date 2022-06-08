@@ -20,6 +20,19 @@ task("accounts", "Prints the list of accounts", async (args, hre) => {
   }
 });
 
+task("fund", "Sends ether to the provided address")
+  .addParam("address", "address of the receiver")
+  .setAction(async (args, hre) => {
+    const { ethers, deployments } = hre;
+    const [owner,  feeCollector, operator] = await ethers.getSigners();
+    console.log("Sending 1 ether to " + args.address + "from " + owner.address);
+    const tx = await owner.sendTransaction({
+      to: args.address,
+      value: ethers.utils.parseEther("1.0"), // Sends exactly 1.0 ether
+    });
+    console.log("Transaction", tx);
+});
+
 task("init-space", "Initializes a space")
   .setAction(async (arge, hre) => {
     const { ethers, deployments } = hre;

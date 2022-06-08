@@ -5,12 +5,13 @@
     "deploy": "graph deploy --product hosted-service grmkris/nft-link",
     "create-local": "graph create --node http://localhost:8020/ web3comments",
 
+    "graph-auth": "graph auth",
     "remove-local": "graph remove --node http://localhost:8020/ web3comments",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 web3comments",
 
-    "create-remote": "graph create --node http://34.116.252.161/:8020/ web3comments",
-    "remove-remote": "graph remove --node http://34.116.252.161/:8020/ web3comments",
-    "deploy-remote": "graph deploy --node http://34.116.252.161/:8020/ --ipfs http://34.116.214.15:5001 web3comments",
+    "create-remote": "graph create --node http://34.116.252.161:8020/ web3comments",
+    "remove-remote": "graph remove --node http://34.116.252.161:8020/ web3comments",
+    "deploy-remote": "graph deploy --node http://34.116.252.161:8020/ --ipfs http://34.116.214.15:5001 web3comments",
 
 
     "generate-schema": "cat schema/* > schema.graphql",
@@ -19,7 +20,7 @@
     "codegen": "cat schema/* > schema.graphql && graph codegen",
     "build": "graph build",
     "deploy:mumbai": "graph deploy --node https://api.thegraph.com/deploy/ grmkris/nft-link subgraph.yaml",
-    "generate-and-deploy:mumbai": "yarn generate-schema && yarn prepare:mumbai && yarn codegen && yarn build && yarn deploy-remote",
+    "generate-and-deploy:mumbai": "yarn generate-schema && yarn prepare:mumbai && yarn codegen && yarn build && yarn deploy:mumbai",
     "generate-and-deploy:local": "yarn generate-schema && yarn prepare:local && yarn codegen && yarn build && yarn deploy-local"
   },
   "dependencies": {
