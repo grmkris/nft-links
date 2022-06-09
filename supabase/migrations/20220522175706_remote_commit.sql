@@ -3,14 +3,6 @@
 -- and may require manual changes to the script to ensure changes are applied in the correct order.
 -- Please report an issue for any failure with the reproduction steps.
 
-DROP FUNCTION IF EXISTS graphql.build_delete(ast jsonb, variable_definitions jsonb, variables jsonb, parent_type text, parent_block_name text);
-
-DROP FUNCTION IF EXISTS graphql.build_insert(ast jsonb, variable_definitions jsonb, variables jsonb, parent_type text);
-
-DROP FUNCTION IF EXISTS graphql.cache_key(role regrole, ast jsonb, variables jsonb);
-
-DROP FUNCTION IF EXISTS graphql.build_update(ast jsonb, variable_definitions jsonb, variables jsonb, parent_type text, parent_block_name text);
-
 REVOKE ALL ON TABLE public.groups FROM anon;
 REVOKE ALL ON TABLE public.groups FROM authenticated;
 REVOKE ALL ON TABLE public.groups FROM postgres;
