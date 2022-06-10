@@ -13,8 +13,8 @@ tasks:
       dfx start --background --clean
       dfx deploy --no-wallet --argument \
       "(record {
-          name = \"Numbers One Through Fifty\";
-          symbol = \"NOTF\";
+          name = \"NFT Links\";
+          symbol = \"NFTL\";
           logo = opt record {
               data = \"$(base64 -i ./logo.png)\";
               logo_type = \"image/png\";
@@ -22,11 +22,13 @@ tasks:
           custodians = opt vec { principal \"$(dfx identity get-principal)\" };
       })"
       minting-tool local "$(dfx canister id dip721_nft_container)" --owner "$(dfx identity get-principal)" --file ./logo.png --sha2-auto
-
 # inits canister dip721
 # mints NFT
   
-  
-
-
-
+  - init: |
+      brew install supabase/tap/supabase
+      supabase start
+      cd frontend
+    command: |  
+      yarn install
+      yarn dev
