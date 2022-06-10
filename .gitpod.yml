@@ -7,6 +7,7 @@ tasks:
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
       source /workspace/.cargo/env
       cargo install --git https://github.com/dfinity/experimental-minting-tool
+      cargo install ic-cdk-optimizer
     command: |
       cd /workspace/nft-links/blockchain/icp/dip721-nft-container
       dfx start --background --clean
