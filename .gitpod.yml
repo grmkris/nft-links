@@ -24,10 +24,12 @@ tasks:
       minting-tool local "$(dfx canister id dip721_nft_container)" --owner "$(dfx identity get-principal)" --file ./logo.png --sha2-auto
 # inits canister dip721
 # mints NFT
-  
+
+# skipped for now
+# brew install supabase/tap/supabase
+# supabase start
+
   - init: |
-      brew install supabase/tap/supabase
-      supabase start
       cd frontend
     command: |  
       yarn install
