@@ -43,25 +43,42 @@ const ViewNFT = ({ data }) => {
         {data[0] && (
           <>
             <NftCard nft={data[0]} />
-            <ConnectButton />
+            {!web3account && (
+              <>
+                <div className='mt-4 text-2xl font-bold'>To claim, please:</div>
+
+                <div className='flex w-full max-w-lg flex-col'>
+                  <div className='card rounded-box grid h-32 flex-grow place-items-center bg-base-300'>
+                    <ConnectButton />
+                  </div>
+                  <div className='divider'>OR</div>
+                  <div className='card rounded-box grid h-32 flex-grow place-items-center bg-base-300'>
+                    <button className={'btn btn-primary'}>Login</button>
+                  </div>
+                </div>
+              </>
+            )}
             {web3account && (
-              <button
-                className='btn btn-accent btn-lg'
-                onClick={async () => {
-                  console.log('claiming nft');
-                  const claimedNft = await fetch('/api/nft/claim', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ uuid: uuid, address: web3account.address }),
-                  });
-                  const tx = (await claimedNft.json()) as ContractTransaction;
-                  console.log(tx);
-                  setTx(tx);
-                }}
-                disabled={!!tx}
-              >
-                {tx ? 'Claimed' : 'Claim'}
-              </button>
+              <>
+                <ConnectButton />
+                <button
+                  className='btn btn-accent btn-lg'
+                  onClick={async () => {
+                    console.log('claiming nft');
+                    const claimedNft = await fetch('/api/nft/claim', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ uuid: uuid, address: web3account.address }),
+                    });
+                    const tx = (await claimedNft.json()) as ContractTransaction;
+                    console.log(tx);
+                    setTx(tx);
+                  }}
+                  disabled={!!tx}
+                >
+                  {tx ? 'Claimed' : 'Claim'}
+                </button>
+              </>
             )}
             {tx && <div className='badge badge-accent badge-outline'>{tx.hash}</div>}
           </>
