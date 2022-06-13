@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import NftCard from '@/nft/NftCard';
 import { supabaseServerClient } from '../../../utils/server/supabaseServer';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAccount } from 'wagmi';
+import { ContractTransaction } from 'ethers';
 
 export async function getServerSideProps({ query }) {
   // Fetch data from external API
@@ -27,6 +30,8 @@ export async function getServerSideProps({ query }) {
 const ViewNFT = ({ data }) => {
   const router = useRouter();
   const { uuid } = router.query;
+  const { data: web3account } = useAccount();
+  const [tx, setTx] = useState<ContractTransaction | undefined>();
 
   useEffect(() => {
     console.log(data);
@@ -38,10 +43,27 @@ const ViewNFT = ({ data }) => {
         {data[0] && (
           <>
             <NftCard nft={data[0]} />
-            {
-              // big flashy button for claiming the nft reward
-            }
-            <button className='btn btn-accent btn-lg'>Claim</button>
+            <ConnectButton />
+            {web3account && (
+              <button
+                className='btn btn-accent btn-lg'
+                onClick={async () => {
+                  console.log('claiming nft');
+                  const claimedNft = await fetch('/api/nft/claim', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ uuid: uuid, address: web3account.address }),
+                  });
+                  const tx = (await claimedNft.json()) as ContractTransaction;
+                  console.log(tx);
+                  setTx(tx);
+                }}
+                disabled={!!tx}
+              >
+                {tx ? 'Claimed' : 'Claim'}
+              </button>
+            )}
+            {tx && <div className='badge badge-accent badge-outline'>{tx.hash}</div>}
           </>
         )}
       </div>

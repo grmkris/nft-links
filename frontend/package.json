@@ -13,12 +13,13 @@
     "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.6",
     "@pinata/sdk": "^1.1.24",
+    "@rainbow-me/rainbowkit": "^0.2.4",
     "@supabase/supabase-auth-helpers": "^1.4.0",
     "@supabase/supabase-js": "^1.35.3",
     "@supabase/ui": "^0.36.5",
     "@tailwindcss/typography": "^0.5.2",
     "daisyui": "^2.13.6",
-    "ethers": "^5.6.2",
+    "ethers": "^5.6.8",
     "formidable": "^2.0.1",
     "is-ipfs": "^6.0.2",
     "multer": "^1.4.4",
@@ -40,7 +41,7 @@
     "react-use-wizard": "^2.2.0",
     "theme-change": "^2.0.2",
     "use-file-picker": "^1.4.2",
-    "wagmi": "^0.2.26"
+    "wagmi": "^0.4.12"
   },
   "devDependencies": {
     "@types/node": "^17.0.23",
