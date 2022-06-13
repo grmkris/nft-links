@@ -5,11 +5,12 @@ import {
   NEXT_PUBLIC_ETHEREUM_NODE_URL,
   NEXT_PUBLIC_NFT_LINK_NFT,
 } from '../../../utils/constants';
-import { supabaseServerClient } from '../../../utils/server/supabaseServer';
 
 import NftLinkABI from '../../../utils/abis/NftLink.json';
 import { NftLink } from 'types/contracts/NftLink';
 import { definitions } from 'types/database';
+import { supabaseServerClient } from '../../../utils/server/supabaseServer';
+import nft from '../../nft';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -17,8 +18,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'POST': {
       try {
         const { address: recipientAddress, uuid } = req.body;
-        const url = NEXT_PUBLIC_ETHEREUM_NODE_URL;
-        const alchemyProvider = new ethers.providers.JsonRpcProvider(url);
+        // get token metadata from subabase
+        const nftData = await supabaseServerClient.from('nfts').select('*').match({
+          id: uuid,
+        });
+        if (!nftData.data) return res.status(404).send('NFT not found');
+        const nft = nftData.data[0] as definitions['nfts'];
+        if (nft.chain === 'icp') {
+          return res.status(400).send('ICP NFTs are not yet supported');
+        }
+        const alchemyProvider = new ethers.providers.JsonRpcProvider(NEXT_PUBLIC_ETHEREUM_NODE_URL);
         alchemyProvider.getBlockNumber().then((result) => {
           console.log('Current block number: ' + result);
         });
@@ -31,14 +40,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           NftLinkABI.abi,
           signer
         ) as NftLink;
-
-        // get token metadata from subabase
-        const nftData = await supabaseServerClient.from('nfts').select('*').match({
-          id: uuid,
-        });
-
-        if (!nftData.data) return res.status(404).send('NFT not found');
-        const nft = nftData.data[0] as definitions['nfts'];
 
         const tx = await nftLinkContract.mintNFT(recipientAddress, nft.metadata);
         console.log(tx);
