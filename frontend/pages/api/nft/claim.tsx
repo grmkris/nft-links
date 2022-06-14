@@ -10,7 +10,6 @@ import NftLinkABI from '../../../utils/abis/NftLink.json';
 import { NftLink } from 'types/contracts/NftLink';
 import { definitions } from 'types/database';
 import { supabaseServerClient } from '../../../utils/server/supabaseServer';
-import nft from '../../nft';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
