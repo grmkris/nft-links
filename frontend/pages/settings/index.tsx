@@ -9,6 +9,7 @@ import { useQueryClient } from 'react-query';
 import { LinkedWalletList } from '@/settings/LinkedWalletList';
 import { useWallets } from 'hooks/useWallets';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { GithubConnection } from '@/settings/github/GithubConnection';
 
 function Index() {
   const { data: accountData } = useAccount();
@@ -80,14 +81,21 @@ function Index() {
       <div>
         <div className='card m-4 max-w-prose rounded-xl bg-base-300 shadow-xl'>
           <div className='card-body'>
-            <h2 className='card-title'>Wallet information</h2>
+            <h2 className='card-title text-primary'>Wallet information</h2>
             <div className='card-actions flex-col'>
               <ConnectButton />
               {renderWalletAccountConnection()}
             </div>
+            <LinkedWalletList />
           </div>
         </div>
-        <LinkedWalletList />
+
+        <div className='card m-4 max-w-prose rounded-xl bg-base-300 shadow-xl'>
+          <div className='card-body'>
+            <h2 className='card-title text-primary'>Github information</h2>
+            <GithubConnection />
+          </div>
+        </div>
       </div>
     );
   };
