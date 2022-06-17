@@ -31,9 +31,9 @@ tasks:
 # supabase start
 
   - init: |
-      cd frontend
       echo 'place .env from discord chat!'
-      npm i -g vercel
     command: |  
+      npm i -g vercel 
+      cd frontend
       yarn install
       yarn dev
