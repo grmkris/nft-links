@@ -8,10 +8,11 @@ const app = new OAuthApp({
 });
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
+  console.log(request.query.code as string);
   const { authentication } = await app.createToken({
     code: request.query.code as string,
   });
 
-  console.log(authentication.token);
+  console.log(authentication);
   response.json(authentication);
 }
