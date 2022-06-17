@@ -10,6 +10,7 @@ tasks:
       cargo install ic-cdk-optimizer
     command: |
       cd /workspace/nft-links/blockchain/icp/dip721-nft-container
+      sed -i "s/0.10.0/$(dfx --version | awk '{ print $2 }')/g" dfx.json
       dfx start --background --clean
       dfx deploy --no-wallet --argument \
       "(record {
@@ -31,6 +32,7 @@ tasks:
 
   - init: |
       cd frontend
+      echo 'place .env from discord chat!'
     command: |  
       yarn install
       yarn dev
