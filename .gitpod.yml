@@ -33,6 +33,7 @@ tasks:
   - init: |
       cd frontend
       echo 'place .env from discord chat!'
+      npm i -g vercel
     command: |  
       yarn install
       yarn dev
