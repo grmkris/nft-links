@@ -1,13 +1,13 @@
 [package]
-name = "index"
+name = "mint"
 version = "1.0.0"
-authors = ["Your Name <your@site.com>"]
+authors = ["pz"]
 edition = "2018"
 
 [dependencies]
 http = "0.1"
 vercel_lambda = "*"
 
-[lib]
-name = "util"
-path = "_util.rs"
+[[bin]]
+name = "mint"
+path = "mint.rs"
