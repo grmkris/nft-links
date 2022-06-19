@@ -1,6 +1,6 @@
 {
     "functions": {
-      "**/*.rs": {
+      "api/icp/*.rs": {
         "runtime": "vercel-rust@3.1.2"
       }
     }
