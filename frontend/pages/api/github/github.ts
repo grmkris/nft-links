@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Octokit } from 'octokit';
 import { createAppAuth } from '@octokit/auth-app';
+import { Octokit } from '@octokit/core';
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   const authCreator = createAppAuth({
@@ -13,49 +13,29 @@ export default async function handler(request: NextApiRequest, response: NextApi
   console.log('qqq', auth);
   const octokit = new Octokit(auth);
   const owner = request.query.owner as string;
-  const repo = request.query.repo as string;
+  if (!owner) {
+    response.status(400).send('Missing owner');
+  }
+  const userToken = request.headers.authorization.slice(7);
   try {
-    const installation = await octokit.rest.apps.getAuthenticated({
-      username: owner,
-      headers: {
-        authorization: 'Bearer ' + auth.token,
-      },
-    });
-    console.log('installation', installation);
-    const apps = await octokit.rest.apps.getRepoInstallation({
-      repo,
-      owner: owner,
-      headers: {
-        authorization: 'Bearer ' + auth.token,
-      },
-    });
-    console.log('apps', apps);
     const installations = await octokit.request('GET /app/installations', {
       headers: {
         authorization: 'Bearer ' + auth.token,
       },
     });
-
-    console.log('installations', installations);
-    const installationAccessToken = await octokit.request(
-      'POST /app/installations/' + installations.data[0].id + '/access_tokens',
+    const installationId = installations.data.find((data) => data.account.login === owner).id;
+    const installationRepos = await octokit.request(
+      `GET /user/installations/${installationId}/repositories`,
       {
         headers: {
-          authorization: 'Bearer ' + auth.token,
+          authorization: 'token ' + userToken,
         },
       }
     );
-
-    console.log('installationAccessToken', installationAccessToken.data.token);
-
-    const installationRepos = await octokit.request('GET /installation/repositories', {
-      headers: {
-        authorization: 'token ' + installationAccessToken.data.token,
-      },
-    });
-
     console.log('installationRepos', installationRepos.data);
-    response.json(installation);
+    response.json({
+      installationId: installationId,
+    });
   } catch (e) {
     console.log(e);
     response.json('fail');

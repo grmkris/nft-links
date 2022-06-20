@@ -1,14 +1,28 @@
 import 'react-loading-skeleton/dist/skeleton.css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Octokit } from 'octokit';
+import useLocalStorage from 'use-local-storage';
+import { Octokit } from '@octokit/core';
+import { useIntegrationsGithub } from 'hooks/useIntegrationsGithub';
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
+import { definitions } from 'types/database';
+import { Endpoints } from '@octokit/types';
+import { toast } from 'react-toastify';
+import { useQueryClient } from 'react-query';
+import { useUser } from '@supabase/supabase-auth-helpers/react';
+
+type ListUserReposResponse =
+  Endpoints['GET /user/installations/{installation_id}/repositories']['response']['data']['repositories'];
 
 export const GithubConnection = () => {
   const router = useRouter();
   const { code } = router.query;
-  const [githubInfo, setGithubInfo] = useState<{ token: string }>();
-  const [githubRepos, setGithubRepos] = useState<never[]>();
-  const [githubUserInfo, setGithubUserInfo] = useState<string>('');
+  const [githubInfo, setGithubInfo] = useLocalStorage<{ token: string }>('githubInfo', undefined);
+  const [githubRepos, setGithubRepos] = useState<ListUserReposResponse>();
+  const [githubUserInfo, setGithubUserInfo] = useLocalStorage<string>('githubUserInfo', '');
+  const { data: githubIntegrations, isLoading, error } = useIntegrationsGithub();
+  const queryClient = useQueryClient();
+  const { user } = useUser();
 
   const getToken = useCallback(
     async (code) => {
@@ -18,18 +32,13 @@ export const GithubConnection = () => {
         console.log(data);
         await router.replace('/settings', undefined, { shallow: true });
         setGithubInfo(data);
-        const octokit = new Octokit({ auth: data.token });
-        const {
-          data: { login },
-        } = await octokit.request('GET /user');
-        setGithubUserInfo(login);
-        console.log(login);
-        const { data: repos } = await octokit.request('GET /user/repos');
 
-        const { data: installations } = await octokit.request('GET /user/installations');
-        console.log(installations.installations);
-        console.log(repos);
-        setGithubRepos(repos);
+        // get the user info from github
+        const github = new Octokit({
+          auth: data.token,
+        });
+        const userInfo = await github.request('GET /user');
+        setGithubUserInfo(userInfo.data.login);
       } catch (e) {
         console.log('Error retrieving token');
       }
@@ -37,26 +46,41 @@ export const GithubConnection = () => {
     [code]
   );
 
-  const getInstallation = async (repo: string, owner: string) => {
+  const getAvailableRepos = async (owner: string) => {
     console.log(githubInfo.token);
     const octokit = new Octokit({ auth: githubInfo.token });
-    const result = await fetch('api/github/github?repo=' + repo + '&' + 'owner=' + owner);
-    octokit.rest;
-    console.log(result);
+    const result = await fetch('api/github/github?owner=' + owner, {
+      headers: {
+        Authorization: `Bearer ${githubInfo.token}`,
+      },
+    });
+    const installationId = await result.json();
+    const availableRepos = await octokit.request(
+      `GET /user/installations/${installationId.installationId}/repositories`,
+      {
+        headers: {
+          authorization: 'token ' + githubInfo.token,
+        },
+      }
+    );
+    setGithubRepos(availableRepos.data.repositories);
   };
 
   useEffect(() => {
-    if (code && !githubInfo) {
+    if (code) {
       getToken(code);
     }
-  }, [code, githubInfo, getToken, router.query.code]);
+    if (!githubRepos && githubUserInfo != '' && githubUserInfo != undefined) {
+      getAvailableRepos(githubUserInfo);
+    }
+  }, [code, githubRepos, getToken, router.query.code]);
 
   const connectGithub = async () => {
     const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
     window.location.href =
       'https://github.com/login/oauth/authorize?client_id=' +
       clientId +
-      '&redirect_uri=http://localhost:3000/settings';
+      '&redirect_uri=http://localhost:3001/settings';
   };
 
   function popupWindow(url, windowName, win, w, h) {
@@ -88,23 +112,43 @@ export const GithubConnection = () => {
         </button>
         {githubUserInfo !== '' && (
           <button className={'btn'} onClick={() => installGithubApp()}>
-            Install app
+            Manage App on Github
           </button>
         )}
         {githubRepos && (
           <>
-            <h2 className='card-title text-primary'>Your repos</h2>
+            <h2 className='card-title text-primary'>Connected repos</h2>
             <ul>
-              {githubRepos.map((data: { name: string }) => {
+              {githubRepos.map((data) => {
                 return (
-                  <li key={data.name} className={'m-2'}>
+                  <li key={data.id} className={'m-2'}>
                     <button
                       className={'btn btn-accent btn-sm'}
                       onClick={async () => {
-                        await getInstallation(data.name, githubUserInfo);
+                        const result = await supabaseClient
+                          .from<definitions['integration_github']>('integration_github')
+                          .insert({
+                            repository: data.id,
+                            type: 'nft_bot',
+                            user_id: user.id,
+                          });
+                        if (result.error) {
+                          toast.error(result.error);
+                        }
+                        if (result.data) {
+                          await queryClient.invalidateQueries('integrations_github');
+                          toast.success('Successfully added');
+                        }
                       }}
                     >
-                      Link
+                      {
+                        // if repo is linked then show a checkmark otherwise not
+                        githubIntegrations.data.find(
+                          (integration) => integration.repository === data.id.toString()
+                        )
+                          ? '✅'
+                          : '🔘'
+                      }
                     </button>{' '}
                     {data.name}
                   </li>
