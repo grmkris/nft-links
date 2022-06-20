@@ -5,3 +5,4 @@ node_modules
 .idea
 .env.prod
 niftios.2022-06-16.private-key.pem
+.vercel

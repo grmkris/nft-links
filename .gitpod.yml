@@ -31,8 +31,13 @@ tasks:
 # supabase start
 
   - init: |
-      cd frontend
       echo 'place .env from discord chat!'
     command: |  
+      npm i -g vercel 
+      cd frontend
       yarn install
-      yarn dev
+      vercel dev
+  - init: |
+      echo 'test api'
+    command: |  
+      curl 'http://localhost:3000/api/icp/mint?nftId=123123&userAddress=abcqwe'
