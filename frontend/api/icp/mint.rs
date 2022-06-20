@@ -27,10 +27,10 @@ use ic_agent::{
 use sha2::{Digest, Sha256};
 use types::*;
 
-// use uriparse::URI;
+use uriparse::URI;
 use url::Url;
 
-use auris::URI;
+// use auris::URI;
 
 use http::{StatusCode};
 use vercel_lambda::{lambda, error::VercelError, IntoResponse, Request, Response};
@@ -59,12 +59,16 @@ fn handler(req: Request) -> Result<impl IntoResponse, VercelError> {
 		Ok(response)
 }
 
-fn parseit(s: String) -> Result<(), url::ParseError> {
+async fn parseit(s: String) -> Result<(), url::ParseError> {
 	let u = Url::parse(&s)?;
 	let q = query(u);
 	println!("parsed params: {:?}", q);
 
 	//mint nft
+    if let Err(e) = rmain().await {
+        eprintln!("{}", e);
+        // process::exit(1);
+    }
 
 	Ok(())
  }
@@ -129,7 +133,8 @@ async fn get_agent(network: Network) -> Result<Agent> {
     let file = File::open(Path::new(&user_home).join(".config/dfx/identity.json"))
         .context("Configure an identity in `dfx` or provide an --identity flag")?;
     let default: DefaultIdentity = serde_json::from_reader(file)?;
-	let pemfile = PathBuf::from_str(".config/dfx/identity/default/identity.pem");
+	// let pemfile = PathBuf::from_str("/home/gitpod/.config/dfx/identity/default/identity.pem");
+    let pemfile = PathBuf::from("/home/gitpod/.config/dfx/identity/default/identity.pem");
     // let pemfile = PathBuf::from_iter([
     //     &*user_home,
     //     ".config/dfx/identity/".as_ref(),
@@ -195,10 +200,11 @@ async fn rmain() -> Result<()> {
     } else if let Some(asset_canister) = mint.asset_canister {
         metadata.insert("locationType", Nat8Content(2));
         metadata.insert("location", TextContent(format!("{asset_canister}")));
-    } else if let Some(uri) = mint.uri {
-        URI::try_from(&*uri)?;
-        metadata.insert("locationType", Nat8Content(3));
-        metadata.insert("location", TextContent(uri));
+    // } else if let Some(uri) = mint.uri {
+    //     URI::try_from(&*uri)?;
+    //     // URI::try_from(&'uri)?;
+    //     metadata.insert("locationType", Nat8Content(3));
+    //     metadata.insert("location", TextContent(uri));
     } else {
         metadata.insert("locationType", Nat8Content(4));
     }
