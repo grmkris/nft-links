@@ -1,0 +1,43 @@
+tasks:
+# prep steps for ICP 
+  - init: |
+      sh -ci "$(curl -fsSL https://smartcontracts.org/install.sh)"
+      echo 'export PATH=$PATH:/home/gitpod/bin' >> ~/.bash_profile
+      source ~/.bash_profile
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      source /workspace/.cargo/env
+      cargo install --git https://github.com/dfinity/experimental-minting-tool
+      cargo install ic-cdk-optimizer
+    command: |
+      cd /workspace/nft-links/blockchain/icp/dip721-nft-container
+      sed -i "s/0.10.0/$(dfx --version | awk '{ print $2 }')/g" dfx.json
+      dfx start --background --clean
+      dfx deploy --no-wallet --argument \
+      "(record {
+          name = \"NFT Links\";
+          symbol = \"NFTL\";
+          logo = opt record {
+              data = \"$(base64 -i ./logo.png)\";
+              logo_type = \"image/png\";
+          };
+          custodians = opt vec { principal \"$(dfx identity get-principal)\" };
+      })"
+      minting-tool local "$(dfx canister id dip721_nft_container)" --owner "$(dfx identity get-principal)" --file ./logo.png --sha2-auto
+# inits canister dip721
+# mints NFT
+
+# skipped for now
+# brew install supabase/tap/supabase
+# supabase start
+
+  - init: |
+      echo 'place .env from discord chat!'
+    command: |  
+      npm i -g vercel 
+      cd frontend
+      yarn install
+      vercel dev
+  - init: |
+      echo 'test api'
+    command: |  
+      curl 'http://localhost:3000/api/icp/mint?nftId=123123&userAddress=abcqwe'

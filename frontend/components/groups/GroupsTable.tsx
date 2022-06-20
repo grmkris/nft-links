@@ -137,6 +137,7 @@ function Table({ columns, data }) {
 
 export const GroupsTable = () => {
   const { data, isError, isLoading } = useGroups();
+
   const [selectedGroup, setSelectedGroup] = useState(null);
 
   const columns = React.useMemo(

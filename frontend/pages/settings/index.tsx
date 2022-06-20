@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../../components/layout/Layout';
-import { useAccount, useConnect, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import axios from 'axios';
 import { useUser } from '@supabase/supabase-auth-helpers/react';
 import { toast } from 'react-toastify';
@@ -8,14 +8,13 @@ import { CheckIcon } from '@heroicons/react/solid';
 import { useQueryClient } from 'react-query';
 import { LinkedWalletList } from '@/settings/LinkedWalletList';
 import { useWallets } from 'hooks/useWallets';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { GithubConnection } from '@/settings/github/GithubConnection';
 
 function Index() {
-  const [{ data: accountData }, disconnect] = useAccount({
-    fetchEns: true,
-  });
+  const { data: accountData } = useAccount();
   const { accessToken } = useUser();
-  const [{}, signMessage] = useSignMessage();
-  const [{ data: connectData, error: connectError }, connect] = useConnect();
+  const { signMessageAsync } = useSignMessage();
   const { data: linkedWallets } = useWallets();
   const queryCache = useQueryClient();
 
@@ -32,7 +31,7 @@ function Index() {
     // popup metamask and ask to sign a message
     // if signed, call api to link account
     // if not signed, do nothing
-    signMessage({ message: result.data.nonce }).then(async ({ data }) => {
+    signMessageAsync({ message: result.data.nonce }).then(async (data) => {
       const result = await axios.post(
         'api/wallet/validate',
         {
@@ -56,14 +55,9 @@ function Index() {
   };
 
   const renderWalletAccountConnection = () => {
-    console.log(accountData.address);
-    console.log(linkedWallets);
     if (accountData && linkedWallets) {
       return (
         <div className='flex items-center gap-2'>
-          <button className='btn btn-secondary' onClick={disconnect}>
-            Disconnect
-          </button>
           {!linkedWallets.data.some((element) => element.wallet === accountData.address) ? (
             <button
               className='btn btn-primary'
@@ -82,57 +76,26 @@ function Index() {
     }
   };
 
-  const renderWalletInformation = () => {
-    return (
-      accountData && (
-        <div>
-          {accountData.ens?.name
-            ? `${accountData.ens?.name} (${accountData.address})`
-            : accountData.address}
-          <div>Connected to {accountData.connector.name}</div>
-        </div>
-      )
-    );
-  };
-
   const renderContent = () => {
     return (
       <div>
-        {!accountData && (
-          <div className='card m-2 max-w-prose bg-base-100 shadow-xl'>
-            <div className='card-body'>
-              <h2 className='card-title'>Wallet connection</h2>
-              <p>Link wallet to your account</p>
-              <div>
-                <div className={'btn-group'}>
-                  {connectData.connectors.map((connector) => (
-                    <button
-                      className={'btn btn-primary'}
-                      disabled={!connector.ready}
-                      key={connector.id}
-                      onClick={() => connect(connector)}
-                    >
-                      {connector.name}
-                      {!connector.ready && ' (unsupported)'}
-                    </button>
-                  ))}
+        <div className='card m-4 max-w-prose rounded-xl bg-base-300 shadow-xl'>
+          <div className='card-body'>
+            <h2 className='card-title text-primary'>Wallet information</h2>
+            <div className='card-actions flex-col'>
+              <ConnectButton />
+              {renderWalletAccountConnection()}
+            </div>
+            <LinkedWalletList />
+          </div>
+        </div>
 
-                  {connectError && <div>{connectError?.message ?? 'Failed to connect'}</div>}
-                </div>
-              </div>
-            </div>
+        <div className='card m-4 max-w-prose rounded-xl bg-base-300 shadow-xl'>
+          <div className='card-body'>
+            <h2 className='card-title text-primary'>Github information</h2>
+            <GithubConnection />
           </div>
-        )}
-        {accountData && (
-          <div className='card m-2 max-w-prose bg-base-100 shadow-xl'>
-            <div className='card-body'>
-              <h2 className='card-title'>Wallet information</h2>
-              {renderWalletInformation()}
-              <div className='card-actions'>{renderWalletAccountConnection()}</div>
-            </div>
-          </div>
-        )}
-        <LinkedWalletList />
+        </div>
       </div>
     );
   };

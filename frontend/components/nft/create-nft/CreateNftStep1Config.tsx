@@ -60,6 +60,7 @@ export default function CreateNftStep1Config(props: { createNftForm; setCreateNf
           <option value={0} disabled>
             Select Blockchain
           </option>
+          <option>ICP(Dfinity)</option>
           <option>Ethereum</option>
           <option>Polygon</option>
         </select>

@@ -222,6 +222,105 @@ export interface paths {
       };
     };
   };
+  "/integration_github": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.integration_github.id"];
+          created_at?: parameters["rowFilter.integration_github.created_at"];
+          repository?: parameters["rowFilter.integration_github.repository"];
+          type?: parameters["rowFilter.integration_github.type"];
+          user_id?: parameters["rowFilter.integration_github.user_id"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["integration_github"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** integration_github */
+          integration_github?: definitions["integration_github"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.integration_github.id"];
+          created_at?: parameters["rowFilter.integration_github.created_at"];
+          repository?: parameters["rowFilter.integration_github.repository"];
+          type?: parameters["rowFilter.integration_github.type"];
+          user_id?: parameters["rowFilter.integration_github.user_id"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.integration_github.id"];
+          created_at?: parameters["rowFilter.integration_github.created_at"];
+          repository?: parameters["rowFilter.integration_github.repository"];
+          type?: parameters["rowFilter.integration_github.type"];
+          user_id?: parameters["rowFilter.integration_github.user_id"];
+        };
+        body: {
+          /** integration_github */
+          integration_github?: definitions["integration_github"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/nfts": {
     get: {
       parameters: {
@@ -1084,6 +1183,26 @@ export interface definitions {
     /** Format: character varying */
     description?: string;
   };
+  /** @description table for github integration */
+  integration_github: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /** Format: numeric */
+    repository?: number;
+    /** Format: text */
+    type?: string;
+    /** Format: uuid */
+    user_id?: string;
+  };
   /** @description Hosted nfts created by the users */
   nfts: {
     /**
@@ -1340,6 +1459,18 @@ export interface parameters {
   "rowFilter.groups.image": string;
   /** Format: character varying */
   "rowFilter.groups.description": string;
+  /** @description integration_github */
+  "body.integration_github": definitions["integration_github"];
+  /** Format: bigint */
+  "rowFilter.integration_github.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.integration_github.created_at": string;
+  /** Format: numeric */
+  "rowFilter.integration_github.repository": string;
+  /** Format: text */
+  "rowFilter.integration_github.type": string;
+  /** Format: uuid */
+  "rowFilter.integration_github.user_id": string;
   /** @description nfts */
   "body.nfts": definitions["nfts"];
   /** Format: timestamp with time zone */
