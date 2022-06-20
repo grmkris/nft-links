@@ -20,7 +20,7 @@ export const GithubConnection = () => {
   const [githubInfo, setGithubInfo] = useLocalStorage<{ token: string }>('githubInfo', undefined);
   const [githubRepos, setGithubRepos] = useState<ListUserReposResponse>();
   const [githubUserInfo, setGithubUserInfo] = useLocalStorage<string>('githubUserInfo', '');
-  const { data: githubIntegrations, isLoading, error } = useIntegrationsGithub();
+  const { data: githubIntegrations } = useIntegrationsGithub();
   const queryClient = useQueryClient();
   const { user } = useUser();
 
