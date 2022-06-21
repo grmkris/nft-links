@@ -15,7 +15,7 @@ export default function AuthComponent() {
       <div className='flex flex-col items-center justify-center space-y-4 bg-gradient-to-br from-indigo-900 via-indigo-500 to-rose-500 p-5 md:space-y-8 '>
         <div>
           <h1 className='text-center text-lg font-bold text-gray-300 transition-all duration-300 hover:text-white md:text-4xl'>
-            Welcome to NFT Link
+            Welcome to Niftios
           </h1>
           <h3 className=' text-center text-xs text-gray-400 transition-all duration-300 hover:text-white'>
             Sign in to continue to Dashboard
@@ -42,12 +42,11 @@ export default function AuthComponent() {
             <span className='text-semibold text-rose-500 underline decoration-2	underline-offset-2	'>
               adipisicing elit.
             </span>{' '}
-            Libero ducimus praesentium quod quae, obcaecati officiis et
-            laudantium illo eius ad magnam, vitae ipsa repudiandae recusandae
-            magni. Adipisci itaque fuga totam. Lorem ipsum dolor sit, amet
-            consectetur adipisicing elit. Assumenda unde tenetur esse optio
-            quasi incidunt numquam repellat, earum, nisi officia qui cumque
-            pariatur eligendi rem sapiente architecto iusto reiciendis. Unde?
+            Libero ducimus praesentium quod quae, obcaecati officiis et laudantium illo eius ad
+            magnam, vitae ipsa repudiandae recusandae magni. Adipisci itaque fuga totam. Lorem ipsum
+            dolor sit, amet consectetur adipisicing elit. Assumenda unde tenetur esse optio quasi
+            incidunt numquam repellat, earum, nisi officia qui cumque pariatur eligendi rem sapiente
+            architecto iusto reiciendis. Unde?
           </div>
           <div className='mt-8 flex min-w-fit  flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 sm:px-16 sm:py-4 md:px-8 lg:order-1  '>
             <Auth
