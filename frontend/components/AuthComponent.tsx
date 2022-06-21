@@ -35,29 +35,15 @@ export default function AuthComponent() {
         </div>
       </div>
 
-      <div className='col-span-2'>
-        <div className='flex flex-col items-center justify-center bg-white p-5 dark:bg-slate-800'>
-          <div className='w-full rounded-xl bg-gray-100 p-5 text-sm shadow-lg shadow-gray-200 dark:bg-gray-700 dark:shadow-gray-700 md:text-base lg:order-2'>
-            Lorem, ipsum dolor sit amet consectetur{' '}
-            <span className='text-semibold text-rose-500 underline decoration-2	underline-offset-2	'>
-              adipisicing elit.
-            </span>{' '}
-            Libero ducimus praesentium quod quae, obcaecati officiis et laudantium illo eius ad
-            magnam, vitae ipsa repudiandae recusandae magni. Adipisci itaque fuga totam. Lorem ipsum
-            dolor sit, amet consectetur adipisicing elit. Assumenda unde tenetur esse optio quasi
-            incidunt numquam repellat, earum, nisi officia qui cumque pariatur eligendi rem sapiente
-            architecto iusto reiciendis. Unde?
-          </div>
-          <div className='mt-8 flex min-w-fit  flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 sm:px-16 sm:py-4 md:px-8 lg:order-1  '>
-            <Auth
-              supabaseClient={supabaseClient}
-              providers={['google', 'github', 'discord', 'twitter']}
-              socialLayout='horizontal'
-              socialButtonSize='xlarge'
-              redirectTo={location}
-            />
-          </div>
-        </div>
+      <div className='col-span-2 m-auto max-w-prose text-primary'>
+        <Auth
+          className={'text-primary'}
+          supabaseClient={supabaseClient}
+          providers={['google', 'github', 'discord', 'twitter']}
+          socialLayout='horizontal'
+          socialButtonSize='xlarge'
+          redirectTo={location}
+        />
       </div>
     </div>
   );
