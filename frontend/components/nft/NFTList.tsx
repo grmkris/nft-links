@@ -16,7 +16,7 @@ function NFTList() {
           <div className={"card"} key={index}>
             <NftCard nft={nft} />
             <div className="card-actions btn-group grid grid-cols-3">
-              <CopyToClipboard text={window.location.href + '/' + nft.id}>
+              <CopyToClipboard text={window.location.host + '/claim/nfts/' + nft.id}>
                 <div
                   className={'btn btn-sm'}
                   onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
