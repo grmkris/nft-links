@@ -38,7 +38,7 @@ function NftCard(props: { nft: definitions['nfts'] }) {
     return <Skeleton height={200} />;
   }
   return (
-    <div className='card cursor-pointer border-accent bg-base-200 shadow-2xl transition-all duration-500 hover:border lg:card-side'>
+    <div className='card max-w-lg cursor-pointer border-accent bg-base-200 shadow-2xl transition-all duration-500 hover:border'>
       {!isMetadataFail && (
         <figure className={'avatar'}>
           {nftMetadata.image ? (
@@ -77,6 +77,7 @@ function NftCard(props: { nft: definitions['nfts'] }) {
           <div className='badge badge-outline'>
             Created: {new Date(nft.created_at).toDateString()}
           </div>
+          <div className='badge badge-outline'>{nft.metadata}</div>
         </div>
       </div>
     </div>

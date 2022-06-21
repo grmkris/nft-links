@@ -1,9 +1,7 @@
 {
   "name": "hardhat-project",
   "scripts": {
-    "test1": "npx hardhat test ./test/*",
-    "test2": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat test ./test/*",
-    "generete-types": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat compile",
+    "generate-types": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat compile",
     "compile:": "npx hardhat compile",
     "deploy:local": "hardhat deploy --network localhost",
     "deploy:rinkeby": "hardhat deploy --network rinkeby",

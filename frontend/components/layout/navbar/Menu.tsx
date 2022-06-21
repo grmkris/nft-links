@@ -1,13 +1,9 @@
-import {
-  BeakerIcon,
-  ChartPieIcon,
-  ClipboardCheckIcon,
-  CogIcon,
-} from '@heroicons/react/outline';
+import { BeakerIcon, ChartPieIcon, ClipboardCheckIcon, CogIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { DatabaseIcon, UserGroupIcon } from '@heroicons/react/solid';
+import GrtIcon from '@cryptofonts/cryptofont/SVG/grt.svg';
 
 function Menu() {
   const router = useRouter();
@@ -26,6 +22,11 @@ function Menu() {
       name: "NFT's",
       link: '/nft',
       icon: <ClipboardCheckIcon className='mt-1 h-5 w-5' />,
+    },
+    {
+      name: 'The Graph',
+      link: '/graph',
+      icon: <GrtIcon className={'mt-1 h-5 w-5 fill-primary'} />,
     },
     {
       name: 'Files',
