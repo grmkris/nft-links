@@ -120,6 +120,204 @@ export interface paths {
       };
     };
   };
+  "/graph_auth_tokens": {
+    get: {
+      parameters: {
+        query: {
+          created_at?: parameters["rowFilter.graph_auth_tokens.created_at"];
+          user_id?: parameters["rowFilter.graph_auth_tokens.user_id"];
+          id?: parameters["rowFilter.graph_auth_tokens.id"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["graph_auth_tokens"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** graph_auth_tokens */
+          graph_auth_tokens?: definitions["graph_auth_tokens"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          created_at?: parameters["rowFilter.graph_auth_tokens.created_at"];
+          user_id?: parameters["rowFilter.graph_auth_tokens.user_id"];
+          id?: parameters["rowFilter.graph_auth_tokens.id"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          created_at?: parameters["rowFilter.graph_auth_tokens.created_at"];
+          user_id?: parameters["rowFilter.graph_auth_tokens.user_id"];
+          id?: parameters["rowFilter.graph_auth_tokens.id"];
+        };
+        body: {
+          /** graph_auth_tokens */
+          graph_auth_tokens?: definitions["graph_auth_tokens"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/graph_projects": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.graph_projects.id"];
+          created_at?: parameters["rowFilter.graph_projects.created_at"];
+          user_id?: parameters["rowFilter.graph_projects.user_id"];
+          repository?: parameters["rowFilter.graph_projects.repository"];
+          description?: parameters["rowFilter.graph_projects.description"];
+          name?: parameters["rowFilter.graph_projects.name"];
+          chain?: parameters["rowFilter.graph_projects.chain"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["graph_projects"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** graph_projects */
+          graph_projects?: definitions["graph_projects"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.graph_projects.id"];
+          created_at?: parameters["rowFilter.graph_projects.created_at"];
+          user_id?: parameters["rowFilter.graph_projects.user_id"];
+          repository?: parameters["rowFilter.graph_projects.repository"];
+          description?: parameters["rowFilter.graph_projects.description"];
+          name?: parameters["rowFilter.graph_projects.name"];
+          chain?: parameters["rowFilter.graph_projects.chain"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.graph_projects.id"];
+          created_at?: parameters["rowFilter.graph_projects.created_at"];
+          user_id?: parameters["rowFilter.graph_projects.user_id"];
+          repository?: parameters["rowFilter.graph_projects.repository"];
+          description?: parameters["rowFilter.graph_projects.description"];
+          name?: parameters["rowFilter.graph_projects.name"];
+          chain?: parameters["rowFilter.graph_projects.chain"];
+        };
+        body: {
+          /** graph_projects */
+          graph_projects?: definitions["graph_projects"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/groups": {
     get: {
       parameters: {
@@ -1161,6 +1359,45 @@ export interface definitions {
      */
     name?: string;
   };
+  /** @description Authentication tokens used for interacting with hosted graph */
+  graph_auth_tokens: {
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /** Format: uuid */
+    user_id?: string;
+    /**
+     * Format: uuid
+     * @default extensions.uuid_generate_v4()
+     */
+    id?: string;
+  };
+  /** @description graph projects created by user */
+  graph_projects: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /** Format: uuid */
+    user_id: string;
+    /** Format: character varying */
+    repository?: string;
+    /** Format: character varying */
+    description?: string;
+    /** Format: character varying */
+    name?: string;
+    /** Format: character varying */
+    chain?: string;
+  };
   /** @description User groups used for various purposes */
   groups: {
     /**
@@ -1445,6 +1682,30 @@ export interface parameters {
    * @description filename
    */
   "rowFilter.files.name": string;
+  /** @description graph_auth_tokens */
+  "body.graph_auth_tokens": definitions["graph_auth_tokens"];
+  /** Format: timestamp with time zone */
+  "rowFilter.graph_auth_tokens.created_at": string;
+  /** Format: uuid */
+  "rowFilter.graph_auth_tokens.user_id": string;
+  /** Format: uuid */
+  "rowFilter.graph_auth_tokens.id": string;
+  /** @description graph_projects */
+  "body.graph_projects": definitions["graph_projects"];
+  /** Format: bigint */
+  "rowFilter.graph_projects.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.graph_projects.created_at": string;
+  /** Format: uuid */
+  "rowFilter.graph_projects.user_id": string;
+  /** Format: character varying */
+  "rowFilter.graph_projects.repository": string;
+  /** Format: character varying */
+  "rowFilter.graph_projects.description": string;
+  /** Format: character varying */
+  "rowFilter.graph_projects.name": string;
+  /** Format: character varying */
+  "rowFilter.graph_projects.chain": string;
   /** @description groups */
   "body.groups": definitions["groups"];
   /** Format: bigint */

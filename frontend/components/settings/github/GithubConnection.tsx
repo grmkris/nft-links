@@ -80,7 +80,7 @@ export const GithubConnection = () => {
     window.location.href =
       'https://github.com/login/oauth/authorize?client_id=' +
       clientId +
-      '&redirect_uri=http://localhost:3001/settings';
+      '&redirect_uri=http://localhost:3000/settings';
   };
 
   function popupWindow(url, windowName, win, w, h) {

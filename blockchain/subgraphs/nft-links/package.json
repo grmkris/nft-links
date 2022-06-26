@@ -3,11 +3,11 @@
   "license": "UNLICENSED",
   "scripts": {
     "deploy": "graph deploy --product hosted-service grmkris/nft-link",
-    "create-local": "graph create --node http://localhost:8020/ web3comments",
+    "create-local": "graph create --node https://graph-admin.htg.smuu.dev/ web3comments",
 
-    "graph-auth": "graph auth",
+    "graph-auth": "graph auth --node https://graph.htg.smuu.dev 1aa095d4-4177-4cfb-9885-9d060929286f",
     "remove-local": "graph remove --node http://localhost:8020/ web3comments",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 web3comments",
+    "deploy-local": "graph deploy --node https://graph-admin.htg.smuu.dev/ --ipfs http://ipfs.htg.smuu.dev:5001/ web3comments",
 
     "create-remote": "graph create --node http://34.116.252.161:8020/ web3comments",
     "remove-remote": "graph remove --node http://34.116.252.161:8020/ web3comments",

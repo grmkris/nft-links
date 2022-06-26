@@ -1,5 +1,7 @@
 import React from 'react';
 import Layout from '@/layout/Layout';
+import GraphAuthTokens from '@/graph/GraphAuthTokens';
+import { GraphProjectList } from '@/graph/GraphProjectList';
 
 function Dashboard() {
   return (
@@ -10,7 +12,7 @@ function Dashboard() {
             <div className='stat'>
               <div className='stat-title'>Query count</div>
               <div className='stat-value'>
-                <span className='font-semibold text-black dark:text-gray-200'>{1232323}</span>
+                <span className='font-semibold text-black dark:text-gray-200'>{1223}</span>
               </div>
               <div className='stat-desc'>21% more than last month</div>
             </div>
@@ -27,6 +29,12 @@ function Dashboard() {
           </p>
           <p>Supported chains:</p>
         </div>
+      </div>
+      <div className={'m-4 max-w-prose'}>
+        <GraphAuthTokens />
+      </div>
+      <div className={'m-4'}>
+        <GraphProjectList />
       </div>
     </Layout>
   );
