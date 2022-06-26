@@ -4,11 +4,17 @@ import { supabaseServerClient } from '../../../utils/server/supabaseServer';
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   try {
-    if (!request.query.token) {
+    // take bearer token from authorization header
+    let token;
+    if (request.headers?.authorization) {
+      token = request.headers?.authorization.split(' ')[1];
+    }
+    if (!request.query.token && !token) {
       response.status(400).send('Missing token');
     }
-
-    const token = request.query.token as string;
+    if (!token) {
+      token = request.query.token as string;
+    }
     console.log('token', token);
     const tokenDb = await supabaseServerClient
       .from<definitions['graph_auth_tokens']>('graph_auth_tokens')

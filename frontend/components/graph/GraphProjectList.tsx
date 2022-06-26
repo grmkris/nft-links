@@ -159,9 +159,9 @@ export const GraphProjectList = () => {
         Header: 'Graph init',
         accessor: (row) => (
           <CopyToClipboard
-            text={`graph init --node https://graph-admin.htg.smuu.dev/ ${
-              user.email.split('@')[0]
-            }/${row.name}`}
+            text={`graph init --node https://graph.htg.smuu.dev/ ${user.email.split('@')[0]}/${
+              row.name
+            }`}
           >
             <button
               className={'btn btn-sm'}
@@ -176,9 +176,9 @@ export const GraphProjectList = () => {
         Header: 'Graph create',
         accessor: (row) => (
           <CopyToClipboard
-            text={`graph create --node https://graph-admin.htg.smuu.dev/ ${
-              user.email.split('@')[0]
-            }/${row.name}`}
+            text={`graph create --node https://graph.htg.smuu.dev/ ${user.email.split('@')[0]}/${
+              row.name
+            }`}
           >
             <button
               className={'btn btn-sm'}
@@ -193,9 +193,9 @@ export const GraphProjectList = () => {
         Header: 'Graph deploy',
         accessor: (row) => (
           <CopyToClipboard
-            text={`graph deploy --node https://graph-admin.htg.smuu.dev/ ${
-              user.email.split('@')[0]
-            }/${row.name}`}
+            text={`graph deploy --node https://graph.htg.smuu.dev/ ${user.email.split('@')[0]}/${
+              row.name
+            }`}
           >
             <button
               className={'btn btn-sm'}

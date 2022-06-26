@@ -28,8 +28,18 @@ export default function GraphAuthTokens() {
     }
   };
 
-  const deleteGraphToken = () => {
-    console.log('deleteGraphToken');
+  const deleteGraphToken = async (id: string) => {
+    const result = await supabaseClient
+      .from<definitions['graph_auth_tokens']>('graph_auth_tokens')
+      .delete()
+      .match({ id: id });
+
+    if (result.error) {
+      toast.error(result.error.message);
+    } else {
+      await queryClient.invalidateQueries('graph_auth_tokens');
+      toast.success(`Token deleted!`);
+    }
   };
 
   return (
@@ -57,7 +67,7 @@ export default function GraphAuthTokens() {
 
                 <div>
                   <CopyToClipboard
-                    text={`graph auth https://graph-admin.htg.smuu.dev/ ${token.id}`}
+                    text={`graph auth https://graph.htg.smuu.dev/ ${token.id}`}
                     key={token.id + 'graph'}
                   >
                     <div
@@ -70,7 +80,7 @@ export default function GraphAuthTokens() {
                   </CopyToClipboard>
                   <button
                     className='btn btn-warning btn-circle btn-sm ml-2'
-                    onClick={() => deleteGraphToken()}
+                    onClick={() => deleteGraphToken(token.id)}
                   >
                     <XCircleIcon className='inline w-4' />
                   </button>
