@@ -10,7 +10,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
       token = request.headers?.authorization.split(' ')[1];
     }
     if (!request.query.token && !token) {
-      response.status(400).send('Missing token');
+      response.status(401).send('Missing token');
     }
     if (!token) {
       token = request.query.token as string;
@@ -23,14 +23,17 @@ export default async function handler(request: NextApiRequest, response: NextApi
         id: token,
       });
 
+    console.log('tokenDb', tokenDb);
+    console.log('token', token);
+
     if (tokenDb.data.length === 0) {
-      response.status(400).send('token not found');
+      response.status(401).send('Token not found');
     } else {
       console.log('tokenDb', tokenDb);
       response.status(200).send(tokenDb.data[0]);
     }
   } catch (e) {
     console.log(e);
-    response.json('fail');
+    response.status(401).send('Token not valid');
   }
 }
