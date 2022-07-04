@@ -141,6 +141,11 @@ export const GraphProjectList = () => {
   const { data, isError, isLoading } = useGraphProjects();
   const { user } = useUser();
 
+  const graphCliCommand = (type: 'init' | 'create' | 'deploy', chain: string) => {
+    const node = `https://${chain}.graph.htg.smuu.dev/`;
+    return `graph ${type} --node ${node}`;
+  };
+
   const columns = React.useMemo(
     () => [
       {
@@ -159,9 +164,7 @@ export const GraphProjectList = () => {
         Header: 'Graph init',
         accessor: (row) => (
           <CopyToClipboard
-            text={`graph init --node https://graph.htg.smuu.dev/ ${user.email.split('@')[0]}/${
-              row.name
-            }`}
+            text={`${graphCliCommand('init', row.chain)} ${user.email.split('@')[0]}/${row.name}`}
           >
             <button
               className={'btn btn-sm'}
@@ -176,9 +179,7 @@ export const GraphProjectList = () => {
         Header: 'Graph create',
         accessor: (row) => (
           <CopyToClipboard
-            text={`graph create --node https://graph.htg.smuu.dev/ ${user.email.split('@')[0]}/${
-              row.name
-            }`}
+            text={`${graphCliCommand('create', row.chain)} ${user.email.split('@')[0]}/${row.name}`}
           >
             <button
               className={'btn btn-sm'}
@@ -193,9 +194,7 @@ export const GraphProjectList = () => {
         Header: 'Graph deploy',
         accessor: (row) => (
           <CopyToClipboard
-            text={`graph deploy --node https://graph.htg.smuu.dev/ ${user.email.split('@')[0]}/${
-              row.name
-            }`}
+            text={`${graphCliCommand('deploy', row.chain)} ${user.email.split('@')[0]}/${row.name}`}
           >
             <button
               className={'btn btn-sm'}

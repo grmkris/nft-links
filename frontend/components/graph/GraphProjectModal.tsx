@@ -48,9 +48,12 @@ export const GraphProjectModal = (props: {
     }
   };
 
+  const availableChains = ['polygon', 'polygon-mumbai', 'optimism', 'optimism-kovan'];
+
   const handleChange = (event) => {
-    const name = event.target.name;
+    const name = event.target.name?.length > 0 ? event.target.name : 'chain';
     const value = event.target.value;
+    console.log({ name, value });
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
@@ -86,14 +89,16 @@ export const GraphProjectModal = (props: {
               onChange={handleChange}
             />
             <label className={'label'}>Chain</label>
-            <input
-              className='input input-bordered text-base'
-              type='text'
-              name='chain'
-              placeholder='Chain'
-              value={inputs.chain || ''}
-              onChange={handleChange}
-            />
+            <select className='select select-bordered' onChange={handleChange}>
+              <option disabled selected>
+                Select chain you want to use
+              </option>
+              {availableChains.map((chain) => (
+                <option key={chain} value={chain}>
+                  {chain}
+                </option>
+              ))}
+            </select>
             <label className={'label'}>Repository</label>
             <input
               className='input input-bordered text-base'
