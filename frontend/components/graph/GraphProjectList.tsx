@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { ClipboardCopyIcon } from '@heroicons/react/solid';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useUser } from '@supabase/supabase-auth-helpers/react';
+import Link from 'next/link';
 
 const selectionHook = (hooks: Hooks<object>) => {
   hooks.allColumns.push((columns) => [
@@ -157,8 +158,18 @@ export const GraphProjectList = () => {
         accessor: 'description',
       },
       {
+        Header: 'Chain',
+        accessor: 'chain',
+      },
+      {
         Header: 'Repository',
-        accessor: 'repository',
+        accessor: (row) => (
+          <Link href={row.repository}>
+            <a target='_blank' rel='noopener noreferrer' className='link link-primary'>
+              {row.repository}
+            </a>
+          </Link>
+        ),
       },
       {
         Header: 'Graph init',
@@ -193,17 +204,26 @@ export const GraphProjectList = () => {
       {
         Header: 'Graph deploy',
         accessor: (row) => (
-          <CopyToClipboard
-            text={`${graphCliCommand('deploy', row.chain)} ${user.email.split('@')[0]}/${row.name}`}
+          <div
+            className='tooltip-top tooltip z-50'
+            data-tip={`${graphCliCommand('deploy', row.chain)} ${user.email.split('@')[0]}/${
+              row.name
+            }`}
           >
-            <button
-              className={'btn btn-sm'}
-              onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
+            <CopyToClipboard
+              text={`${graphCliCommand('deploy', row.chain)} ${user.email.split('@')[0]}/${
+                row.name
+              }`}
             >
-              <ClipboardCopyIcon className='inline w-4' />
-              Deploy
-            </button>
-          </CopyToClipboard>
+              <button
+                className={'btn btn-sm'}
+                onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
+              >
+                <ClipboardCopyIcon className='inline w-4' />
+                Deploy
+              </button>
+            </CopyToClipboard>
+          </div>
         ),
       },
     ],

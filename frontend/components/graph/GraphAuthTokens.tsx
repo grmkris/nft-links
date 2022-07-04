@@ -65,13 +65,16 @@ export default function GraphAuthTokens() {
                   </CopyToClipboard>
                 </div>
 
-                <div>
+                <div
+                  className={'tooltip tooltip-bottom'}
+                  data-tip={`graph auth https://graph.htg.smuu.dev/ ${token.id}`}
+                >
                   <CopyToClipboard
                     text={`graph auth https://graph.htg.smuu.dev/ ${token.id}`}
                     key={token.id + 'graph'}
                   >
                     <div
-                      className={'badge badge-lg badge-primary cursor-pointer hover:badge-info'}
+                      className={'btn btn-primary btn-sm'}
                       onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
                     >
                       <ClipboardCopyIcon className='inline w-4' />
