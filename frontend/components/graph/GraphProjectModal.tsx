@@ -53,7 +53,6 @@ export const GraphProjectModal = (props: {
   const handleChange = (event) => {
     const name = event.target.name?.length > 0 ? event.target.name : 'chain';
     const value = event.target.value;
-    console.log({ name, value });
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
