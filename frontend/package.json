@@ -26,6 +26,7 @@
     "daisyui": "^2.13.6",
     "ethers": "^5.6.8",
     "formidable": "^2.0.1",
+    "graphql": "^16.5.0",
     "is-ipfs": "^6.0.2",
     "multer": "^1.4.4",
     "multiparty": "^4.2.3",
@@ -47,6 +48,7 @@
     "react-use": "^17.4.0",
     "react-use-wizard": "^2.2.0",
     "theme-change": "^2.0.2",
+    "urql": "^2.2.2",
     "use-file-picker": "^1.4.2",
     "use-local-storage": "^2.3.6",
     "wagmi": "^0.4.12"
