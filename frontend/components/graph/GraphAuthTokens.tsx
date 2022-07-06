@@ -8,17 +8,19 @@ import { useUser } from '@supabase/supabase-auth-helpers/react';
 import { useGraphAuthTokens } from 'hooks/useGraphAuthTokens';
 import Skeleton from 'react-loading-skeleton';
 import { useQueryClient } from 'react-query';
+import { AVAILABLE_CHAINS, CHAIN, graphCliCommand } from './graph.utils';
 
 export default function GraphAuthTokens() {
   const { user } = useUser();
   const { data, isLoading, isError } = useGraphAuthTokens();
   const queryClient = useQueryClient();
 
-  const generateNewToken = async () => {
+  const generateNewToken = async (chain: CHAIN) => {
     const result = await supabaseClient
       .from<definitions['graph_auth_tokens']>('graph_auth_tokens')
       .insert({
         user_id: user.id,
+        chain,
       });
     if (result.error) {
       toast.error(result.error.message);
@@ -54,6 +56,7 @@ export default function GraphAuthTokens() {
             data.data.map((token: definitions['graph_auth_tokens']) => (
               <>
                 <div className={'col-span-2'}>
+                  <div>{token.chain}</div>
                   <CopyToClipboard text={token.id} key={token.id}>
                     <div
                       className={'badge badge-lg badge-ghost cursor-pointer hover:badge-info'}
@@ -67,10 +70,18 @@ export default function GraphAuthTokens() {
 
                 <div
                   className={'tooltip tooltip-bottom'}
-                  data-tip={`graph auth https://graph.htg.smuu.dev/ ${token.id}`}
+                  data-tip={`${graphCliCommand({
+                    type: 'auth',
+                    chain: token.chain as CHAIN,
+                    tokenId: token.id,
+                  })}`}
                 >
                   <CopyToClipboard
-                    text={`graph auth https://graph.htg.smuu.dev/ ${token.id}`}
+                    text={`${graphCliCommand({
+                      type: 'auth',
+                      chain: token.chain as CHAIN,
+                      tokenId: token.id,
+                    })}`}
                     key={token.id + 'graph'}
                   >
                     <div
@@ -91,9 +102,21 @@ export default function GraphAuthTokens() {
               </>
             ))}
           <div className={'col-span-3 mt-2'}>
-            <button className='btn btn-primary btn-sm' onClick={() => generateNewToken()}>
-              Generate new token
-            </button>
+            <div className='dropdown'>
+              <label tabIndex={0} className='btn m-1'>
+                Generate token
+              </label>
+              <ul
+                tabIndex={0}
+                className='dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow'
+              >
+                {AVAILABLE_CHAINS.map((chain) => (
+                  <li key={chain}>
+                    <a onClick={() => generateNewToken(chain)}>{chain}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
           <div className={'col-span-3 mt-2'}>
             <div className='text-xl font-medium'>Install the CLI</div>

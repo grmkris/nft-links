@@ -12,6 +12,7 @@ import { useUser } from '@supabase/supabase-auth-helpers/react';
 import Link from 'next/link';
 import { definitions } from 'types/database';
 import SubgraphStatus from '@/graph/SubgraphStatus';
+import { CHAIN, getNodeUrl, graphCliCommand } from './graph.utils';
 
 const selectionHook = (hooks: Hooks<object>) => {
   hooks.allColumns.push((columns) => [
@@ -144,18 +145,8 @@ export const GraphProjectList = () => {
   const { data, isError, isLoading } = useGraphProjects();
   const { user } = useUser();
 
-  const getNodeUrl = (chain: string) => {
-    return `https://${chain}.graph.htg.smuu.dev`;
-  };
-
   const getSubgraphFullname = (name: string) => {
     return `${user.email.split('@')[0].replace('.', '')}/${name}`;
-  };
-
-  const graphCliCommand = (type: 'init' | 'create' | 'deploy', chain: string) => {
-    const node = getNodeUrl(chain);
-    const ipfs = 'https://ipfs.htg.smuu.dev';
-    return `graph ${type} --node ${node} --ipfs ${ipfs} `;
   };
 
   const getGraphQLUrl = (name: string, chain: string) => {
@@ -196,7 +187,10 @@ export const GraphProjectList = () => {
         Header: 'Graph init',
         accessor: (row: definitions['graph_projects']) => (
           <CopyToClipboard
-            text={`${graphCliCommand('init', row.chain)} ${getSubgraphFullname(row.name)}`}
+            text={`${graphCliCommand({
+              type: 'init',
+              chain: row.chain as CHAIN,
+            })} ${getSubgraphFullname(row.name)}`}
           >
             <button
               className={'btn btn-sm'}
@@ -211,7 +205,10 @@ export const GraphProjectList = () => {
         Header: 'Graph create',
         accessor: (row: definitions['graph_projects']) => (
           <CopyToClipboard
-            text={`${graphCliCommand('create', row.chain)} ${getSubgraphFullname(row.name)}`}
+            text={`${graphCliCommand({
+              type: 'init',
+              chain: row.chain as CHAIN,
+            })} ${getSubgraphFullname(row.name)}`}
           >
             <button
               className={'btn btn-sm'}
@@ -227,7 +224,10 @@ export const GraphProjectList = () => {
         accessor: (row: definitions['graph_projects']) => (
           <div>
             <CopyToClipboard
-              text={`${graphCliCommand('deploy', row.chain)} ${getSubgraphFullname(row.name)}`}
+              text={`${graphCliCommand({
+                type: 'init',
+                chain: row.chain as CHAIN,
+              })} ${getSubgraphFullname(row.name)}`}
             >
               <button
                 className={'btn btn-sm'}

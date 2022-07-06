@@ -124,9 +124,10 @@ export interface paths {
     get: {
       parameters: {
         query: {
+          id?: parameters["rowFilter.graph_auth_tokens.id"];
           created_at?: parameters["rowFilter.graph_auth_tokens.created_at"];
           user_id?: parameters["rowFilter.graph_auth_tokens.user_id"];
-          id?: parameters["rowFilter.graph_auth_tokens.id"];
+          chain?: parameters["rowFilter.graph_auth_tokens.chain"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -177,9 +178,10 @@ export interface paths {
     delete: {
       parameters: {
         query: {
+          id?: parameters["rowFilter.graph_auth_tokens.id"];
           created_at?: parameters["rowFilter.graph_auth_tokens.created_at"];
           user_id?: parameters["rowFilter.graph_auth_tokens.user_id"];
-          id?: parameters["rowFilter.graph_auth_tokens.id"];
+          chain?: parameters["rowFilter.graph_auth_tokens.chain"];
         };
         header: {
           /** Preference */
@@ -194,9 +196,10 @@ export interface paths {
     patch: {
       parameters: {
         query: {
+          id?: parameters["rowFilter.graph_auth_tokens.id"];
           created_at?: parameters["rowFilter.graph_auth_tokens.created_at"];
           user_id?: parameters["rowFilter.graph_auth_tokens.user_id"];
-          id?: parameters["rowFilter.graph_auth_tokens.id"];
+          chain?: parameters["rowFilter.graph_auth_tokens.chain"];
         };
         body: {
           /** graph_auth_tokens */
@@ -1362,6 +1365,13 @@ export interface definitions {
   /** @description Authentication tokens used for interacting with hosted graph */
   graph_auth_tokens: {
     /**
+     * Format: uuid
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     * @default extensions.uuid_generate_v4()
+     */
+    id: string;
+    /**
      * Format: timestamp with time zone
      * @default now()
      */
@@ -1369,10 +1379,10 @@ export interface definitions {
     /** Format: uuid */
     user_id?: string;
     /**
-     * Format: uuid
-     * @default extensions.uuid_generate_v4()
+     * Format: text
+     * @default polygon
      */
-    id?: string;
+    chain?: string;
   };
   /** @description graph projects created by user */
   graph_projects: {
@@ -1684,12 +1694,14 @@ export interface parameters {
   "rowFilter.files.name": string;
   /** @description graph_auth_tokens */
   "body.graph_auth_tokens": definitions["graph_auth_tokens"];
+  /** Format: uuid */
+  "rowFilter.graph_auth_tokens.id": string;
   /** Format: timestamp with time zone */
   "rowFilter.graph_auth_tokens.created_at": string;
   /** Format: uuid */
   "rowFilter.graph_auth_tokens.user_id": string;
-  /** Format: uuid */
-  "rowFilter.graph_auth_tokens.id": string;
+  /** Format: text */
+  "rowFilter.graph_auth_tokens.chain": string;
   /** @description graph_projects */
   "body.graph_projects": definitions["graph_projects"];
   /** Format: bigint */
