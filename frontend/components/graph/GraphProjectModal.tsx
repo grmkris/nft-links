@@ -6,6 +6,7 @@ import { useQueryClient } from 'react-query';
 import { useUser } from '@supabase/supabase-auth-helpers/react';
 import { PencilIcon, PlusIcon } from '@heroicons/react/solid';
 import { definitions } from 'types/database';
+import { AVAILABLE_CHAINS } from './graph.utils';
 
 export const GraphProjectModal = (props: {
   graphProject?: { name: string; description: string; repository: string; chain: string };
@@ -21,6 +22,7 @@ export const GraphProjectModal = (props: {
     repository: props.graphProject?.repository ? props.graphProject.repository : '',
     chain: props.graphProject?.chain ? props.graphProject.chain : '',
   });
+  const [formValid, setValidity] = useState<boolean>(false);
   const { user } = useUser();
   const queryCache = useQueryClient();
 
@@ -48,12 +50,19 @@ export const GraphProjectModal = (props: {
     }
   };
 
-  const availableChains = ['polygon', 'polygon-mumbai', 'optimism', 'optimism-kovan'];
-
   const handleChange = (event) => {
     const name = event.target.name?.length > 0 ? event.target.name : 'chain';
     const value = event.target.value;
+    switch (name) {
+      case 'name':
+      case 'repository':
+        setValidity(value.match(/^[a-zA-Z0-9]+$/));
+        break;
+    }
     setInputs((values) => ({ ...values, [name]: value }));
+    if (!inputs.chain || !inputs.name || !inputs.repository) {
+      setValidity(false);
+    }
   };
 
   return (
@@ -92,7 +101,7 @@ export const GraphProjectModal = (props: {
               <option disabled selected>
                 Select chain you want to use
               </option>
-              {availableChains.map((chain) => (
+              {AVAILABLE_CHAINS.map((chain) => (
                 <option key={chain} value={chain}>
                   {chain}
                 </option>
@@ -115,6 +124,7 @@ export const GraphProjectModal = (props: {
                 data-dismiss='graph-projects-modal'
                 className='btn btn-primary'
                 type={'submit'}
+                disabled={!formValid}
               >
                 Submit
               </button>
