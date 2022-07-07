@@ -206,7 +206,7 @@ export const GraphProjectList = () => {
         accessor: (row: definitions['graph_projects']) => (
           <CopyToClipboard
             text={`${graphCliCommand({
-              type: 'init',
+              type: 'create',
               chain: row.chain as CHAIN,
             })} ${getSubgraphFullname(row.name)}`}
           >
@@ -225,7 +225,7 @@ export const GraphProjectList = () => {
           <div>
             <CopyToClipboard
               text={`${graphCliCommand({
-                type: 'init',
+                type: 'deploy',
                 chain: row.chain as CHAIN,
               })} ${getSubgraphFullname(row.name)}`}
             >
