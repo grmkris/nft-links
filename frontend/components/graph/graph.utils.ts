@@ -37,3 +37,11 @@ export const graphCliCommand = (options: {
 
   return command.join(' ');
 };
+
+export const getSubgraphFullname = (workspace: string, name: string) => {
+  return `${workspace}/${name}`;
+};
+
+export const getGraphQLUrl = (workspace: string, name: string, chain: CHAIN) => {
+  return `${getNodeUrl(chain)}/subgraphs/name/${getSubgraphFullname(workspace, name)}/graphql`;
+};

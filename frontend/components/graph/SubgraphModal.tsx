@@ -8,7 +8,7 @@ import { PencilIcon, PlusIcon } from '@heroicons/react/solid';
 import { definitions } from 'types/database';
 import { AVAILABLE_CHAINS } from './graph.utils';
 
-export const GraphProjectModal = (props: {
+export const SubgraphModal = (props: {
   graphProject?: {
     name: string;
     description: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '@/layout/Layout';
 import GraphAuthTokens from '@/graph/GraphAuthTokens';
-import { GraphProjectList } from '@/graph/GraphProjectList';
+import { SubgraphsTable } from '@/graph/SubgraphsTable';
 
 function Dashboard() {
   return (
@@ -34,7 +34,7 @@ function Dashboard() {
         <GraphAuthTokens />
       </div>
       <div className={'m-4'}>
-        <GraphProjectList />
+        <SubgraphsTable />
       </div>
     </Layout>
   );
