@@ -8,7 +8,6 @@ import { useGraphProjects } from 'hooks/useGraphProjects';
 import { toast } from 'react-toastify';
 import { ClipboardCopyIcon } from '@heroicons/react/solid';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { useUser } from '@supabase/supabase-auth-helpers/react';
 import Link from 'next/link';
 import { definitions } from 'types/database';
 import SubgraphStatus from '@/graph/SubgraphStatus';
@@ -143,18 +142,21 @@ function Table({ columns, data }) {
 
 export const GraphProjectList = () => {
   const { data, isError, isLoading } = useGraphProjects();
-  const { user } = useUser();
 
-  const getSubgraphFullname = (name: string) => {
-    return `${user.email.split('@')[0].replace('.', '')}/${name}`;
+  const getSubgraphFullname = (workspace: string, name: string) => {
+    return `${workspace}/${name}`;
   };
 
-  const getGraphQLUrl = (name: string, chain: string) => {
-    return `${getNodeUrl(chain)}/subgraphs/name/${getSubgraphFullname(name)}/graphql`;
+  const getGraphQLUrl = (workspace: string, name: string, chain: string) => {
+    return `${getNodeUrl(chain)}/subgraphs/name/${getSubgraphFullname(workspace, name)}/graphql`;
   };
 
   const columns = React.useMemo(
     () => [
+      {
+        Header: 'Workspace',
+        accessor: 'workspace', // accessor is the "key" in the data
+      },
       {
         Header: 'Name',
         accessor: 'name', // accessor is the "key" in the data
@@ -180,7 +182,7 @@ export const GraphProjectList = () => {
       {
         Header: 'Status',
         accessor: (row: definitions['graph_projects']) => (
-          <SubgraphStatus graphQLUrl={getGraphQLUrl(row.name, row.chain)} />
+          <SubgraphStatus graphQLUrl={getGraphQLUrl(row.workspace, row.name, row.chain)} />
         ),
       },
       {
@@ -190,7 +192,7 @@ export const GraphProjectList = () => {
             text={`${graphCliCommand({
               type: 'init',
               chain: row.chain as CHAIN,
-            })} ${getSubgraphFullname(row.name)}`}
+            })} ${getSubgraphFullname(row.workspace, row.name)}`}
           >
             <button
               className={'btn btn-sm'}
@@ -208,7 +210,7 @@ export const GraphProjectList = () => {
             text={`${graphCliCommand({
               type: 'create',
               chain: row.chain as CHAIN,
-            })} ${getSubgraphFullname(row.name)}`}
+            })} ${getSubgraphFullname(row.workspace, row.name)}`}
           >
             <button
               className={'btn btn-sm'}
@@ -227,7 +229,7 @@ export const GraphProjectList = () => {
               text={`${graphCliCommand({
                 type: 'deploy',
                 chain: row.chain as CHAIN,
-              })} ${getSubgraphFullname(row.name)}`}
+              })} ${getSubgraphFullname(row.workspace, row.name)}`}
             >
               <button
                 className={'btn btn-sm'}
@@ -243,7 +245,7 @@ export const GraphProjectList = () => {
       {
         Header: 'Graphql',
         accessor: (row: definitions['graph_projects']) => (
-          <Link href={getGraphQLUrl(row.name, row.chain)}>
+          <Link href={getGraphQLUrl(row.workspace, row.name, row.chain)}>
             <a target='_blank' rel='noopener noreferrer' className='link link-primary'>
               Open
             </a>

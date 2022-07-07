@@ -227,6 +227,7 @@ export interface paths {
           description?: parameters["rowFilter.graph_projects.description"];
           name?: parameters["rowFilter.graph_projects.name"];
           chain?: parameters["rowFilter.graph_projects.chain"];
+          workspace?: parameters["rowFilter.graph_projects.workspace"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -284,6 +285,7 @@ export interface paths {
           description?: parameters["rowFilter.graph_projects.description"];
           name?: parameters["rowFilter.graph_projects.name"];
           chain?: parameters["rowFilter.graph_projects.chain"];
+          workspace?: parameters["rowFilter.graph_projects.workspace"];
         };
         header: {
           /** Preference */
@@ -305,6 +307,7 @@ export interface paths {
           description?: parameters["rowFilter.graph_projects.description"];
           name?: parameters["rowFilter.graph_projects.name"];
           chain?: parameters["rowFilter.graph_projects.chain"];
+          workspace?: parameters["rowFilter.graph_projects.workspace"];
         };
         body: {
           /** graph_projects */
@@ -1407,6 +1410,8 @@ export interface definitions {
     name?: string;
     /** Format: character varying */
     chain?: string;
+    /** Format: character varying */
+    workspace?: string;
   };
   /** @description User groups used for various purposes */
   groups: {
@@ -1718,6 +1723,8 @@ export interface parameters {
   "rowFilter.graph_projects.name": string;
   /** Format: character varying */
   "rowFilter.graph_projects.chain": string;
+  /** Format: character varying */
+  "rowFilter.graph_projects.workspace": string;
   /** @description groups */
   "body.groups": definitions["groups"];
   /** Format: bigint */

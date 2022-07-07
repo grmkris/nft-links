@@ -9,18 +9,26 @@ import { definitions } from 'types/database';
 import { AVAILABLE_CHAINS } from './graph.utils';
 
 export const GraphProjectModal = (props: {
-  graphProject?: { name: string; description: string; repository: string; chain: string };
+  graphProject?: {
+    name: string;
+    description: string;
+    repository: string;
+    chain: string;
+    workspace: string;
+  };
 }) => {
   const [inputs, setInputs] = useState<{
     name;
     description;
     repository;
     chain;
+    workspace;
   }>({
     name: props.graphProject?.name ? props.graphProject.name : '',
     description: props.graphProject?.description ? props.graphProject.description : '',
     repository: props.graphProject?.repository ? props.graphProject.repository : '',
     chain: props.graphProject?.chain ? props.graphProject.chain : '',
+    workspace: props.graphProject?.workspace ? props.graphProject.workspace : '',
   });
   const [formValid, setValidity] = useState<boolean>(false);
   const { user } = useUser();
@@ -37,6 +45,7 @@ export const GraphProjectModal = (props: {
         description: inputs.description,
         chain: inputs.chain,
         user_id: user.id,
+        workspace: inputs.workspace,
       });
     if (result.error) {
       toast.error(result.error.message);
@@ -55,6 +64,7 @@ export const GraphProjectModal = (props: {
     const value = event.target.value;
     switch (name) {
       case 'name':
+      case 'workspace':
       case 'repository':
         setValidity(value.match(/^[a-zA-Z0-9]+$/));
         break;
@@ -79,6 +89,15 @@ export const GraphProjectModal = (props: {
         <div className='modal-box'>
           <h2 className={'text-2xl'}>Create a graph project</h2>
           <form className={'form-control'} onSubmit={handleSubmit}>
+            <label className={'label'}>Workspace name</label>
+            <input
+              className='input input-bordered text-base'
+              placeholder='Workspace name'
+              type='text'
+              name='workspace'
+              value={inputs.workspace || ''}
+              onChange={handleChange}
+            />
             <label className={'label'}>Project name</label>
             <input
               className='input input-bordered text-base'
