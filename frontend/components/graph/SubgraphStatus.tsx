@@ -5,12 +5,12 @@ export default function SubgraphStatus(props: { graphQLUrl: string }) {
   const { data, isLoading, isError } = useSubgraphStatus(props.graphQLUrl);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className={'badge badge-error'}>Loading...</div>;
   }
   if (isError) {
-    return <div>Error</div>;
+    return <div className={'badge badge-error'}>Error</div>;
   }
   if (data) {
-    return <div>{data}</div>;
+    return <div className={'badge badge-success'}>Syncing - {data}</div>;
   }
 }

@@ -10,14 +10,13 @@ export const useSubgraphStatus = (subgraphGraphQLUrl: string) => {
 
 const getSubgraphStatus = async (graphQLUrl: string): Promise<string> => {
   console.log('inside');
-  try {
-    const client = createClient({
-      url: graphQLUrl,
-    });
+  const client = createClient({
+    url: graphQLUrl,
+  });
 
-    const result = await client
-      .query(
-        `{
+  const result = await client
+    .query(
+      `{
       _meta {block{
         hash
         number
@@ -25,12 +24,8 @@ const getSubgraphStatus = async (graphQLUrl: string): Promise<string> => {
       deployment
       hasIndexingErrors}
       }`
-      )
-      .toPromise();
-    console.log(result);
-    return result.data._meta.block.hash;
-  } catch (e) {
-    console.log(e);
-    return 'error';
-  }
+    )
+    .toPromise();
+  console.log(result);
+  return result.data._meta.block.number;
 };

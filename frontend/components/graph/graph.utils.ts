@@ -43,5 +43,5 @@ export const getSubgraphFullname = (workspace: string, name: string) => {
 };
 
 export const getGraphQLUrl = (workspace: string, name: string, chain: CHAIN) => {
-  return `${getNodeUrl(chain)}/subgraphs/name/${getSubgraphFullname(workspace, name)}/graphql`;
+  return `${getNodeUrl(chain)}/subgraphs/name/${getSubgraphFullname(workspace, name)}`;
 };

@@ -38,7 +38,7 @@ export const SubgraphActionsModal = (props: { subgraph: definitions['graph_proje
           <div className='flex w-full flex-col'>
             <div className={'card rounded-box'}>
               <div>
-                <CopyToClipboard text={createCommand}>
+                <CopyToClipboard text={initCommand}>
                   <button
                     className={'btn btn-sm m-2'}
                     onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
@@ -54,7 +54,7 @@ export const SubgraphActionsModal = (props: { subgraph: definitions['graph_proje
                 </div>
               </div>
               <div>
-                <CopyToClipboard text={initCommand}>
+                <CopyToClipboard text={createCommand}>
                   <button
                     className={'btn btn-sm m-2'}
                     onClick={() => toast.info('Copied to clipboard', { autoClose: 500 })}
@@ -64,7 +64,7 @@ export const SubgraphActionsModal = (props: { subgraph: definitions['graph_proje
                 </CopyToClipboard>
                 <div className='mockup-code'>
                   <pre data-prefix='$'>
-                    <code>{initCommand}</code>
+                    <code>{createCommand}</code>
                   </pre>
                 </div>
               </div>
