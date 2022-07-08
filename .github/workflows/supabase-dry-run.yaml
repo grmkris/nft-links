@@ -10,9 +10,9 @@ on:
 
 jobs:
   migration:
-    needs: changes
-    if: ${{ needs.changes.outputs.migrations == 'true' }}
     runs-on: ubuntu-latest
+    # needs: changes
+    # if: ${{ needs.changes.outputs.migrations == 'true' }}
     steps:
       - uses: actions/checkout@v2
       - name: Install Supabase CLI
