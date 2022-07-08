@@ -9,17 +9,17 @@ on:
       - "*"
 
 jobs:
-  changes:
-    runs-on: ubuntu-latest
-    outputs:
-      migrations: ${{ steps.filter.outputs.migrations }}
-    steps:
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            migrations:
-              - 'supabase/migrations/**'
+  # changes:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     migrations: ${{ steps.filter.outputs.migrations }}
+  #   steps:
+  #     - uses: dorny/paths-filter@v2
+  #       id: filter
+  #       with:
+  #         filters: |
+  #           migrations:
+  #             - 'supabase/migrations/**'
 
   migration:
     needs: changes
