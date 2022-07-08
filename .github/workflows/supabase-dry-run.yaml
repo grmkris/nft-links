@@ -9,18 +9,6 @@ on:
       - "*"
 
 jobs:
-  # changes:
-  #   runs-on: ubuntu-latest
-  #   outputs:
-  #     migrations: ${{ steps.filter.outputs.migrations }}
-  #   steps:
-  #     - uses: dorny/paths-filter@v2
-  #       id: filter
-  #       with:
-  #         filters: |
-  #           migrations:
-  #             - 'supabase/migrations/**'
-
   migration:
     needs: changes
     if: ${{ needs.changes.outputs.migrations == 'true' }}
@@ -38,3 +26,14 @@ jobs:
           supabase db remote set 'postgresql://postgres:"$SUPABASE_PASSWORD"@db."$SUPABASE_PROJECT_REF".supabase.co:6543/postgres'
       - name: Push Migrations dry run
         run: supabase db push --dry-run
+# changes:
+#   runs-on: ubuntu-latest
+#   outputs:
+#     migrations: ${{ steps.filter.outputs.migrations }}
+#   steps:
+#     - uses: dorny/paths-filter@v2
+#       id: filter
+#       with:
+#         filters: |
+#           migrations:
+#             - 'supabase/migrations/**'
