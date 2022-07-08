@@ -1,0 +1,40 @@
+name: Migration for Prod DB
+
+on:
+  push:
+    branches:
+      - "**"
+      - "!main"
+    tags-ignore:
+      - "*"
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      migrations: ${{ steps.filter.outputs.migrations }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            migrations:
+              - 'supabase/migrations/**'
+
+  migration:
+    needs: changes
+    if: ${{ needs.changes.outputs.migrations == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Supabase CLI
+        run: brew install supabase/tap/supabase
+      - name: Set Remote DB
+        shell: bash
+        env:
+          SUPABASE_PASSWORD: ${{ secrets.SUPABASE_PASSWORD }}
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: |
+          supabase db remote set 'postgresql://postgres:"$SUPABASE_PASSWORD"@db."$SUPABASE_PROJECT_REF".supabase.co:6543/postgres'
+      - name: Push Migrations dry run
+        run: supabase db push --dry-run
