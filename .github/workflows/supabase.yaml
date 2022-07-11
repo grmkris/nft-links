@@ -1,4 +1,4 @@
-name: Dry run Migration for Prod DB
+name: Migration for Prod DB
 
 on:
   push:
