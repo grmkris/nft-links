@@ -15,21 +15,14 @@ import { popupWindow } from '../../../utils/utils';
 export const GithubConnection = () => {
   const router = useRouter();
   const { code } = router.query;
-  const {
-    data: githubToken,
-    error: errorGithubToken,
-    isLoading: isLoadingGithubToken,
-  } = useGithubUserToken(code as string);
-  const {
-    data: githubUserData,
-    error: errorGithubUserData,
-    isLoading: isLoadingGithubUserData,
-  } = useGithubUserData(githubToken as string);
-  const {
-    data: githubRepos,
-    error: errorGithubRepos,
-    isLoading: isLoadingGithubRepos,
-  } = useGithubRepos(githubToken as string, githubUserData?.login as string);
+  const { data: githubToken, isLoading: isLoadingGithubToken } = useGithubUserToken(code as string);
+  const { data: githubUserData, isLoading: isLoadingGithubUserData } = useGithubUserData(
+    githubToken as string
+  );
+  const { data: githubRepos } = useGithubRepos(
+    githubToken as string,
+    githubUserData?.login as string
+  );
   const { data: githubIntegrations } = useIntegrationsGithub();
   const queryClient = useQueryClient();
   const { user } = useUser();
