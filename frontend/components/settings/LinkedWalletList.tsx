@@ -15,7 +15,7 @@ export const LinkedWalletList = () => {
         <h2 className='card-title text-primary'>Linked wallets</h2>
         {isLoading || (isFetching && <Skeleton enableAnimation={true} count={5} />)}
         {error || (data && data.error && <div>Error</div>)}
-        {data &&
+        {data?.data &&
           data.data.map((wallet, index) => (
             <div key={index}>
               <CopyToClipboard text={wallet.wallet}>
