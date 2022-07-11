@@ -3,8 +3,7 @@ name: Dry run Migration for Prod DB
 on:
   push:
     branches:
-      - "**"
-      - "!main"
+      - "main"
     tags-ignore:
       - "*"
 
@@ -29,4 +28,4 @@ jobs:
       - name: DB push
         shell: bash
         run: |
-          supabase db push --dry-run
+          supabase db push
