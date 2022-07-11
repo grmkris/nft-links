@@ -20,10 +20,10 @@ jobs:
       - name: Install Supabase CLI
         run: brew install supabase/tap/supabase
 
-      - name: Set Remote DB & Run db push
+      - name: Set Remote DB
         shell: bash
         env:
-          SUPABASE_PORT: 6543
+          SUPABASE_PORT: 5432
         run: |
           supabase db remote set postgresql://postgres:${{ secrets.SUPABASE_PASSWORD }}@db.${{ secrets.SUPABASE_PROJECT_REF }}.supabase.co:${{ env.SUPABASE_PORT }}/postgres
           supabase db push --dry-run
