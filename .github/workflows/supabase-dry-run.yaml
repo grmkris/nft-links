@@ -26,6 +26,12 @@ jobs:
           SUPABASE_PORT: 5432
         run: |
           supabase db remote set postgresql://postgres:${{ secrets.SUPABASE_PASSWORD }}@db.${{ secrets.SUPABASE_PROJECT_REF }}.supabase.co:${{ env.SUPABASE_PORT }}/postgres
+          ls
+          supabase db push --dry-run
+      - name: DB push
+        shell: bash
+        run: |
+          ls
           supabase db push --dry-run
 # changes:
 #   runs-on: ubuntu-latest
