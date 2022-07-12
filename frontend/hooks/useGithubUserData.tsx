@@ -1,7 +1,9 @@
 import { useQuery } from 'react-query';
 import { Octokit } from '@octokit/core';
+import { useGithubUserToken } from 'hooks/useGithubUserToken';
 
-export const useGithubUserData = (token: string) => {
+export const useGithubUserData = () => {
+  const { data: token } = useGithubUserToken();
   return useQuery('githubUserData', async () => await getGithubUserInfo(token), {
     enabled: token !== undefined,
   });

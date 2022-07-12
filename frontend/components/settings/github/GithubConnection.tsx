@@ -11,18 +11,14 @@ import { useGithubUserToken } from 'hooks/useGithubUserToken';
 import { useGithubUserData } from 'hooks/useGithubUserData';
 import { useGithubRepos } from 'hooks/useGithubRepos';
 import { popupWindow } from '../../../utils/utils';
+import Skeleton from 'react-loading-skeleton';
 
 export const GithubConnection = () => {
   const router = useRouter();
   const { code } = router.query;
-  const { data: githubToken, isLoading: isLoadingGithubToken } = useGithubUserToken(code as string);
-  const { data: githubUserData, isLoading: isLoadingGithubUserData } = useGithubUserData(
-    githubToken as string
-  );
-  const { data: githubRepos } = useGithubRepos(
-    githubToken as string,
-    githubUserData?.login as string
-  );
+  const { isLoading: isLoadingGithubToken } = useGithubUserToken(code as string);
+  const { data: githubUserData, isLoading: isLoadingGithubUserData } = useGithubUserData();
+  const { data: githubRepos, isLoading: isLoadingGithubRepos } = useGithubRepos();
   const { data: githubIntegrations } = useIntegrationsGithub();
   const queryClient = useQueryClient();
   const { user } = useUser();
@@ -34,11 +30,13 @@ export const GithubConnection = () => {
   }, [code, router]);
 
   const connectGithub = async () => {
+    // get current url
     const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
     window.location.href =
       'https://github.com/login/oauth/authorize?client_id=' +
       clientId +
-      '&redirect_uri=http://localhost:3000/settings';
+      '&redirect_uri=' +
+      window.location.href;
   };
 
   const installGithubApp = async () => {
@@ -56,7 +54,7 @@ export const GithubConnection = () => {
       <div className='card-body'>
         <h2 className='card-title text-primary'>Github</h2>
         <button
-          className={'btn'}
+          className={'btn btn-accent'}
           onClick={() => connectGithub()}
           disabled={!!githubUserData || isLoadingGithubUserData || isLoadingGithubToken}
         >
@@ -68,6 +66,7 @@ export const GithubConnection = () => {
             Manage App on Github
           </button>
         )}
+        {isLoadingGithubRepos && <Skeleton count={10} />}
         {githubRepos && (
           <>
             <h2 className='card-title text-primary'>Connected repos</h2>

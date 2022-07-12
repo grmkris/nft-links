@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-export const useGithubUserToken = (code: string) => {
+export const useGithubUserToken = (code?: string) => {
   return useQuery('githubUserToken', async () => await getToken(code), {
     enabled: code !== undefined,
   });

@@ -1,7 +1,7 @@
 import 'react-loading-skeleton/dist/skeleton.css';
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { CellProps, HeaderProps, Hooks, usePagination, useRowSelect, useTable } from 'react-table';
+import { usePagination, useRowSelect, useTable } from 'react-table';
 import { Pagination } from '@/table/Pagination';
 import { SubgraphModal } from '@/graph/SubgraphModal';
 import { useGraphProjects } from 'hooks/useGraphProjects';
@@ -11,48 +11,6 @@ import SubgraphStatus from '@/graph/SubgraphStatus';
 import { CHAIN, getGraphQLUrl } from './graph.utils';
 import { SubgraphActionsModal } from '@/graph/SubgraphActionsModal';
 
-const selectionHook = (hooks: Hooks<object>) => {
-  hooks.allColumns.push((columns) => [
-    // Let's make a column for selection
-    {
-      id: '_selector',
-      disableResizing: true,
-      disableGroupBy: true,
-      minWidth: 45,
-      width: 45,
-      maxWidth: 45,
-      Aggregated: undefined,
-      // The header can use the table's getToggleAllRowsSelectedProps method
-      // to render a checkbox
-      Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<object>) => (
-        <div>
-          <input
-            type='checkbox'
-            id={'toggle-all-groups-selected'}
-            className='checkbox checkbox-xs'
-            {...getToggleAllRowsSelectedProps()}
-          />
-        </div>
-      ),
-      // The cell can use the individual row's getToggleRowSelectedProps method
-      // to the render a checkbox
-      Cell: ({ row }: CellProps<object>) => (
-        <input
-          type='checkbox'
-          className='checkbox checkbox-xs'
-          {...row.getToggleRowSelectedProps()}
-        />
-      ),
-    },
-    ...columns,
-  ]);
-  hooks.useInstanceBeforeDimensions.push(({ headerGroups }) => {
-    // fix the parent group of the selection button to not be resizable
-    const selectionGroupHeader = headerGroups[0].headers[0];
-    selectionGroupHeader.canResize = false;
-  });
-};
-
 function Table({ columns, data }) {
   // Use the state and functions returned from useTable to build your UI
   const {
@@ -60,10 +18,7 @@ function Table({ columns, data }) {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
-
-    // The rest of these things are super handy, too ;)
+    page,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -79,8 +34,7 @@ function Table({ columns, data }) {
       data,
     },
     usePagination,
-    useRowSelect,
-    selectionHook
+    useRowSelect
   );
 
   // Render the UI for your table
@@ -119,7 +73,6 @@ function Table({ columns, data }) {
                   key={i}
                   {...row.getRowProps()}
                   className={`hover cursor-pointer ${row.isSelected ? 'active' : ''}`}
-                  onClick={() => row.toggleRowSelected()}
                 >
                   {row.cells.map((cell, id) => {
                     return (

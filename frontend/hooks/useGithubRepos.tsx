@@ -1,14 +1,18 @@
 import { useQuery } from 'react-query';
 import { Octokit } from '@octokit/core';
 import { Endpoints } from '@octokit/types';
+import { useGithubUserToken } from 'hooks/useGithubUserToken';
+import { useGithubUserData } from 'hooks/useGithubUserData';
 type ListUserReposResponse =
   Endpoints['GET /user/installations/{installation_id}/repositories']['response']['data']['repositories'];
-export const useGithubRepos = (token: string, owner = 'grmkris') => {
+export const useGithubRepos = () => {
+  const { data: token } = useGithubUserToken();
+  const { data: userData } = useGithubUserData();
   return useQuery<ListUserReposResponse>(
     'githubRepos',
-    async () => await getAvailableRepos(token, owner),
+    async () => await getAvailableRepos(token, userData.login),
     {
-      enabled: !!token && !!owner,
+      enabled: !!token && !!userData,
     }
   );
 };

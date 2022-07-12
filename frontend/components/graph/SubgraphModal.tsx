@@ -7,6 +7,8 @@ import { useUser } from '@supabase/supabase-auth-helpers/react';
 import { PencilIcon, PlusIcon } from '@heroicons/react/solid';
 import { definitions } from 'types/database';
 import { AVAILABLE_CHAINS } from './graph.utils';
+import { useGithubRepos } from 'hooks/useGithubRepos';
+import Link from 'next/link';
 
 export const SubgraphModal = (props: {
   graphProject?: {
@@ -33,6 +35,7 @@ export const SubgraphModal = (props: {
   const [formValid, setValidity] = useState<boolean>(false);
   const { user } = useUser();
   const queryCache = useQueryClient();
+  const { data: githubRepos } = useGithubRepos();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -116,8 +119,8 @@ export const SubgraphModal = (props: {
               onChange={handleChange}
             />
             <label className={'label'}>Chain</label>
-            <select className='select select-bordered' onChange={handleChange}>
-              <option disabled selected>
+            <select className='select select-bordered' onChange={handleChange} defaultValue={''}>
+              <option disabled value={''}>
                 Select chain you want to use
               </option>
               {AVAILABLE_CHAINS.map((chain) => (
@@ -135,6 +138,34 @@ export const SubgraphModal = (props: {
               value={inputs.repository || ''}
               onChange={handleChange}
             />
+            <label className={'label'}>Select linked Repository</label>
+            {githubRepos ? (
+              <select
+                className='select select-bordered'
+                defaultValue={''}
+                onChange={(event) => {
+                  // update inputs.repository with repository url
+                  setInputs((values) => ({
+                    ...values,
+                    repository: `${event.target.value}`,
+                  }));
+                }}
+              >
+                <option disabled value={''}>
+                  Select repository
+                </option>
+                {githubRepos?.map((repo) => (
+                  <option key={repo.name} value={repo.url}>
+                    {repo.name}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <Link href='/settings'>
+                <a className={'btn btn-accent'}>Link github account </a>
+              </Link>
+            )}
+
             <div className='modal-action'>
               <label htmlFor='graph-projects-modal' className='btn btn-secondary'>
                 Close
